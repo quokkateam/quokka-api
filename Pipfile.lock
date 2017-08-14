@@ -1,0 +1,22 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "a9730bdd5b36c79a0fc158ea3c04ffde948c10fb3aaad90f74c71bdef475ecfe"
+        },
+        "requires": {},
+        "sources": [
+            {
+                "url": "https://pypi.python.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "flask-restplus": "*",
+        "flask-sqlalchemy": "*"
+    },
+    "develop": {
+        "coverage": "*",
+        "pytest": "*"
+    }
+}
