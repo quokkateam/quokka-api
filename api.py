@@ -2,9 +2,7 @@ from flask import Flask
 from flask_restplus import Api, Resource, fields
 
 app = Flask(__name__)
-api = Api(app, version='1.0', title='TodoMVC API',
-    description='A simple TodoMVC API',
-)
+api = Api(app, version='0.1', title='Quokka API')
 
 ns = api.namespace('todos', description='TODO operations')
 

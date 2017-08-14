@@ -9,3 +9,5 @@ coverage = "*"
 [packages]
 flask-restplus = "*"
 Flask-SQLAlchemy = "*"
+passlib = "*"
+bcrypt = "*"
