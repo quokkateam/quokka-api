@@ -1,0 +1,7 @@
+before_install: sudo pip install pipenv
+
+install: pipenv install --dev
+
+script: pipenv run coverage run -m pytest
+
+after_success: codecov
