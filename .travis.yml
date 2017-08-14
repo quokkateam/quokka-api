@@ -1,4 +1,6 @@
-before_install: sudo pip install pipenv
+before_install:
+  - sudo pip install pipenv
+  - sudo pip install codecov
 
 install: pipenv install --dev
 
