@@ -1,7 +1,11 @@
 {
     "_meta": {
         "hash": {
+<<<<<<< c517735eb421234b4c2cb04c75dac0ffb96ca6cf
             "sha256": "a400cd5baf74a4fdc3ae344f6b8450b3ec902b7058dd22d7222e706f04c74a5e"
+=======
+            "sha256": "caa863c9d40f4036e0119275dda5f382f9a6417afa8c7ed38a252f5ae455d262"
+>>>>>>> Add user table and some account creation endpoints
         },
         "requires": {},
         "sources": [
@@ -12,6 +16,7 @@
         ]
     },
     "default": {
+<<<<<<< c517735eb421234b4c2cb04c75dac0ffb96ca6cf
         "aniso8601": {
             "version": "==1.2.1"
         },
@@ -128,5 +133,17 @@
         "wrapt": {
             "version": "==1.10.11"
         }
+=======
+        "bcrypt": "*",
+        "flask-migrate": "*",
+        "flask-restplus": "*",
+        "flask-sqlalchemy": "*",
+        "passlib": "*"
+    },
+    "develop": {
+        "coverage": "*",
+        "pylint": "*",
+        "pytest": "*"
+>>>>>>> Add user table and some account creation endpoints
     }
 }
