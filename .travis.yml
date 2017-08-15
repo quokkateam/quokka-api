@@ -2,7 +2,7 @@ before_install:
   - sudo pip install pipenv
   - sudo pip install codecov
 
-install: pipenv install --dev
+install: pipenv install --dev --three
 
 script:
   - pipenv run coverage run -m pytest
