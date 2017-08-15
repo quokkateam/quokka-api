@@ -6,7 +6,7 @@ Hashing utilities for account security.
 # passwords without loss of entropy or DDoS vulnerability. See
 # https://blogs.dropbox.com/tech/2016/09/how-dropbox-securely-stores-your-passwords/
 # for more info.
-# 
+#
 # TODO: Investigate using a pepper and hashing on separate machines than the
 # ones running the API. This would protect the pepper in case the API is
 # compromised, and allow hashing on machines suitable for a compute heavy

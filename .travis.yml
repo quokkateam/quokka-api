@@ -4,6 +4,9 @@ before_install:
 
 install: pipenv install --dev
 
-script: pipenv run coverage run -m pytest
+script:
+  - pipenv run coverage run -m pytest
+# TODO lint all files
+  - pipenv run pylint hash_util.py
 
 after_success: codecov

@@ -5,6 +5,7 @@ verify_ssl = true
 [dev-packages]
 pytest = "*"
 coverage = "*"
+pylint = "*"
 
 [packages]
 flask-restplus = "*"
