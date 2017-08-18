@@ -1,6 +1,6 @@
 from flask import Flask
 
-def create_app(config_file):
+def create_app(config_file='config.py'):
     app = Flask(__name__)
     app.config.from_pyfile(config_file)
 
@@ -14,4 +14,4 @@ def create_app(config_file):
     return app
 
 if __name__ == '__main__':
-    create_app('config.py').run()
+    create_app().run()
