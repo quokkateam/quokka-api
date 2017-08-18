@@ -7,7 +7,7 @@ db = SQLAlchemy()
 migrate = Migrate()
 
 class User(db.Model):
-    user_id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True)
     hashed_pw = db.Column(db.String(120))
     email_verified = db.Column(db.Boolean())
@@ -23,8 +23,8 @@ class User(db.Model):
         return '<User %r>' % self.email
 
 class Token(db.Model):
-    token_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     secret = db.Column(db.String(64))
     user = db.relationship('User', backref='tokens')
 
@@ -33,4 +33,4 @@ class Token(db.Model):
         self.secret = secret
 
     def __repr__(self):
-        return '<Token %r>' % self.token_id
+        return '<Token %r>' % self.id

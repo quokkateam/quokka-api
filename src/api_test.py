@@ -18,7 +18,7 @@ def test_create_user_flow(client, mocker):
     res = client.post('/api/users/', headers={'Content-Type': 'application/json'},
                       data=json.dumps(dict(email='e@mail.edu', password='hunter2')))
 
-    assert res.json == dict(user_id=1, email='e@mail.edu')
+    assert res.json == dict(id=1, email='e@mail.edu')
     assert res.status_code == 201
 
     assert email_client.send_verification_email.called
@@ -34,7 +34,7 @@ def test_create_user_flow(client, mocker):
     assert res.json['reason'] == 'email not verified'
     assert res.status_code == 401
 
-    res = client.post('/api/verify_email/%d/%s' % (user.user_id, user.email_verification_secret))
+    res = client.post('/api/verify_email/%d/%s' % (user.id, user.email_verification_secret))
     assert res.status_code == 200
 
     res = client.post('/api/mint_token', headers={'Content-Type': 'application/json'},
