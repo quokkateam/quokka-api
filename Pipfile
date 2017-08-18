@@ -6,9 +6,12 @@ verify_ssl = true
 pytest = "*"
 coverage = "*"
 pylint = "*"
+pytest-flask = "*"
+pytest-mock = "*"
 
 [packages]
 flask-restplus = "*"
 Flask-SQLAlchemy = "*"
 passlib = "*"
 bcrypt = "*"
+Flask-Migrate = "*"

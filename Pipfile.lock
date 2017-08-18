@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "b4bd623f8ce9b69c5c4448141ed13ef3ac869ff440b8e30fa4c4782da7a3368d"
+            "sha256": "caa863c9d40f4036e0119275dda5f382f9a6417afa8c7ed38a252f5ae455d262"
         },
         "requires": {},
         "sources": [
@@ -13,12 +13,14 @@
     },
     "default": {
         "bcrypt": "*",
+        "flask-migrate": "*",
         "flask-restplus": "*",
         "flask-sqlalchemy": "*",
         "passlib": "*"
     },
     "develop": {
         "coverage": "*",
+        "pylint": "*",
         "pytest": "*"
     }
 }
