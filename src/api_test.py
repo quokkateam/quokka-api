@@ -20,6 +20,7 @@ def test_create_user_flow(client, mocker):
 
     [user] = User.query.all()
     assert not user.email_verified
+    assert 'id=1' in str(user)
 
     assert res.json == dict(id=1, email='e@mail.edu')
     assert res.status_code == 201

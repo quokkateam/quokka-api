@@ -19,7 +19,7 @@ class User(db.Model):
         self.email_verification_secret = auth_util.fresh_secret()
 
     def __repr__(self):
-        return '<User %r>' % self.email
+        return '<User %r, id=%d>' % (self.email, self.id)
 
 class Token(db.Model):
     id = db.Column(db.Integer, primary_key=True)
