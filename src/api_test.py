@@ -3,7 +3,7 @@ import pytest
 
 import email_client
 from app import create_app
-from models import db
+from models import db, User
 
 @pytest.fixture
 def app():
@@ -17,6 +17,9 @@ def test_create_user_flow(client, mocker):
 
     res = client.post('/api/users/', headers={'Content-Type': 'application/json'},
                       data=json.dumps(dict(email='e@mail.edu', password='hunter2')))
+
+    [user] = User.query.all()
+    assert not user.email_verified
 
     assert res.json == dict(id=1, email='e@mail.edu')
     assert res.status_code == 201

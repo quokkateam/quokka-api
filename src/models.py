@@ -10,13 +10,12 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True)
     hashed_pw = db.Column(db.String(120))
-    email_verified = db.Column(db.Boolean())
+    email_verified = db.Column(db.Boolean(), default=False)
     email_verification_secret = db.Column(db.String(64))
 
     def __init__(self, email, hashed_pw):
         self.email = email
         self.hashed_pw = hashed_pw
-        self.email_verified = False
         self.email_verification_secret = auth_util.fresh_secret()
 
     def __repr__(self):
