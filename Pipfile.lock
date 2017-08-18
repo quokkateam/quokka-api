@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "a303d117542ef0480d6b2e9cc78f079c9892bf77ef58352aaeac8e80e7ade5bb"
+            "sha256": "a400cd5baf74a4fdc3ae344f6b8450b3ec902b7058dd22d7222e706f04c74a5e"
         },
         "requires": {},
         "sources": [
@@ -71,14 +71,32 @@
         "astroid": {
             "version": "==1.5.3"
         },
+        "click": {
+            "version": "==6.7"
+        },
         "coverage": {
             "version": "==4.4.1"
+        },
+        "flask": {
+            "version": "==0.12.2"
+        },
+        "flask-script": {
+            "version": "==2.0.5"
         },
         "isort": {
             "version": "==4.2.15"
         },
+        "itsdangerous": {
+            "version": "==0.24"
+        },
+        "jinja2": {
+            "version": "==2.9.6"
+        },
         "lazy-object-proxy": {
             "version": "==1.3.1"
+        },
+        "markupsafe": {
+            "version": "==1.0"
         },
         "mccabe": {
             "version": "==0.6.1"
@@ -92,11 +110,20 @@
         "pytest": {
             "version": "==3.2.1"
         },
+        "pytest-flask": {
+            "version": "==0.10.0"
+        },
+        "pytest-mock": {
+            "version": "==1.6.2"
+        },
         "setuptools": {
             "version": "==36.2.7"
         },
         "six": {
             "version": "==1.10.0"
+        },
+        "werkzeug": {
+            "version": "==0.12.2"
         },
         "wrapt": {
             "version": "==1.10.11"

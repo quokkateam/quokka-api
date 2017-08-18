@@ -6,6 +6,9 @@ verify_ssl = true
 pytest = "*"
 coverage = "*"
 pylint = "*"
+pytest-flask = "*"
+pytest-mock = "*"
+Flask-Script = "*"
 
 [packages]
 flask-restplus = "*"
