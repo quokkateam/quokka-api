@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
 import auth_util
+import datetime
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -12,6 +13,9 @@ class User(db.Model):
     hashed_pw = db.Column(db.String(120))
     email_verified = db.Column(db.Boolean(), default=False)
     email_verification_secret = db.Column(db.String(64))
+    # TODO make a helper for querying all live users
+    is_destroyed = db.Column(db.Boolean(), default=False)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
     def __init__(self, email, hashed_pw):
         self.email = email
