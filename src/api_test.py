@@ -7,7 +7,7 @@ from models import db
 
 @pytest.fixture
 def app():
-    app = create_app('test_config.py')
+    app = create_app(config_file='test_config.py')
     return app
 
 def test_create_user_flow(client, mocker):
