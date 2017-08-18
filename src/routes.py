@@ -31,7 +31,7 @@ token_model = api.model('Token', {
 })
 
 @namespace.route('/users/')
-class AddUser(Resource):
+class CreateUser(Resource):
     """Lets you POST to add new users"""
 
     @namespace.doc('create_user')
