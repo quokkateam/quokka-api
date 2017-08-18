@@ -5,8 +5,7 @@ before_install:
 install: pipenv install --dev --three
 
 script:
-  - pipenv run coverage run -m pytest
-# TODO lint all files
-  - pipenv run pylint hash_util.py
+  - make test
+  - pipenv run pylint src/auth_util.py
 
 after_success: codecov
