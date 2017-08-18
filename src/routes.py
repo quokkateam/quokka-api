@@ -2,6 +2,7 @@ from flask_restplus import Api, Resource, fields
 
 import auth_util
 import email_client
+import sqlalchemy
 from models import db, Token, User
 
 api = Api(version='0.1', title='Quokka API')
@@ -39,12 +40,14 @@ class CreateUser(Resource):
     @namespace.marshal_with(user_model, code=201)
     def post(self):
         # TODO do something graceful on unique email integrity constraint violation.
-        from flask import request
         user = User(
             hashed_pw=auth_util.hash_pw(api.payload['password']),
             email=api.payload['email'])
         db.session.add(user)
-        db.session.commit()
+        try:
+            db.session.commit()
+        except sqlalchemy.exc.IntegrityError:
+            db.session.rollback()            
         email_client.send_verification_email(user)
         return user, 201
 
