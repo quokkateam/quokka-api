@@ -8,7 +8,7 @@ api = Api(version='0.1', title='Quokka API')
 namespace = api.namespace('api')
 
 user_model = api.model('User', {
-    'user_id': fields.Integer(readOnly=True, description='The user unique identifier'),
+    'id': fields.Integer(readOnly=True, description='The user unique identifier'),
     'email': fields.String(),
 })
 
@@ -56,7 +56,7 @@ class VerifyEmail(Resource):
     @namespace.response(200, 'Success')
     @namespace.response(401, 'Secret unrecognized')
     def post(self, user_id, secret):
-        user = User.query.filter_by(user_id=user_id).first()
+        user = User.query.filter_by(id=user_id).first()
         if user is not None and auth_util.verify_secret(
                 secret, user.email_verification_secret):
             user.email_verified = True
@@ -88,6 +88,6 @@ class MintToken(Resource):
             token = Token(user, secret)
             db.session.add(token)
             db.session.commit()
-            return dict(token=auth_util.serialize_token(token.token_id, secret)), 201
+            return dict(token=auth_util.serialize_token(token.id, secret)), 201
         else:
             return dict(reason='Unrecognized credentials'), 401
