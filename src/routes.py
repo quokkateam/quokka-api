@@ -39,7 +39,6 @@ class CreateUser(Resource):
     @namespace.expect(create_user_model)
     @namespace.marshal_with(user_model, code=201)
     def post(self):
-        # TODO do something graceful on unique email integrity constraint violation.
         user = User(
             hashed_pw=auth_util.hash_pw(api.payload['password']),
             email=api.payload['email'])
