@@ -1,6 +1,6 @@
 .PHONY: test
 test:
-	pipenv run coverage run -m pytest src
+	pipenv run coverage run -m pytest
 
 .PHONY: run
 run:

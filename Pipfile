@@ -9,6 +9,7 @@ pylint = "*"
 pytest-flask = "*"
 pytest-mock = "*"
 Flask-Script = "*"
+snapshottest = "*"
 
 [packages]
 flask-restplus = "*"
