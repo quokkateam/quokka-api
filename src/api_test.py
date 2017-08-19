@@ -10,6 +10,27 @@ def app():
     app = create_app(config_file='test_config.py')
     return app
 
+def test_email_already_registered(client, mocker):
+    db.create_all()
+
+    mocker.patch('email_client.send_verification_email')
+
+    res = client.post('/api/users/', headers={'Content-Type': 'application/json'},
+                      data=json.dumps(dict(email='e@mail.edu', password='hunter2')))
+    assert res.status_code == 201
+
+    [user1] = User.query.all()
+
+    res = client.post('/api/users/', headers={'Content-Type': 'application/json'},
+                      data=json.dumps(dict(email='e@mail.edu', password='hunter2')))
+    assert res.status_code == 201
+
+    [user2] = User.query.all()
+
+    assert user1 == user2
+
+    db.drop_all()
+
 def test_create_user_flow(client, mocker):
     db.create_all()
 
