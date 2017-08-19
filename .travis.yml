@@ -1,11 +1,19 @@
 before_install:
-  - sudo pip install pipenv
-  - sudo pip install codecov
-
-install: pipenv install --dev --three
-
+- sudo pip install pipenv
+- sudo pip install codecov
+install:
+- pipenv install --three
+- pipenv run pip freeze > requirements.txt # For heroku
+- pipenv install --dev
 script:
-  - make test
-  - pipenv run pylint src/auth_util.py
-
-after_success: codecov
+- make test
+- pipenv run pylint src/auth_util.py
+after_success:
+- codecov
+deploy:
+  provider: heroku
+  api_key:
+    secure: GiRS/oUDjObKcU2WojXZCJ0sDCWXJTM59zlWv13BtelmL5Mhpf8RPTegz/vBSpMe6YrEs9YWyxtHvdAqpt1IO6QmoivqlVwknvsWMyaJD81V+sx4LGEt0l5BdV97LEhZfIY2/pMiuEwaj+8acFOU5mfDPDNqkgEe7iboZNEpCmVQNoIr59rL/KvPeQtGHNgM1iIw2GKmEOlAyqCN+KDCXW+rr5K3uPOSUqG65M1EWDQGo1xoyo0xGXk6bredo8bJyjUTW0yJmYqoWJlycaY/pwN7po/kZ4Efy1ZUeb1NpwZndDBYD8Rzw/bWFMEt4pJpqdNGD8VXpMstZkrYDxq2P8YN/8TYdXN2+m7M3N/TDmRGdxDFXTjDIm/MJdx1BQxL6QixmCfj37woh7tTwlLhIh7Q+t+Sw75IW9Cplbju85tSNxeZ4andGa0LeDuDcG1RmyISX+aovLrLbUVIR4VPhyY6ltGF0CWmPwOFPQuJDfv180cP/RUoUEGSs9Je1NminHdwUZfXy/xJ8WB7Oyl/k9lnNA9j0JwPn61CGbajDfabWv7j4maJLrjnMl3bMnCN7F1vpzxUOqaNHakoc51yIgL7/Y3f7gWi/r9t/+nDjA7QcDkETcTd8DPxPhU0tyy9ZqFhFNC7V1Q8gGR/whJEKSVjmJGUjIy/lnaeUJNpOJw=
+  app: quokka-api-prod
+  on:
+    repo: quokkateam/quokka-api
