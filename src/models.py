@@ -27,7 +27,8 @@ class User(db.Model):
     self.email_verification_secret = auth_util.fresh_secret()
 
   def __repr__(self):
-    return '<User %r, id=%d>' % (self.email, self.id)
+    return '<User id={}, email={}, email_verified={}>'.format(
+      self.id, self.email, self.email_verified)
 
 
 class Token(db.Model):

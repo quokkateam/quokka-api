@@ -1,9 +1,10 @@
 from flask_restplus import Api, Resource, fields
 
 import auth_util
+import dbi
 import email_client
 import sqlalchemy
-from models import db, Token, User
+from models import db, Token, User, School
 
 api = Api(version='0.1', title='Quokka API')
 namespace = api.namespace('api')
@@ -30,6 +31,27 @@ unauthorized_response_model = api.model('Unauthorized', {
 token_model = api.model('Token', {
     'token': fields.String(),
 })
+
+school_model = api.model('School', {
+    'name': fields.String(),
+    'slug': fields.String(),
+    'domains': fields.List(fields.String()),
+})
+
+schools_model = api.model('Schools', {
+    'schools': fields.List(fields.Nested(school_model)),
+})
+
+@namespace.route('/schools')
+class GetSchools(Resource):
+  """Fetch all non-destroyed Schools"""
+
+  @namespace.doc('get_schools')
+  @namespace.marshal_with(schools_model)
+  def get(self):
+    schools = dbi.find_all(School)
+    school_data = [{'name': s.name, 'slug': s.slug, 'domains': s.domains} for s in schools]
+    return {'schools': school_data}
 
 @namespace.route('/users/')
 class CreateUser(Resource):

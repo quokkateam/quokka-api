@@ -3,12 +3,28 @@ import pytest
 
 import email_client
 from app import create_app
-from models import db, User
+from models import db, User, School
 
 @pytest.fixture
 def app():
     app = create_app(config_file='test_config.py')
     return app
+
+def test_get_schools(client):
+    db.create_all()
+
+    school = School('University of School', ['uos.edu'])
+    db.session.add(school)
+    db.session.commit()
+
+    res = client.get('/api/schools')
+    assert res.status_code == 200
+
+    assert res.json == dict(schools=[dict(
+        name='University of School', slug='university-of-school', domains=['uos.edu'])])
+
+    db.session.commit()
+    db.drop_all()
 
 def test_email_already_registered(client, mocker):
 

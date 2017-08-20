@@ -1,3 +1,7 @@
+"""
+Database Interface
+"""
+
 from models import db
 
 IS_DESTROYED = 'is_destroyed'
@@ -17,7 +21,7 @@ def find_all(model, params=None, session=None, unscoped=False):
   exact_params = {}
   list_params = {}
 
-  for k, v in params.iteritems():
+  for k, v in params.items():
     if type(v).__name__ in ['list', 'tuple']:
       list_params[k] = tuple(v)
     else:
@@ -28,7 +32,7 @@ def find_all(model, params=None, session=None, unscoped=False):
 
   query = session.query(model).filter_by(**exact_params)
 
-  for k, v in list_params.iteritems():
+  for k, v in list_params.items():
     query = query.filter(getattr(model, k).in_(v))
 
   return query.all()
@@ -54,7 +58,7 @@ def update(model_instance, params=None, session=None):
   params, session = ensure_args(params, session)
 
   try:
-    [setattr(model_instance, k, v) for k, v in params.iteritems()]
+    [setattr(model_instance, k, v) for k, v in params.items()]
     session.commit()
   except Exception as e:
     raise Exception(
