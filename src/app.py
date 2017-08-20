@@ -12,6 +12,9 @@ def create_app(config_file='config.py'):
   from routes import api
   api.init_app(app)
 
+  from flask_sslify import SSLify
+  SSLify(app)
+
   return app
 
 
