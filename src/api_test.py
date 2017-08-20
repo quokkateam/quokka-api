@@ -11,9 +11,11 @@ def app():
     return app
 
 def test_email_already_registered(client, mocker):
+
     db.create_all()
 
     mocker.patch('email_client.send_verification_email')
+
 
     res = client.post('/api/users/', headers={'Content-Type': 'application/json'},
                       data=json.dumps(dict(email='e@mail.edu', password='hunter2')))
@@ -29,6 +31,7 @@ def test_email_already_registered(client, mocker):
 
     assert user1 == user2
 
+    db.session.commit()
     db.drop_all()
 
 def test_create_user_flow(client, mocker):
@@ -68,4 +71,6 @@ def test_create_user_flow(client, mocker):
     assert 'token' in res.json
     assert res.status_code == 201
 
+    db.session.commit()
     db.drop_all()
+
