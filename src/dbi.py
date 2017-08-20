@@ -1,3 +1,7 @@
+"""
+Database Interface
+"""
+
 from models import db
 
 IS_DESTROYED = 'is_destroyed'
