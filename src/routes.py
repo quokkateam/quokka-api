@@ -1,46 +1,45 @@
 from flask_restplus import Api, Resource, fields
 
 import auth_util
-import dbi
 import email_client
-import sqlalchemy
 from models import db, Token, User, School
 
 api = Api(version='0.1', title='Quokka API')
 namespace = api.namespace('api')
 
 user_model = api.model('User', {
-    'id': fields.Integer(readOnly=True, description='The user unique identifier'),
-    'email': fields.String(),
+  'id': fields.Integer(readOnly=True, description='The user unique identifier'),
+  'email': fields.String(),
 })
 
 create_user_model = api.model('User', {
-    'email': fields.String(required=True),
-    'password': fields.String(required=False),
+  'email': fields.String(required=True),
+  'password': fields.String(required=False),
 })
 
 mint_token_model = api.model('Credentials', {
-    'email': fields.String(required=True),
-    'password': fields.String(required=True),
+  'email': fields.String(required=True),
+  'password': fields.String(required=True),
 })
 
 unauthorized_response_model = api.model('Unauthorized', {
-    'reason': fields.String(),
+  'reason': fields.String(),
 })
 
 token_model = api.model('Token', {
-    'token': fields.String(),
+  'token': fields.String(),
 })
 
 school_model = api.model('School', {
-    'name': fields.String(),
-    'slug': fields.String(),
-    'domains': fields.List(fields.String()),
+  'name': fields.String(),
+  'slug': fields.String(),
+  'domains': fields.List(fields.String()),
 })
 
 schools_model = api.model('Schools', {
-    'schools': fields.List(fields.Nested(school_model)),
+  'schools': fields.List(fields.Nested(school_model)),
 })
+
 
 @namespace.route('/schools')
 class GetSchools(Resource):
@@ -49,77 +48,80 @@ class GetSchools(Resource):
   @namespace.doc('get_schools')
   @namespace.marshal_with(schools_model)
   def get(self):
-    schools = dbi.find_all(School)
+    schools = School.query.all()
     school_data = [{'name': s.name, 'slug': s.slug, 'domains': s.domains} for s in schools]
     return {'schools': school_data}
 
+
 @namespace.route('/users/')
 class CreateUser(Resource):
-    """Lets you POST to add new users"""
+  """Lets you POST to add new users"""
 
-    @namespace.doc('create_user')
-    @namespace.expect(create_user_model, validate=True)
-    @namespace.marshal_with(user_model, code=201)
-    def post(self):
-        user_exists_already = User.query.filter_by(email=api.payload['email']).first() is not None
-        if 'password' in api.payload:
-            hashed_pw = auth_util.hash_pw(api.payload['password'])
-        else:
-            hashed_pw = None
-        user = User(
-            hashed_pw=hashed_pw,
-            email=api.payload['email'])
-        if not user_exists_already:
-          db.session.add(user)
-          db.session.commit()
-        email_client.send_verification_email(user)
-        return user, 201
+  @namespace.doc('create_user')
+  @namespace.expect(create_user_model, validate=True)
+  @namespace.marshal_with(user_model, code=201)
+  def post(self):
+    user_exists_already = User.query.filter_by(email=api.payload['email']).first() is not None
+    if 'password' in api.payload:
+      hashed_pw = auth_util.hash_pw(api.payload['password'])
+    else:
+      hashed_pw = None
+    user = User(
+      hashed_pw=hashed_pw,
+      email=api.payload['email'])
+    if not user_exists_already:
+      db.session.add(user)
+      db.session.commit()
+    email_client.send_verification_email(user)
+    return user, 201
+
 
 # TODO add endpoint for resending user verification email
 
 @namespace.route('/verify_email/<int:user_id>/<string:secret>')
 class VerifyEmail(Resource):
-    """Verifies an email address."""
-    @namespace.response(200, 'Success')
-    @namespace.response(401, 'Secret unrecognized')
-    def post(self, user_id, secret):
-        user = User.query.filter_by(id=user_id).first()
-        if user is not None and auth_util.verify_secret(
-                secret, user.email_verification_secret):
-            user.email_verified = True
-            db.session.add(user)
-            db.session.commit()
-            return '', 200
-        return '', 401
+  """Verifies an email address."""
+
+  @namespace.response(200, 'Success')
+  @namespace.response(401, 'Secret unrecognized')
+  def post(self, user_id, secret):
+    user = User.query.filter_by(id=user_id).first()
+    if user is not None and auth_util.verify_secret(
+      secret, user.email_verification_secret):
+      user.email_verified = True
+      db.session.add(user)
+      db.session.commit()
+      return '', 200
+    return '', 401
 
 
 @namespace.route('/mint_token')
 class MintToken(Resource):
-    """Lets you POST to mint tokens"""
+  """Lets you POST to mint tokens"""
 
-    @namespace.doc('mint_token')
-    @namespace.expect(mint_token_model, validate=True)
-    @namespace.response(401, 'Unrecognized credentials', model=unauthorized_response_model)
-    @namespace.response(401, 'Unverified email', model=unauthorized_response_model)
-    @namespace.response(201, 'Success', model=token_model)
-    def post(self):
-        user = User.query.filter_by(email=api.payload['email']).first()
-        if user is not None and user.hashed_pw is not None:
-            hashed_pw = user.hashed_pw
-            can_mint_token = True
-        else:
-            # Turns out auth_util.verify_pw returns immediately if hashed_pw =
-            # '', so use a dummy hash. Doesn't matter what it's of because of
-            # can_mint_token flag.
-            hashed_pw = '$2b$10$H/AD/eQ42vKMBQhd9QtDh.1UnLWcD6YA3qFBbosr37UAUrDMm4pPq'
-            can_mint_token = False
-        if auth_util.verify_pw(hashed_pw, api.payload['password']) and can_mint_token:
-            if not user.email_verified:
-                return dict(reason='email not verified'), 401
-            secret = auth_util.fresh_secret()
-            token = Token(user, secret)
-            db.session.add(token)
-            db.session.commit()
-            return dict(token=auth_util.serialize_token(token.id, secret)), 201
-        else:
-            return dict(reason='Unrecognized credentials'), 401
+  @namespace.doc('mint_token')
+  @namespace.expect(mint_token_model, validate=True)
+  @namespace.response(401, 'Unrecognized credentials', model=unauthorized_response_model)
+  @namespace.response(401, 'Unverified email', model=unauthorized_response_model)
+  @namespace.response(201, 'Success', model=token_model)
+  def post(self):
+    user = User.query.filter_by(email=api.payload['email']).first()
+    if user is not None and user.hashed_pw is not None:
+      hashed_pw = user.hashed_pw
+      can_mint_token = True
+    else:
+      # Turns out auth_util.verify_pw returns immediately if hashed_pw =
+      # '', so use a dummy hash. Doesn't matter what it's of because of
+      # can_mint_token flag.
+      hashed_pw = '$2b$10$H/AD/eQ42vKMBQhd9QtDh.1UnLWcD6YA3qFBbosr37UAUrDMm4pPq'
+      can_mint_token = False
+    if auth_util.verify_pw(hashed_pw, api.payload['password']) and can_mint_token:
+      if not user.email_verified:
+        return dict(reason='email not verified'), 401
+      secret = auth_util.fresh_secret()
+      token = Token(user, secret)
+      db.session.add(token)
+      db.session.commit()
+      return dict(token=auth_util.serialize_token(token.id, secret)), 201
+    else:
+      return dict(reason='Unrecognized credentials'), 401
