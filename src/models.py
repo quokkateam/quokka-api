@@ -15,7 +15,7 @@ class User(db.Model):
   hashed_pw = db.Column(db.String(120))
   email_verified = db.Column(db.Boolean(), default=False)
   email_verification_secret = db.Column(db.String(64))
-  school_id = db.Column(db.Integer, db.ForeignKey('school.id'), index=True, nullable=False)
+  school_id = db.Column(db.Integer, db.ForeignKey('school.id'), index=True) # TODO make not nullable
   # TODO make a helper for querying all live users
   is_destroyed = db.Column(db.Boolean(), default=False)
   created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
