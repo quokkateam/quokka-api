@@ -59,4 +59,5 @@ class School(db.Model):
     self.domains = domains
 
   def __repr__(self):
-    return '<School id={}, name={}, slug={}, domains={}>'.format(self.id, self.name, self.slug, self.domains)
+    return '<School id={}, name={}, slug={}, domains={}>'.format(
+      self.id, self.name, self.slug, self.domains)
