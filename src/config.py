@@ -1,6 +1,5 @@
 import os
 import subprocess
-import config_util
 
 if os.environ.get('ENV') == 'prod':
     assert 'DATABASE_URL' in os.environ
