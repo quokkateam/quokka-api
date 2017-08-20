@@ -56,7 +56,6 @@ class School(db.Model):
     self.name = name
     self.slug = slugify(name, separator='-', to_lower=True)
     self.domains = domains
-    self.email_verification_secret = auth_util.fresh_secret()
 
   def __repr__(self):
     return '<School id={}, name={}, slug={}, domains={}>'.format(self.id, self.name, self.slug, self.domains)
