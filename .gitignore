@@ -106,5 +106,3 @@ ENV/
 app.db
 
 .idea/
-
-migrations/
