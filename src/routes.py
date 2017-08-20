@@ -39,14 +39,13 @@ class CreateUser(Resource):
     @namespace.expect(create_user_model)
     @namespace.marshal_with(user_model, code=201)
     def post(self):
+        user_exists_already = User.query.filter_by(email=api.payload['email']).first() is not None
         user = User(
             hashed_pw=auth_util.hash_pw(api.payload['password']),
             email=api.payload['email'])
-        db.session.add(user)
-        try:
-            db.session.commit()
-        except sqlalchemy.exc.IntegrityError:
-            db.session.rollback()            
+        if not user_exists_already:
+          db.session.add(user)
+          db.session.commit()
         email_client.send_verification_email(user)
         return user, 201
 
