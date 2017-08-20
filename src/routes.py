@@ -15,13 +15,13 @@ user_model = api.model('User', {
 })
 
 create_user_model = api.model('User', {
-    'email': fields.String(),
-    'password': fields.String(),
+    'email': fields.String(required=True),
+    'password': fields.String(required=False),
 })
 
 mint_token_model = api.model('Credentials', {
-    'email': fields.String(),
-    'password': fields.String(),
+    'email': fields.String(required=True),
+    'password': fields.String(required=True),
 })
 
 unauthorized_response_model = api.model('Unauthorized', {
@@ -58,12 +58,16 @@ class CreateUser(Resource):
     """Lets you POST to add new users"""
 
     @namespace.doc('create_user')
-    @namespace.expect(create_user_model)
+    @namespace.expect(create_user_model, validate=True)
     @namespace.marshal_with(user_model, code=201)
     def post(self):
         user_exists_already = User.query.filter_by(email=api.payload['email']).first() is not None
+        if 'password' in api.payload:
+            hashed_pw = auth_util.hash_pw(api.payload['password'])
+        else:
+            hashed_pw = None
         user = User(
-            hashed_pw=auth_util.hash_pw(api.payload['password']),
+            hashed_pw=hashed_pw,
             email=api.payload['email'])
         if not user_exists_already:
           db.session.add(user)
@@ -94,17 +98,22 @@ class MintToken(Resource):
     """Lets you POST to mint tokens"""
 
     @namespace.doc('mint_token')
-    @namespace.expect(mint_token_model)
+    @namespace.expect(mint_token_model, validate=True)
     @namespace.response(401, 'Unrecognized credentials', model=unauthorized_response_model)
     @namespace.response(401, 'Unverified email', model=unauthorized_response_model)
     @namespace.response(201, 'Success', model=token_model)
     def post(self):
         user = User.query.filter_by(email=api.payload['email']).first()
-        if user is not None:
+        if user is not None and user.hashed_pw is not None:
             hashed_pw = user.hashed_pw
+            can_mint_token = True
         else:
-            hashed_pw = ''
-        if auth_util.verify_pw(hashed_pw, api.payload['password']):
+            # Turns out auth_util.verify_pw returns immediately if hashed_pw =
+            # '', so use a dummy hash. Doesn't matter what it's of because of
+            # can_mint_token flag.
+            hashed_pw = '$2b$10$H/AD/eQ42vKMBQhd9QtDh.1UnLWcD6YA3qFBbosr37UAUrDMm4pPq'
+            can_mint_token = False
+        if auth_util.verify_pw(hashed_pw, api.payload['password']) and can_mint_token:
             if not user.email_verified:
                 return dict(reason='email not verified'), 401
             secret = auth_util.fresh_secret()
