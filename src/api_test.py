@@ -135,5 +135,11 @@ def test_create_user_no_password(client, mocker):
     res = client.post('/api/verify_email/%d/%s' % (user.id, user.email_verification_secret))
     assert res.status_code == 200
 
+    # Test again after email is verified.
+    res = client.post('/api/mint_token', headers={'Content-Type': 'application/json'},
+                      data=json.dumps(dict(email='e@mail.edu', password='pw')))
+    assert res.json['reason'] == 'Unrecognized credentials'
+    assert res.status_code == 401
+
     db.session.commit()
     db.drop_all()
