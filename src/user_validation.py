@@ -7,6 +7,8 @@ def validate_user(email, school):
   :returns: None if there is no error, or an error code if there is an error.
   >>> from models import School
   >>> validate_user('scroopy@noopers.edu', School('n', ['noopers.edu']))
+  >>> validate_user('scroopy@noopers.edu', None) == INVALID_EMAIL_DOMAIN
+  True
   >>> validate_user('scroopy@noopers.edu', school=School('n', [])) == INVALID_EMAIL_DOMAIN
   True
   >>> validate_user('scroopynoopers.edu', school=School('n', [])) == MALFORMED_EMAIL
