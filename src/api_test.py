@@ -154,5 +154,5 @@ def test_register_inquiry(client):
   assert res.status_code == 200
 
 def test_letsencrypt_response(client):
-  res = client.get('/.well-known/acme-challenge/KjAkaz_AWW5MheB8uYkrB9n-bYGcj0GIm-5WrjCAmck')
+  res = client.get('/.well-known/acme-challenge/H4oERc1FmLuXTD8FxyA1GgbHmlDFaiY5gGLq5mw9cMc')
   assert res.status_code == 200
