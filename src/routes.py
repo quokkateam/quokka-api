@@ -2,6 +2,7 @@ from flask_restplus import Api, Resource, fields
 
 import auth_util
 import email_client
+from integrations import slack
 from models import db, Token, User, School
 
 api = Api(version='0.1', title='Quokka API')
@@ -39,6 +40,25 @@ school_model = api.model('School', {
 schools_model = api.model('Schools', {
   'schools': fields.List(fields.Nested(school_model)),
 })
+
+
+@namespace.route('/inquire')
+class RegisterInquiry():
+  """Inquire about joining the Quokka Challenge as a school"""
+
+  @namespace.doc('register_inquiry')
+  def post(self):
+    email = api.payload.get('email')
+    school = api.payload.get('school')
+
+    # TODO: Add email validation and respond with 1201 if not valid
+
+    assert email
+    assert school
+
+    slack.log_inquiry(school, email)
+
+    return '', 200
 
 
 @namespace.route('/schools')
