@@ -37,13 +37,13 @@ def test_get_schools(client):
 def test_email_already_registered(client, mocker):
     mocker.patch('email_client.send_verification_email')
 
-    res = client.post('/api/users/', headers={'Content-Type': 'application/json'},
+    res = client.post('/api/users', headers={'Content-Type': 'application/json'},
                       data=json.dumps(dict(email='e@uos.edu', name='Scroopy', school='university-of-school', password='hunter2')))
     assert res.status_code == 201
 
     [user1] = User.query.all()
 
-    res = client.post('/api/users/', headers={'Content-Type': 'application/json'},
+    res = client.post('/api/users', headers={'Content-Type': 'application/json'},
                       data=json.dumps(dict(email='e@uos.edu', name='Noopers', school='university-of-school', password='hunter2')))
     assert res.status_code == 201
 
@@ -54,7 +54,7 @@ def test_email_already_registered(client, mocker):
 def test_create_user_flow(client, mocker):
     mocker.patch('email_client.send_verification_email')
 
-    res = client.post('/api/users/', headers={'Content-Type': 'application/json'},
+    res = client.post('/api/users', headers={'Content-Type': 'application/json'},
                       data=json.dumps(dict(email='e@uos.edu', name='Scroopy', school='university-of-school', password='hunter2')))
 
     [user] = User.query.all()
@@ -88,7 +88,7 @@ def test_create_user_flow(client, mocker):
 def test_create_user_no_password(client, mocker):
     mocker.patch('email_client.send_verification_email')
 
-    res = client.post('/api/users/', headers={'Content-Type': 'application/json'},
+    res = client.post('/api/users', headers={'Content-Type': 'application/json'},
                       data=json.dumps(dict(email='e@uos.edu', name='Scroopy', school='university-of-school')))
 
     [user] = User.query.all()
