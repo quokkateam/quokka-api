@@ -51,7 +51,7 @@ class GetSchools(Resource):
     return {'schools': school_data}
 
 
-@namespace.route('/users/')
+@namespace.route('/users')
 class CreateUser(Resource):
   """Lets you POST to add new users"""
 
