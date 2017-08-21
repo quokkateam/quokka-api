@@ -132,3 +132,22 @@ def test_create_user_no_password(client, mocker):
                       data=json.dumps(dict(email='e@uos.edu', password='pw')))
     assert res.json['reason'] == 'Unrecognized credentials'
     assert res.status_code == 401
+
+def test_register_inquiry(client):
+  # Ensure fails for no school
+  res = client.post('/api/inquire', headers={'Content-Type': 'application/json'},
+                    data=json.dumps(dict(email='e@uos.edu')))
+
+  assert res.status_code == 400
+
+  # Ensure fails for no email
+  res = client.post('/api/inquire', headers={'Content-Type': 'application/json'},
+                    data=json.dumps(dict(school='University of School')))
+
+  assert res.status_code == 400
+
+  # Ensure works for both email and school
+  res = client.post('/api/inquire', headers={'Content-Type': 'application/json'},
+                    data=json.dumps(dict(email='e@uos.edu', school='University of School')))
+
+  assert res.status_code == 200
