@@ -2,6 +2,7 @@ from flask_restplus import Api, Resource, fields
 
 import auth_util
 import email_client
+from integrations import slack
 import user_validation
 from models import db, Token, User, School
 
@@ -37,6 +38,22 @@ school_model = api.model('School', {
 schools_model = api.model('Schools', {
   'schools': fields.List(fields.Nested(school_model)),
 })
+
+
+@namespace.route('/inquire')
+class RegisterInquiry(Resource):
+  """Inquire about joining the Quokka Challenge as a school"""
+
+  @namespace.doc('register_inquiry')
+  def post(self):
+    email = api.payload.get('email')
+    school = api.payload.get('school')
+    
+    if not email or not school:
+      return 'Both email and school required for inquiry', 400
+
+    slack.log_inquiry(school, email)
+    return '', 200
 
 
 @namespace.route('/schools')
