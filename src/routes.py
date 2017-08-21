@@ -50,14 +50,11 @@ class RegisterInquiry():
   def post(self):
     email = api.payload.get('email')
     school = api.payload.get('school')
-
-    # TODO: Add email validation and respond with 1201 if not valid
-
-    assert email
-    assert school
+    
+    if not email or not school:
+      return 'Both email and school required for inquiry', 400
 
     slack.log_inquiry(school, email)
-
     return '', 200
 
 
