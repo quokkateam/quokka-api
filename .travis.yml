@@ -2,9 +2,9 @@ before_install:
 - sudo pip install pipenv
 - sudo pip install codecov
 install:
-- pipenv install --three
+- pipenv install --three --ignore-pipfile
 - pipenv run pip freeze > requirements.txt # For heroku
-- pipenv install --dev
+- pipenv install --dev --ignore-pipfile
 script:
 - make test
 - pipenv run pylint src/auth_util.py
