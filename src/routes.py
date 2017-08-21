@@ -40,10 +40,10 @@ schools_model = api.model('Schools', {
 })
 
 letsencrypt = api.namespace('.well-known')
-@letsencrypt.route('/acme-challenge/vpf920uAKIRfYjDeZNpQeqtKYuTpB3Sb5QP8Dlqb5uU')
+@letsencrypt.route('/acme-challenge/KjAkaz_AWW5MheB8uYkrB9n-bYGcj0GIm-5WrjCAmck')
 class LetsEncrypt(Resource):
   def get(self):
-    return 'vpf920uAKIRfYjDeZNpQeqtKYuTpB3Sb5QP8Dlqb5uU.EhpvvnfVgLYBmolxucvxugRb9BB9AKa5TTEZzlG8z6U', 200
+    return 'KjAkaz_AWW5MheB8uYkrB9n-bYGcj0GIm-5WrjCAmck.EhpvvnfVgLYBmolxucvxugRb9BB9AKa5TTEZzlG8z6U', 200
 
 
 @namespace.route('/inquire')
