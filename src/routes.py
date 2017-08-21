@@ -39,6 +39,12 @@ schools_model = api.model('Schools', {
   'schools': fields.List(fields.Nested(school_model)),
 })
 
+letsencrypt = api.namespace('.well-known')
+@letsencrypt.route('/acme-challenge/vpf920uAKIRfYjDeZNpQeqtKYuTpB3Sb5QP8Dlqb5uU')
+class LetsEncrypt(Resource):
+  def get(self):
+    return 'vpf920uAKIRfYjDeZNpQeqtKYuTpB3Sb5QP8Dlqb5uU.EhpvvnfVgLYBmolxucvxugRb9BB9AKa5TTEZzlG8z6U', 200
+
 
 @namespace.route('/inquire')
 class RegisterInquiry(Resource):
