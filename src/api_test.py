@@ -25,7 +25,8 @@ def run_around_tests():
   except:
     db.session.rollback()
   finally:
-    db.drop_all()
+    db.engine.execute("drop schema if exists public cascade")
+    db.engine.execute("create schema public")
 
 def test_get_schools(client):
     res = client.get('/api/schools')
