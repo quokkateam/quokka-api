@@ -152,7 +152,3 @@ def test_register_inquiry(client):
                     data=json.dumps(dict(email='e@uos.edu', school='University of School')))
 
   assert res.status_code == 200
-
-def test_letsencrypt_response(client):
-  res = client.get('/.well-known/acme-challenge/yynVH9P4k60MECCTNqNdQT6iccoCF71rME26bj8IU-M')
-  assert res.status_code == 200
