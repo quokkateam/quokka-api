@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "4c118b85cc1eec1c66c0fc42fbb4b4108123c46ea918eb735bdd896d4860a223"
+            "sha256": "d13d5fbc0dedda39e471ae536e467acee89dfb83c3388ed950c664fe1952398a"
         },
         "requires": {},
         "sources": [
@@ -16,14 +16,15 @@
         "bcrypt": "*",
         "flask-migrate": "*",
         "flask-restplus": "*",
+        "flask-script": "*",
         "flask-sqlalchemy": "*",
+        "flask-sslify": "*",
         "passlib": "*",
         "psycopg2": "*",
         "requests": "*"
     },
     "develop": {
         "coverage": "*",
-        "flask-script": "*",
         "pylint": "*",
         "pytest": "*",
         "pytest-flask": "*",
