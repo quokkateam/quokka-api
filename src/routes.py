@@ -3,18 +3,16 @@ from flask_restplus import Api, Resource, fields
 import auth_util
 import email_client
 from integrations import slack
+import user_validation
 from models import db, Token, User, School
 
 api = Api(version='0.1', title='Quokka API')
 namespace = api.namespace('api')
 
-user_model = api.model('User', {
-  'id': fields.Integer(readOnly=True, description='The user unique identifier'),
-  'email': fields.String(),
-})
-
 create_user_model = api.model('User', {
   'email': fields.String(required=True),
+  'name': fields.String(required=True),
+  'school': fields.String(required=True),
   'password': fields.String(required=False),
 })
 
@@ -76,21 +74,29 @@ class CreateUser(Resource):
 
   @namespace.doc('create_user')
   @namespace.expect(create_user_model, validate=True)
-  @namespace.marshal_with(user_model, code=201)
   def post(self):
     user_exists_already = User.query.filter_by(email=api.payload['email']).first() is not None
+    school = School.query.filter_by(slug=api.payload['school']).first()
+    user_validation_error = user_validation.validate_user(api.payload['email'], school)
+    if user_validation_error is not None:
+      return dict(error=user_validation_error), 400
     if 'password' in api.payload:
       hashed_pw = auth_util.hash_pw(api.payload['password'])
     else:
       hashed_pw = None
-    user = User(
-      hashed_pw=hashed_pw,
-      email=api.payload['email'])
-    if not user_exists_already:
+    if user_exists_already:
+      # TODO notify user
+      pass
+    else:
+      user = User(
+        hashed_pw=hashed_pw,
+        email=api.payload['email'],
+        name=api.payload['name'],
+        school=school)
       db.session.add(user)
       db.session.commit()
-    email_client.send_verification_email(user)
-    return user, 201
+      email_client.send_verification_email(user)
+    return '', 201
 
 
 # TODO add endpoint for resending user verification email

@@ -12,17 +12,20 @@ migrate = Migrate()
 class User(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   email = db.Column(db.String(120), index=True, unique=True)
+  name = db.Column(db.String(120), nullable=False)
   hashed_pw = db.Column(db.String(120), nullable=True)
   email_verified = db.Column(db.Boolean(), default=False)
   email_verification_secret = db.Column(db.String(64))
-  school_id = db.Column(db.Integer, db.ForeignKey('school.id'), index=True) # TODO make not nullable
+  school_id = db.Column(db.Integer, db.ForeignKey('school.id'), index=True, nullable=False)
   # TODO make a helper for querying all live users
   is_destroyed = db.Column(db.Boolean(), default=False)
   created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
   school = db.relationship('School', backref='users')
 
-  def __init__(self, email, hashed_pw=None):
+  def __init__(self, email, name, school, hashed_pw=None):
     self.email = email
+    self.name = name
+    self.school = school
     self.hashed_pw = hashed_pw
     self.email_verification_secret = auth_util.fresh_secret()
 
