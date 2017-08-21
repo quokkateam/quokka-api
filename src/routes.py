@@ -41,7 +41,7 @@ schools_model = api.model('Schools', {
 
 
 @namespace.route('/inquire')
-class RegisterInquiry():
+class RegisterInquiry(Resource):
   """Inquire about joining the Quokka Challenge as a school"""
 
   @namespace.doc('register_inquiry')
