@@ -1,5 +1,5 @@
 from flask_restplus import Api, Resource, fields
-
+from flask import make_response
 import auth_util
 import email_client
 from integrations import slack
@@ -40,10 +40,12 @@ schools_model = api.model('Schools', {
 })
 
 letsencrypt = api.namespace('.well-known')
-@letsencrypt.route('/acme-challenge/H4oERc1FmLuXTD8FxyA1GgbHmlDFaiY5gGLq5mw9cMc')
+@letsencrypt.route('/acme-challenge/yynVH9P4k60MECCTNqNdQT6iccoCF71rME26bj8IU-M')
 class LetsEncrypt(Resource):
   def get(self):
-    return 'H4oERc1FmLuXTD8FxyA1GgbHmlDFaiY5gGLq5mw9cMc.EhpvvnfVgLYBmolxucvxugRb9BB9AKa5TTEZzlG8z6U', 200, {'Content-Type': 'text/plain'}
+    resp = make_response('yynVH9P4k60MECCTNqNdQT6iccoCF71rME26bj8IU-M.EhpvvnfVgLYBmolxucvxugRb9BB9AKa5TTEZzlG8z6U')
+    resp.headers['content-type'] = 'text/plain'
+    return resp
 
 
 @namespace.route('/inquire')
