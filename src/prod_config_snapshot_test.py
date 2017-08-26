@@ -1,5 +1,5 @@
 import pytest
-import os
+
 
 def test_prod_config(snapshot, mocker):
     """
@@ -7,10 +7,9 @@ def test_prod_config(snapshot, mocker):
         $ pipenv run pytest --snapshot-update src/prod_config_snapshot_test.py
     """
     mocker.patch.dict('os.environ', {'ENV': 'prod'})
+
     with pytest.raises(AssertionError):
-        import config
-    mocker.patch.dict('os.environ',
-                      {'ENV': 'prod',
-                       'DATABASE_URL': 'the-db-url'})
+      mocker.patch.dict('os.environ', {'ENV': 'prod', 'DATABASE_URL': 'the-db-url'})
+
     import config
     snapshot.assert_match(config.get_pretty_config())

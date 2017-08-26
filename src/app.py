@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 
 
@@ -12,14 +13,13 @@ def create_app(config_file='config.py'):
   from routes import api
   api.init_app(app)
 
-  from flask_sslify import SSLify
-  SSLify(app)
+  if os.environ.get('ENV') == 'prod':
+    from flask_sslify import SSLify
+    SSLify(app)
 
   return app
 
 
 if __name__ == '__main__':
-  # Bind to PORT if defined, otherwise default to 5000.
-  import os
   port = int(os.environ.get('PORT', 5000))
   create_app().run(host='0.0.0.0', port=port)
