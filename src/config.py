@@ -20,11 +20,14 @@ class Config:
 
 class ProdConfig(Config):
   DEBUG = False
-  SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+
+  def __init__(self):
+    self.SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
 
 class DevConfig(Config):
-  SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+  def __init__(self):
+    self.SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
 
 class TestConfig(Config):
