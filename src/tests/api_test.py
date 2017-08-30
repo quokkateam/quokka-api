@@ -2,7 +2,6 @@ import json
 import pytest
 from src import app as quokka_app
 from src import db
-import src.integrations.email_client
 from src.models import User, School
 
 
@@ -38,9 +37,7 @@ def test_get_schools(client):
     name='University of School', slug='university-of-school', domains=['uos.edu'])])
 
 
-def test_email_already_registered(client, mocker):
-  mocker.patch('email_client.send_verification_email')
-
+def test_email_already_registered(client):
   res = client.post('/api/users', headers={'Content-Type': 'application/json'},
                     data=json.dumps(
                       dict(email='e@uos.edu', name='Scroopy', school='university-of-school', password='hunter2')))
@@ -58,9 +55,7 @@ def test_email_already_registered(client, mocker):
   assert user1 == user2
 
 
-def test_create_user_flow(client, mocker):
-  mocker.patch('email_client.send_verification_email')
-
+def test_create_user_flow(client):
   res = client.post('/api/users', headers={'Content-Type': 'application/json'},
                     data=json.dumps(
                       dict(email='e@uos.edu', name='Scroopy', school='university-of-school', password='hunter2')))
@@ -70,9 +65,6 @@ def test_create_user_flow(client, mocker):
   assert 'id=1' in str(user)
 
   assert res.status_code == 201
-
-  assert email_client.send_verification_email.called
-  (user,), _ = email_client.send_verification_email.call_args
 
   res = client.post('/api/mint_token', headers={'Content-Type': 'application/json'},
                     data=json.dumps(dict(email='e@uos.edu', password='wrong password')))
@@ -94,9 +86,7 @@ def test_create_user_flow(client, mocker):
   assert res.status_code == 201
 
 
-def test_create_user_no_password(client, mocker):
-  mocker.patch('email_client.send_verification_email')
-
+def test_create_user_no_password(client):
   res = client.post('/api/users', headers={'Content-Type': 'application/json'},
                     data=json.dumps(dict(email='e@uos.edu', name='Scroopy', school='university-of-school')))
 
@@ -105,9 +95,6 @@ def test_create_user_no_password(client, mocker):
   assert 'id=1' in str(user)
 
   assert res.status_code == 201
-
-  assert email_client.send_verification_email.called
-  (user,), _ = email_client.send_verification_email.call_args
 
   res = client.post('/api/mint_token', headers={'Content-Type': 'application/json'},
                     data=json.dumps(dict(email='e@uos.edu')))

@@ -1,7 +1,6 @@
 from flask_restplus import Resource, fields
 
 from src import dbi
-from src.integrations.email_client import send_verification_email
 from src.helpers import auth_util, user_validation
 from src.models import User, Token, School
 from src.routes import namespace, api
@@ -54,14 +53,12 @@ class CreateUser(Resource):
 
     # If user doesn't exist yet, create him
     if not user:
-      user = dbi.create(User, {
+      dbi.create(User, {
         'email': email,
         'name': api.payload['name'],
         'school_id': school.id,
         'hashed_pw': hashed_pw
       })
-
-      send_verification_email(user)
 
     return '', 201
 
