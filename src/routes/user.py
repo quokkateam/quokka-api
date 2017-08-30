@@ -56,7 +56,7 @@ class CreateUser(Resource):
       dbi.create(User, {
         'email': email,
         'name': api.payload['name'],
-        'school_id': school.id,
+        'school': school,
         'hashed_pw': hashed_pw
       })
 
@@ -109,6 +109,6 @@ class MintToken(Resource):
 
     secret = auth_util.fresh_secret()
 
-    token = dbi.create(Token, {'user_id': user.id, 'secret': secret})
+    token = dbi.create(Token, {'user': user, 'secret': secret})
 
     return dict(token=auth_util.serialize_token(token.id, secret)), 201
