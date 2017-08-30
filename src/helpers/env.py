@@ -1,6 +1,6 @@
 import os
 
-ENV = os.environ.get('ENV')
+ENV = os.environ.get('ENV') or 'dev'
 
 
 def env():
