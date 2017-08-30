@@ -1,13 +1,9 @@
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from sqlalchemy.dialects.postgresql import JSON
-from slugify import slugify
-
-import auth_util
 import datetime
+from slugify import slugify
+from sqlalchemy.dialects.postgresql import JSON
+from src import db
+from src.helpers import auth_util
 
-db = SQLAlchemy()
-migrate = Migrate()
 
 class User(db.Model):
   id = db.Column(db.Integer, primary_key=True)
@@ -17,7 +13,6 @@ class User(db.Model):
   email_verified = db.Column(db.Boolean(), default=False)
   email_verification_secret = db.Column(db.String(64))
   school_id = db.Column(db.Integer, db.ForeignKey('school.id'), index=True, nullable=False)
-  # TODO make a helper for querying all live users
   is_destroyed = db.Column(db.Boolean(), default=False)
   created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
   school = db.relationship('School', backref='users')

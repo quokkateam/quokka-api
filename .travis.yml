@@ -7,7 +7,7 @@ install:
 - pipenv install --dev --ignore-pipfile
 script:
 - make test
-- pipenv run pylint src/auth_util.py
+- pipenv run pylint src/helpers/auth_util.py
 after_success:
 - codecov
 deploy:

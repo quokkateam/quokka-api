@@ -1,11 +1,9 @@
-# See https://github.com/quokkateam/quokka/blob/3af7fec346c63dec27c11a8c302de63841c3182e/src/utils/StatusCodes.js#L2
-INVALID_EMAIL_DOMAIN = 1200
-MALFORMED_EMAIL = 1201
+from src.helpers.error_codes import MALFORMED_EMAIL, INVALID_EMAIL_DOMAIN
 
 def validate_user(email, school):
   """
   :returns: None if there is no error, or an error code if there is an error.
-  >>> from models import School
+  >>> from src.models import School
   >>> validate_user('scroopy@noopers.edu', School('n', ['noopers.edu']))
   >>> validate_user('scroopy@noopers.edu', None) == INVALID_EMAIL_DOMAIN
   True

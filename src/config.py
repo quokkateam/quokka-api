@@ -1,25 +1,45 @@
+import inspect
+import json
 import os
 import subprocess
+from src.helpers.env import env
 
-if os.environ.get('ENV') == 'prod':
-    assert 'DATABASE_URL' in os.environ
-    DEBUG = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
-else:
-    if 'TEST_DB_URL' in os.environ:
-        SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DB_URL')
+
+class Config:
+  DEBUG = True
+  SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+  def as_dict(self):
+    attrs = inspect.getmembers(self, lambda a: not(inspect.isroutine(a)))
+    attrs = [a for a in attrs if not (a[0].startswith('__') and a[0].endswith('__'))]
+    return dict(attrs)
+
+  def as_json_string(self):
+    return json.dumps(self.as_dict(), sort_keys=True, indent=2)
+
+
+class ProdConfig(Config):
+  DEBUG = False
+
+  def __init__(self):
+    self.SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+
+
+class DevConfig(Config):
+  def __init__(self):
+    self.SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+
+
+class TestConfig(Config):
+  def __init__(self):
+    if os.environ.get('TEST_DB_URL'):
+      self.SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DB_URL')
     else:
-        SQLALCHEMY_DATABASE_URI = subprocess.check_output(
-                "heroku config --app quokka-api-test-db | grep DATABASE_URL | awk '{print $2}'",
-                shell=True).decode('utf-8')
-    DEBUG = True
+      self.SQLALCHEMY_DATABASE_URI = subprocess.check_output(
+        "heroku config --app quokka-api-test-db | grep DATABASE_URL | awk '{print $2}'",
+        shell=True).decode('utf-8')
 
-SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-def get_pretty_config():
-    import json
-    return json.dumps(
-        {k: v
-         for (k, v) in globals().items() if k.isupper()},
-        sort_keys=True,
-        indent=2)
+def get_config():
+  config_class = globals().get('{}Config'.format(env().capitalize()))
+  return config_class()
