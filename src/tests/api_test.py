@@ -2,7 +2,7 @@ import json
 import pytest
 from src import app as quokka_app
 from src import db
-from src.integrations import email_client
+import src.integrations.email_client
 from src.models import User, School
 
 
