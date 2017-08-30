@@ -19,6 +19,7 @@ import os
 from passlib.hash import bcrypt
 from passlib.hash import hex_sha512
 
+
 def hash_pw(password):
   # type: (str) -> bytes
   """
@@ -26,6 +27,7 @@ def hash_pw(password):
   :returns: The hashed password.
   """
   return bcrypt.using(rounds=10).hash(hex_sha512.hash(password))
+
 
 def verify_pw(hashed_password, password):
   # type (bytes, str) -> bool
@@ -45,6 +47,7 @@ def verify_pw(hashed_password, password):
   except ValueError:
     return False
 
+
 def fresh_secret():
   # type () -> str
   """
@@ -54,17 +57,20 @@ def fresh_secret():
   """
   return base64.urlsafe_b64encode(os.urandom(32)).decode('utf-8')
 
+
 def verify_secret(secret1, secret2):
   """
   :returns: True if secret1 == secret2. Uses a constant time string compare.
   """
   return hmac.compare_digest(secret1, secret2)
 
+
 def serialize_token(token_id, secret):
   """
   :returns: <token_id>%<secret>
   """
   return str(token_id) + '%' + secret
+
 
 def unserialize_token(token):
   """

@@ -1,13 +1,11 @@
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from sqlalchemy.dialects.postgresql import JSON
-from slugify import slugify
-
-import auth_util
 import datetime
 
-db = SQLAlchemy()
-migrate = Migrate()
+from slugify import slugify
+from sqlalchemy.dialects.postgresql import JSON
+
+from src import db
+from src.helpers import auth_util
+
 
 class User(db.Model):
   id = db.Column(db.Integer, primary_key=True)

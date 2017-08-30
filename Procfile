@@ -1,2 +1,2 @@
-web: python src/app.py
-release: python src/manage.py db upgrade
+web: python app.py
+release: python manage.py db upgrade
