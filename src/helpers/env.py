@@ -1,9 +1,6 @@
 import os
 
-environment = os.environ.get('ENV')
-assert environment
-
-ENV = environment.lower()
+ENV = os.environ.get('ENV')
 
 
 def env():
