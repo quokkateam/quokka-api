@@ -1,8 +1,6 @@
 import datetime
-
 from slugify import slugify
 from sqlalchemy.dialects.postgresql import JSON
-
 from src import db
 from src.helpers import auth_util
 
