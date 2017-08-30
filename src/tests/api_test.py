@@ -2,7 +2,7 @@ import json
 import pytest
 from src import app as quokka_app
 from src import db
-from src.integrations.email import send_verification_email
+import src.integrations.email as em
 from src.models import User, School
 
 
@@ -39,7 +39,7 @@ def test_get_schools(client):
 
 
 def test_email_already_registered(client, mocker):
-  mocker.patch('send_verification_email')
+  mocker.patch('em.send_verification_email')
 
   res = client.post('/api/users', headers={'Content-Type': 'application/json'},
                     data=json.dumps(
@@ -59,7 +59,7 @@ def test_email_already_registered(client, mocker):
 
 
 def test_create_user_flow(client, mocker):
-  mocker.patch('send_verification_email')
+  mocker.patch('em.send_verification_email')
 
   res = client.post('/api/users', headers={'Content-Type': 'application/json'},
                     data=json.dumps(
@@ -71,8 +71,8 @@ def test_create_user_flow(client, mocker):
 
   assert res.status_code == 201
 
-  assert send_verification_email.called
-  (user,), _ = send_verification_email.call_args
+  assert em.send_verification_email.called
+  (user,), _ = em.send_verification_email.call_args
 
   res = client.post('/api/mint_token', headers={'Content-Type': 'application/json'},
                     data=json.dumps(dict(email='e@uos.edu', password='wrong password')))
@@ -95,7 +95,7 @@ def test_create_user_flow(client, mocker):
 
 
 def test_create_user_no_password(client, mocker):
-  mocker.patch('send_verification_email')
+  mocker.patch('em.send_verification_email')
 
   res = client.post('/api/users', headers={'Content-Type': 'application/json'},
                     data=json.dumps(dict(email='e@uos.edu', name='Scroopy', school='university-of-school')))
@@ -106,8 +106,8 @@ def test_create_user_no_password(client, mocker):
 
   assert res.status_code == 201
 
-  assert send_verification_email.called
-  (user,), _ = send_verification_email.call_args
+  assert em.send_verification_email.called
+  (user,), _ = em.send_verification_email.call_args
 
   res = client.post('/api/mint_token', headers={'Content-Type': 'application/json'},
                     data=json.dumps(dict(email='e@uos.edu')))
