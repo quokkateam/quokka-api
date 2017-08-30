@@ -1,8 +1,6 @@
 import json
 
 
-# Todo: fix this
-
 def test_prod_config(snapshot, mocker):
     """
     Use this command to update snapshot:
