@@ -2,11 +2,11 @@ import logging
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from src.helpers.definitions import configs_dir
-from src.helpers.env import env, is_prod
+from src.config import get_config
+from src.helpers.env import is_prod
 
 app = Flask(__name__)
-app.config.from_pyfile('{}/{}.py'.format(configs_dir, env()))
+app.config.from_object(get_config())
 
 app.logger.addHandler(logging.FileHandler('main.log'))
 app.logger.setLevel(logging.INFO)

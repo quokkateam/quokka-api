@@ -9,6 +9,6 @@ snapshots = Snapshot()
 
 snapshots['test_prod_config 1'] = '''{
   "DEBUG": false, 
-  "SQLALCHEMY_DATABASE_URI": "the-db-url", 
+  "SQLALCHEMY_DATABASE_URI": "postgresql://quokka:quokka@localhost/quokka?user=quokka", 
   "SQLALCHEMY_TRACK_MODIFICATIONS": false
 }'''
