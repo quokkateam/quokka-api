@@ -111,4 +111,17 @@ class MintToken(Resource):
 
     token = dbi.create(Token, {'user': user, 'secret': secret})
 
-    return {}, 201, {'quokka-user': auth_util.serialize_token(token.id, secret)}
+    school = user.school
+
+    response_data = {
+      'user': {
+        'name': user.name,
+        'email': user.email
+      },
+      'school': {
+        'name': school.name,
+        'slug': school.slug
+      }
+    }
+
+    return response_data, 201, {'quokka-user': auth_util.serialize_token(token.id, secret)}
