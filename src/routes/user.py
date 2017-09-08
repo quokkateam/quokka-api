@@ -4,7 +4,6 @@ from src import dbi
 from src.helpers import auth_util, user_validation
 from src.models import User, Token, School
 from src.routes import namespace, api
-from flask import make_response
 
 
 create_user_model = api.model('User', {
