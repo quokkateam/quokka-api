@@ -71,18 +71,20 @@ def test_create_user_flow(client):
   assert res.json['reason'] == 'Unrecognized credentials'
   assert res.status_code == 401
 
+  # res = client.post('/api/mint_token', headers={'Content-Type': 'application/json'},
+  #                   data=json.dumps(dict(email='e@uos.edu', password='hunter2')))
+  # assert res.json['reason'] == 'email not verified'
+  # assert res.status_code == 401
+
+  # res = client.post('/api/verify_email/%d/%s' % (user.id, user.email_verification_secret))
+  # assert res.status_code == 200
+
   res = client.post('/api/mint_token', headers={'Content-Type': 'application/json'},
                     data=json.dumps(dict(email='e@uos.edu', password='hunter2')))
-  assert res.json['reason'] == 'email not verified'
-  assert res.status_code == 401
 
-  res = client.post('/api/verify_email/%d/%s' % (user.id, user.email_verification_secret))
-  assert res.status_code == 200
-
-  res = client.post('/api/mint_token', headers={'Content-Type': 'application/json'},
-                    data=json.dumps(dict(email='e@uos.edu', password='hunter2')))
-
-  assert 'token' in res.json
+  assert 'user' in res.json
+  assert 'school' in res.json
+  assert 'quokka-user' in res.headers
   assert res.status_code == 201
 
 
