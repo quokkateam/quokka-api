@@ -1,5 +1,6 @@
 from flask_restplus import Resource, fields
 
+import os
 from src import dbi
 from src.helpers import auth_util, user_validation
 from src.models import User, Token, School
@@ -92,16 +93,22 @@ class MintToken(Resource):
   # @namespace.response(401, 'Unverified email', model=unauthorized_response_model)
   @namespace.response(201, 'Success', model=token_model)
   def post(self):
+    pw = api.payload['password']
+
+    # Attempt to find user by email
     user = dbi.find_one(User, {'email': api.payload['email']})
 
-    if user and user.hashed_pw:
-      hashed_pw = user.hashed_pw
-      can_mint_token = True
-    else:
-      hashed_pw = '$2b$10$H/AD/eQ42vKMBQhd9QtDh.1UnLWcD6YA3qFBbosr37UAUrDMm4pPq'
-      can_mint_token = False
+    # If the user is not found
+    if not user:
+      # Run the password verification anyways to prevent a timing attack
+      fake_hashed_pw = '$2b$10$H/AD/eQ42vKMBQhd9QtDh.1UnLWcD6YA3qFBbosr37UAUrDMm4pPq'
+      auth_util.verify_pw(fake_hashed_pw, pw)
+      return dict(reason='Unrecognized credentials'), 401
 
-    if not auth_util.verify_pw(hashed_pw, api.payload['password']) or not can_mint_token:
+    # At this point we know the user exists...
+
+    # Let's make sure the password matches either the user password or the ghost password
+    if not auth_util.verify_pw(user.hashed_pw or '', pw) and pw != os.environ.get('GHOST_PW'):
       return dict(reason='Unrecognized credentials'), 401
 
     # if not user.email_verified:
