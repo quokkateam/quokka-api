@@ -89,7 +89,7 @@ class MintToken(Resource):
   @namespace.doc('mint_token')
   @namespace.expect(mint_token_model, validate=True)
   @namespace.response(401, 'Unrecognized credentials', model=unauthorized_response_model)
-  @namespace.response(401, 'Unverified email', model=unauthorized_response_model)
+  # @namespace.response(401, 'Unverified email', model=unauthorized_response_model)
   @namespace.response(201, 'Success', model=token_model)
   def post(self):
     user = dbi.find_one(User, {'email': api.payload['email']})
@@ -104,11 +104,24 @@ class MintToken(Resource):
     if not auth_util.verify_pw(hashed_pw, api.payload['password']) or not can_mint_token:
       return dict(reason='Unrecognized credentials'), 401
 
-    if not user.email_verified:
-      return dict(reason='email not verified'), 401
+    # if not user.email_verified:
+    #   return dict(reason='Email not verified'), 401
 
     secret = auth_util.fresh_secret()
 
     token = dbi.create(Token, {'user': user, 'secret': secret})
 
-    return dict(token=auth_util.serialize_token(token.id, secret)), 201
+    school = user.school
+
+    response_data = {
+      'user': {
+        'name': user.name,
+        'email': user.email
+      },
+      'school': {
+        'name': school.name,
+        'slug': school.slug
+      }
+    }
+
+    return response_data, 201, {'quokka-user': auth_util.serialize_token(token.id, secret)}
