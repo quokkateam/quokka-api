@@ -1,7 +1,7 @@
 from flask_restplus import Resource
 from src.models import Challenge, User
 from src.routes import namespace, api
-from src.routes.deco import set_current_user
+from src.routes.decos import set_current_user
 from src import dbi
 
 
