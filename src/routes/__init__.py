@@ -7,3 +7,4 @@ namespace = api.namespace('api')
 from src.routes.user import *
 from src.routes.school import *
 from src.routes.inquiry import *
+from src.routes.challenge import *
