@@ -4,6 +4,8 @@ from src.dbi import find_one
 from src.models import Token
 
 
+# TODO: Figure out how to implement this without the request responding with null...
+# For now just using user_helper.current_user
 def set_current_user(func):
   def deco(*args, **kwargs):
     user_token = request.cookies.get('quokka-user')
@@ -17,7 +19,7 @@ def set_current_user(func):
       return '', 403
 
     token = find_one(Token, {
-      'id': token_info['id'],
+      'id': token_info['token_id'],
       'secret': token_info['secret']
     })
 

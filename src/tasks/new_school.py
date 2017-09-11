@@ -2,7 +2,7 @@ import sys
 from argparse import ArgumentParser
 from src.models import School, Challenge
 from src.dbi import create, find_one, find_all
-from src.challenges import challenges
+from src.challenges import universal_challenge_info
 from operator import itemgetter
 from datetime import datetime, timedelta
 
@@ -33,7 +33,7 @@ if __name__ == '__main__':
     print 'Creating school, {}...'.format(args.name)
     school = create(School, {'name': args.name, 'domains': domains})
 
-  sorted_challenges = sorted(challenges.values(), key=itemgetter('defaultIndex'))
+  sorted_challenges = sorted(universal_challenge_info.values(), key=itemgetter('defaultIndex'))
 
   challenges = find_all(Challenge, {'school': school})
 

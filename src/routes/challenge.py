@@ -1,8 +1,8 @@
 from flask_restplus import Resource
-from src.models import Challenge, User
-from src.routes import namespace, api
-from src.routes.decos import set_current_user
-from src import dbi
+from src.routes import namespace
+from src.helpers.user_helper import current_user
+from operator import attrgetter
+from src.challenges import universal_challenge_info
 
 
 @namespace.route('/challenge/<int:week_num>')
@@ -10,7 +10,69 @@ class GetChallenge(Resource):
   """Fetch data for a school's challenge page by week number"""
 
   @namespace.doc('get_challenge')
-  @set_current_user
-  def get(self, user=None):
-    import code; code.interact(local=locals())
-    return '', 200
+  def get(self, week_num):
+    user = current_user()
+
+    if not user:
+      return '', 403
+
+    school = user.school
+    week_index = week_num - 1
+
+    # Get challenges for school, sorted by date
+    challenges = sorted(school.challenges, key=attrgetter('start_date'))
+
+    # Find the challenge requested by week index
+    challenge = challenges[week_index]
+
+    if week_index == 0:
+      prev_habit = None
+      next_habit = {
+        'weekNum': 2,
+        'name': challenges[1].name
+      }
+    elif week_index == len(challenges) - 1:
+      prev_habit = {
+        'weekNum': week_index,
+        'name': challenges[week_index - 1].name
+      }
+      next_habit = None
+    else:
+      prev_habit = {
+        'weekNum': week_index,
+        'name': challenges[week_index - 1].name
+      }
+      next_habit = {
+        'weekNum': week_num + 1,
+        'name': challenges[week_num].name
+      }
+
+    universal_challenge = universal_challenge_info.get(challenge.slug)
+
+    prizes = challenge.prizes
+
+    resp = {
+      'habit': {
+        'name': challenge.name,
+        'icon': universal_challenge['icon'],
+        'dates': {
+          # 'start': challenge.start_date,
+          # 'end': challenge.end_date
+          'start': 'Oct 15',
+          'end': 'Oct 22'
+        }
+      },
+      'overview': universal_challenge['overview'],
+      'challenge': {
+        'text': challenge.text,
+        'points': challenge.points
+      },
+      'prizes': [],  # prizes once you format them properly
+      'suggestions': challenge.suggestions,
+      'adjHabits': {
+        'prev': prev_habit,
+        'next': next_habit
+      }
+    }
+
+    return resp
