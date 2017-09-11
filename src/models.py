@@ -51,7 +51,7 @@ class School(db.Model):
   is_destroyed = db.Column(db.Boolean(), default=False)
   created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
-  def __init__(self, name, domains):
+  def __init__(self, name, domains=[]):
     self.name = name
     self.slug = slugify(name, separator='-', to_lower=True)
     self.domains = domains
@@ -63,19 +63,20 @@ class School(db.Model):
 class Challenge(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String(120), nullable=False)
-  slug = db.Column(db.String(120), index=True, unique=True, nullable=False)
+  slug = db.Column(db.String(120), index=True, nullable=False)
   school_id = db.Column(db.Integer, db.ForeignKey('school.id'), index=True, nullable=False)
-  school = db.relationship('school', backref='challenges')
+  school = db.relationship('School', backref='challenges')
   start_date = db.Column(db.DateTime)
   end_date = db.Column(db.DateTime)
   text = db.Column(db.Text)
-  points = db.Column(db.Integer)
+  points = db.Column(db.Integer, default=0)
   suggestions = db.Column(JSON, default=[])
   is_destroyed = db.Column(db.Boolean(), default=False)
   created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
-  def __init__(self, name, school, start_date=None, end_date=None, text=None, points=None, suggestions=[]):
+  def __init__(self, name, school, start_date=None, end_date=None, text=None, points=0, suggestions=[]):
     self.name = name
+    self.slug = slugify(name, separator='-', to_lower=True)
     self.school = school
     self.start_date = start_date
     self.end_date = end_date
@@ -88,30 +89,10 @@ class Challenge(db.Model):
       self.id, self.name, self.slug, self.school_id, self.start_date, self.end_date, self.text, self.points, self.suggestions, self.is_destroyed, self.created_at)
 
 
-class Prize(db.Model):
-  id = db.Column(db.Integer, primary_key=True)
-  challenge_id = db.Column(db.Integer, db.ForeignKey('challenge.id'), index=True, nullable=False)
-  challenge = db.relationship('Challenge', backref='prizes')
-  sponsor_id = db.Column(db.Integer, db.ForeignKey('sponsor.id'), index=True, nullable=False)
-  sponsor = db.relationship('Sponsor', backref='prizes')
-  name = db.Column(db.String(120), nullable=False)
-  is_destroyed = db.Column(db.Boolean(), default=False)
-  created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-
-  def __init__(self, challenge, sponsor, name):
-    self.challenge = challenge
-    self.sponsor = sponsor
-    self.name = name
-
-  def __repr__(self):
-    return '<Sponsor id={}, challenge_id={}, sponsor_id={}, name={}, is_destroyed={}, created_at={}>'.format(
-      self.id, self.challenge_id, self.sponsor_id, self.name, self.is_destroyed, self.created_at)
-
-
 class Sponsor(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   school_id = db.Column(db.Integer, db.ForeignKey('school.id'), index=True, nullable=False)
-  school = db.relationship('school', backref='sponsors')
+  school = db.relationship('School', backref='sponsors')
   name = db.Column(db.String(120), nullable=False)
   logo = db.Column(db.String(240))
   created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
@@ -124,3 +105,23 @@ class Sponsor(db.Model):
   def __repr__(self):
     return '<Sponsor id={}, school_id={}, name={}, logo={}, created_at={}>'.format(
       self.id, self.school_id, self.name, self.logo, self.created_at)
+
+
+class Prize(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  challenge_id = db.Column(db.Integer, db.ForeignKey('challenge.id'), index=True, nullable=False)
+  challenge = db.relationship('Challenge', backref='prizes')
+  sponsor_id = db.Column(db.Integer, db.ForeignKey('sponsor.id'), index=True, nullable=False)
+  sponsor = db.relationship('Sponsor', backref='prizes')
+  name = db.Column(db.String(240), nullable=False)
+  is_destroyed = db.Column(db.Boolean(), default=False)
+  created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+
+  def __init__(self, challenge, sponsor, name):
+    self.challenge = challenge
+    self.sponsor = sponsor
+    self.name = name
+
+  def __repr__(self):
+    return '<Sponsor id={}, challenge_id={}, sponsor_id={}, name={}, is_destroyed={}, created_at={}>'.format(
+      self.id, self.challenge_id, self.sponsor_id, self.name, self.is_destroyed, self.created_at)
