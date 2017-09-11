@@ -13,9 +13,9 @@ class User(db.Model):
   email_verified = db.Column(db.Boolean(), default=False)
   email_verification_secret = db.Column(db.String(64))
   school_id = db.Column(db.Integer, db.ForeignKey('school.id'), index=True, nullable=False)
+  school = db.relationship('School', backref='users')
   is_destroyed = db.Column(db.Boolean(), default=False)
   created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-  school = db.relationship('School', backref='users')
 
   def __init__(self, email, name, school, hashed_pw=None):
     self.email = email
@@ -25,8 +25,8 @@ class User(db.Model):
     self.email_verification_secret = auth_util.fresh_secret()
 
   def __repr__(self):
-    return '<User id={}, email={}, email_verified={}>'.format(
-      self.id, self.email, self.email_verified)
+    return '<User id={}, email={}, name={}, email_verified={}, school_id={}, is_destroyed={}, created_at={}>'.format(
+      self.id, self.email, self.name, self.email_verified, self.school_id, self.is_destroyed, self.created_at)
 
 
 class Token(db.Model):
@@ -40,7 +40,7 @@ class Token(db.Model):
     self.secret = secret
 
   def __repr__(self):
-    return '<Token %r>' % self.id
+    return '<Token id={}, user_id={}>'.format(self.id, self.user_id)
 
 
 class School(db.Model):
@@ -57,7 +57,8 @@ class School(db.Model):
     self.domains = domains
 
   def __repr__(self):
-    return '<School id={}, name={}, slug={}, domains={}>'.format(self.id, self.name, self.slug, self.domains)
+    return '<School id={}, name={}, slug={}, domains={}, is_destroyed={}, created_at={}>'.format(
+      self.id, self.name, self.slug, self.domains, self.is_destroyed, self.created_at)
 
 
 class Challenge(db.Model):
