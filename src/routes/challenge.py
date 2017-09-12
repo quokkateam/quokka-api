@@ -3,6 +3,7 @@ from src.routes import namespace
 from src.helpers.user_helper import current_user
 from operator import attrgetter
 from src.challenges import universal_challenge_info
+from datetime import datetime
 
 
 @namespace.route('/challenge/<int:week_num>')
@@ -56,10 +57,8 @@ class GetChallenge(Resource):
         'name': challenge.name,
         'icon': universal_challenge['icon'],
         'dates': {
-          # 'start': challenge.start_date,
-          # 'end': challenge.end_date
-          'start': 'Oct 15',
-          'end': 'Oct 22'
+          'start': datetime.strftime(challenge.start_date, '%m/%d/%Y'),
+          'end': datetime.strftime(challenge.end_date, '%m/%d/%Y')
         }
       },
       'overview': universal_challenge['overview'],
