@@ -55,6 +55,7 @@ class GetChallenge(Resource):
     resp = {
       'habit': {
         'name': challenge.name,
+        'slug': challenge.slug,
         'icon': universal_challenge['icon'],
         'dates': {
           'start': datetime.strftime(challenge.start_date, '%m/%d/%Y'),
