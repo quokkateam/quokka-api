@@ -102,6 +102,11 @@ class UpdateChallengeSection(Resource):
   @namespace.doc('update_challenge_section')
   @namespace.expect(update_challenge_section_model)
   def put(self):
+    user = current_user()
+
+    if not user or not user.is_admin:
+      return '', 403
+
     challenge = dbi.find_one(Challenge, {'id': api.payload['id']})
 
     if not challenge:
@@ -123,6 +128,11 @@ class UpdateSuggestions(Resource):
   @namespace.doc('update_suggestions')
   @namespace.expect(update_suggestions_model)
   def put(self):
+    user = current_user()
+
+    if not user or not user.is_admin:
+      return '', 403
+
     challenge = dbi.find_one(Challenge, {'id': api.payload['id']})
 
     if not challenge:
