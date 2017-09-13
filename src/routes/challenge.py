@@ -72,7 +72,9 @@ class GetChallenge(Resource):
       'adjHabits': {
         'prev': prev_habit,
         'next': next_habit
-      }
+      },
+      'links': universal_challenge['links'],
+      'extraInfo': universal_challenge['extra_info']
     }
 
     return resp
