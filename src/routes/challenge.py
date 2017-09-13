@@ -52,6 +52,7 @@ class GetChallenge(Resource):
     universal_challenge = universal_challenge_info.get(challenge.slug)
 
     resp = {
+      'id': challenge.id,
       'habit': {
         'name': challenge.name,
         'slug': challenge.slug,
