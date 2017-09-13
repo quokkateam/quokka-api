@@ -62,6 +62,12 @@ class School(db.Model):
     return '<School id={}, name={}, slug={}, domains={}, is_destroyed={}, created_at={}>'.format(
       self.id, self.name, self.slug, self.domains, self.is_destroyed, self.created_at)
 
+  def active_users(self):
+    return [u for u in self.users if not u.is_destroyed]
+
+  def active_challenges(self):
+    return [c for c in self.challenges if not c.is_destroyed]
+
 
 class Challenge(db.Model):
   id = db.Column(db.Integer, primary_key=True)
@@ -91,6 +97,9 @@ class Challenge(db.Model):
     return '<Challenge id={}, name={}, slug={}, school_id={}, start_date={}, end_date={}, text={}, points={}, suggestions={}, is_destroyed={}, created_at={}>'.format(
       self.id, self.name, self.slug, self.school_id, self.start_date, self.end_date, self.text, self.points, self.suggestions, self.is_destroyed, self.created_at)
 
+  def active_prizes(self):
+    return [p for p in self.prizes if not p.is_destroyed]
+
 
 class Sponsor(db.Model):
   id = db.Column(db.Integer, primary_key=True)
@@ -98,16 +107,21 @@ class Sponsor(db.Model):
   school = db.relationship('School', backref='sponsors')
   name = db.Column(db.String(120), nullable=False)
   logo = db.Column(db.String(240))
+  url = db.Column(db.String(240))
   created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
-  def __init__(self, school, name, logo=None):
+  def __init__(self, school, name, logo=None, url=None):
     self.school = school
     self.name = name
     self.logo = logo
+    self.url = url
 
   def __repr__(self):
-    return '<Sponsor id={}, school_id={}, name={}, logo={}, created_at={}>'.format(
-      self.id, self.school_id, self.name, self.logo, self.created_at)
+    return '<Sponsor id={}, school_id={}, name={}, logo={}, url={}, created_at={}>'.format(
+      self.id, self.school_id, self.name, self.logo, self.url, self.created_at)
+
+  def active_prizes(self):
+    return [p for p in self.prizes if not p.is_destroyed]
 
 
 class Prize(db.Model):

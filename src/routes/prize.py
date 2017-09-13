@@ -1,23 +1,20 @@
 from flask_restplus import Resource, fields
+from flask import request
 from src.models import Prize, Challenge, Sponsor
-from src.helpers.challenge_helper import format_prizes
+from src.helpers.prize_helper import format_prizes
 from src.routes import namespace, api
 from src import dbi
 
 create_prize_model = api.model('Prize', {
-  'challengeId': fields.Integer(),
-  'sponsorId': fields.Integer(),
-  'name': fields.String()
+  'challengeId': fields.Integer(required=True),
+  'sponsorId': fields.Integer(required=True),
+  'name': fields.String(required=True)
 })
 
 update_prize_model = api.model('Prize', {
-  'id': fields.Integer(),
-  'sponsorId': fields.Integer(),
-  'name': fields.String()
-})
-
-destroy_prize_model = api.model('Prize', {
-  'id': fields.Integer()
+  'id': fields.Integer(required=True),
+  'sponsorId': fields.Integer(required=True),
+  'name': fields.String(required=True)
 })
 
 
@@ -25,7 +22,7 @@ destroy_prize_model = api.model('Prize', {
 class RestfulPrize(Resource):
 
   @namespace.doc('create_prize')
-  @namespace.marshal_with(create_prize_model)
+  @namespace.expect(create_prize_model, validate=True)
   def post(self):
     challenge = dbi.find_one(Challenge, {'id': api.payload['challengeId']})
 
@@ -43,12 +40,10 @@ class RestfulPrize(Resource):
       'name': api.payload['name']
     })
 
-    prizes = format_prizes(challenge.prizes)
-
-    return prizes, 201
+    return format_prizes(challenge.active_prizes())
 
   @namespace.doc('update_prize')
-  @namespace.marshal_with(update_prize_model)
+  @namespace.expect(update_prize_model, validate=True)
   def put(self):
     prize = dbi.find_one(Prize, {'id': api.payload['id']})
 
@@ -65,21 +60,21 @@ class RestfulPrize(Resource):
       'name': api.payload['name']
     })
 
-    prizes = format_prizes(prize.challenge.prizes)
+    prizes = format_prizes(prize.challenge.active_prizes())
 
     return prizes, 200
 
 
   @namespace.doc('destroy_prize')
-  @namespace.marshal_with(destroy_prize_model)
   def delete(self):
-    prize = dbi.find_one(Prize, {'id': api.payload['id']})
+    args = dict(request.args.items())
+    prize = dbi.find_one(Prize, {'id': args.get('id')})
 
     if not prize:
       return 'Can\'t find prize to destroy :/', 500
 
     dbi.destroy(prize)
 
-    prizes = format_prizes(prize.challenge.prizes)
+    prizes = format_prizes(prize.challenge.active_prizes())
 
     return prizes, 200

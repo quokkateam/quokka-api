@@ -20,4 +20,7 @@ def format_prizes(prizes):
       }
     })
 
+  formatted_prizes.sort(key=lambda e: e['prize']['id'])
+
   return formatted_prizes
+

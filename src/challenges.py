@@ -9,6 +9,7 @@ universal_challenge_info = {
         'content': ''
       }
     ],
+    'links': [],
     'extra_info': ''
   },
   'good-deeds': {
@@ -21,6 +22,7 @@ universal_challenge_info = {
         'content': ''
       }
     ],
+    'links': [],
     'extra_info': ''
   },
   'sleep': {
@@ -33,6 +35,7 @@ universal_challenge_info = {
         'content': ''
       }
     ],
+    'links': [],
     'extra_info': ''
   },
   'healthy-eating': {
@@ -45,6 +48,7 @@ universal_challenge_info = {
         'content': ''
       }
     ],
+    'links': [],
     'extra_info': ''
   },
   'journaling': {
@@ -57,6 +61,7 @@ universal_challenge_info = {
         'content': ''
       }
     ],
+    'links': [],
     'extra_info': ''
   },
   'exercise': {
@@ -126,6 +131,7 @@ universal_challenge_info = {
         'content': ''
       }
     ],
+    'links': [],
     'extra_info': ''
   },
   'positivity-mindfulness': {
@@ -138,6 +144,7 @@ universal_challenge_info = {
         'content': ''
       }
     ],
+    'links': [],
     'extra_info': ''
   }
 }

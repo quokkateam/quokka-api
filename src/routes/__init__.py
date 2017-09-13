@@ -8,3 +8,5 @@ from src.routes.user import *
 from src.routes.school import *
 from src.routes.inquiry import *
 from src.routes.challenge import *
+from src.routes.prize import *
+from src.routes.sponsor import *
