@@ -1,6 +1,7 @@
 from flask_restplus import Resource
 from src.routes import namespace
 from src.helpers.user_helper import current_user
+from src.helpers.challenge_helper import format_prizes
 from operator import attrgetter
 from src.challenges import universal_challenge_info
 from datetime import datetime
@@ -50,8 +51,6 @@ class GetChallenge(Resource):
 
     universal_challenge = universal_challenge_info.get(challenge.slug)
 
-    prizes = challenge.prizes
-
     resp = {
       'habit': {
         'name': challenge.name,
@@ -67,7 +66,7 @@ class GetChallenge(Resource):
         'text': challenge.text,
         'points': challenge.points
       },
-      'prizes': [],  # prizes once you format them properly
+      'prizes': format_prizes(challenge.prizes),
       'suggestions': challenge.suggestions,
       'adjHabits': {
         'prev': prev_habit,
