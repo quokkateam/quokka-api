@@ -9,10 +9,15 @@ from datetime import datetime
 from src import dbi, logger
 from src.models import Challenge
 
-save_challenge_model = api.model('Challenge', {
+update_challenge_section_model = api.model('Challenge', {
   'id': fields.Integer(required=True),
-  'text': fields.String(),
-  'points': fields.Integer()
+  'text': fields.String(required=True),
+  'points': fields.Integer(required=True)
+})
+
+update_suggestions_model = api.model('Challenge', {
+  'id': fields.Integer(required=True),
+  'suggestions': fields.String(required=True)
 })
 
 
@@ -91,11 +96,11 @@ class GetChallenge(Resource):
 
 
 @namespace.route('/challenge/challenge')
-class SaveChallenge(Resource):
+class UpdateChallengeSection(Resource):
   """Save the text and points for a weekly challenge"""
 
-  @namespace.doc('save_challenge')
-  @namespace.expect(save_challenge_model)
+  @namespace.doc('update_challenge_section')
+  @namespace.expect(update_challenge_section_model)
   def put(self):
     challenge = dbi.find_one(Challenge, {'id': api.payload['id']})
 
@@ -103,17 +108,27 @@ class SaveChallenge(Resource):
       logger.error('No challenge found for id: {}'.format(api.payload['id']))
       return 'Challenge required to update text and points', 500
 
-    text = api.payload.get('text')
-    points = api.payload.get('points')
-    updates = {}
+    dbi.update(challenge, {
+      'text': api.payload['text'],
+      'points': api.payload['points'] or 0
+    })
 
-    if text:
-      updates['text'] = text
+    return {'text': challenge.text, 'points': challenge.points}
 
-    if points:
-      updates['points'] = points
 
-    if updates:
-      dbi.update(challenge, updates)
+@namespace.route('/challenge/suggestions')
+class UpdateSuggestions(Resource):
+  """Save the suggestions for a weekly challenge"""
 
-    return {'text': text, 'points': points}
+  @namespace.doc('update_suggestions')
+  @namespace.expect(update_suggestions_model)
+  def put(self):
+    challenge = dbi.find_one(Challenge, {'id': api.payload['id']})
+
+    if not challenge:
+      logger.error('No challenge found for id: {}'.format(api.payload['id']))
+      return 'Challenge required to update text and points', 500
+
+    dbi.update(challenge, {'suggestions': api.payload['suggestions']})
+
+    return {'suggestions': challenge.suggestions}
