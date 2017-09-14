@@ -6,6 +6,7 @@ from src.challenges import universal_challenge_info
 from operator import itemgetter
 from datetime import datetime, timedelta
 
+
 # Assuming kickoff is October 2nd
 kickoff_date = datetime(2017, 10, 2, 0, 0)
 
