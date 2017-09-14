@@ -10,7 +10,8 @@ universal_challenge_info = {
       }
     ],
     'links': [],
-    'extra_info': ''
+    'extra_info': '',
+    'check_in_questions': []
   },
   'good-deeds': {
     'defaultIndex': 1,
@@ -23,7 +24,8 @@ universal_challenge_info = {
       }
     ],
     'links': [],
-    'extra_info': ''
+    'extra_info': '',
+    'check_in_questions': []
   },
   'sleep': {
     'defaultIndex': 2,
@@ -36,7 +38,8 @@ universal_challenge_info = {
       }
     ],
     'links': [],
-    'extra_info': ''
+    'extra_info': '',
+    'check_in_questions': []
   },
   'healthy-eating': {
     'defaultIndex': 3,
@@ -49,7 +52,8 @@ universal_challenge_info = {
       }
     ],
     'links': [],
-    'extra_info': ''
+    'extra_info': '',
+    'check_in_questions': []
   },
   'journaling': {
     'defaultIndex': 4,
@@ -62,7 +66,8 @@ universal_challenge_info = {
       }
     ],
     'links': [],
-    'extra_info': ''
+    'extra_info': '',
+    'check_in_questions': []
   },
   'exercise': {
     'defaultIndex': 5,
@@ -119,7 +124,12 @@ universal_challenge_info = {
     'extra_info': """If circumstances prevent you from fulfilling our outlined challenges, [mind-body exercises may be 
       helpful alternatives to managing a variety of health conditions such as anxiety, insomnia, or other chronic 
       pain symptoms](https://nccih.nih.gov/health/stress/relaxation.htm). The information on this site is for general purposes only and is not intended or implied to be a substitute for professional 
-      medical advice, diagnosis, or treatment. Seek advice from your health care provider for your personal health needs."""
+      medical advice, diagnosis, or treatment. Seek advice from your health care provider for your personal health needs.""",
+    'check_in_questions': [
+      'How did you feel about this week\'s challenge?',
+      'Did you notice anything new about yourself?',
+      'Any other thoughts or feedback on this week or the program?'
+    ]
   },
   'group-selected-challenge': {
     'defaultIndex': 6,
@@ -132,7 +142,8 @@ universal_challenge_info = {
       }
     ],
     'links': [],
-    'extra_info': ''
+    'extra_info': '',
+    'check_in_questions': []
   },
   'positivity-mindfulness': {
     'defaultIndex': 7,
@@ -145,6 +156,7 @@ universal_challenge_info = {
       }
     ],
     'links': [],
-    'extra_info': ''
+    'extra_info': '',
+    'check_in_questions': []
   }
 }

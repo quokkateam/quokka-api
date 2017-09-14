@@ -75,6 +75,7 @@ class Challenge(db.Model):
   slug = db.Column(db.String(120), index=True, nullable=False)
   school_id = db.Column(db.Integer, db.ForeignKey('school.id'), index=True, nullable=False)
   school = db.relationship('School', backref='challenges')
+  check_in = db.relationship('CheckIn', uselist=False, back_populates='challenge')
   start_date = db.Column(db.DateTime)
   end_date = db.Column(db.DateTime)
   text = db.Column(db.Text)
@@ -142,3 +143,60 @@ class Prize(db.Model):
   def __repr__(self):
     return '<Sponsor id={}, challenge_id={}, sponsor_id={}, name={}, is_destroyed={}, created_at={}>'.format(
       self.id, self.challenge_id, self.sponsor_id, self.name, self.is_destroyed, self.created_at)
+
+
+class CheckIn(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  challenge_id = db.Column(db.Integer, db.ForeignKey('challenge.id'), index=True, nullable=False)
+  challenge = db.relationship('Challenge', back_populates='check_in')
+  is_destroyed = db.Column(db.Boolean(), default=False)
+  created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+
+  def __init__(self, challenge):
+    self.challenge = challenge
+
+  def __repr__(self):
+    return '<Sponsor id={}, challenge_id={}, is_destroyed={}, created_at={}>'.format(
+      self.id, self.challenge_id, self.is_destroyed, self.created_at)
+
+  def active_check_in_questions(self):
+    return [q for q in self.check_in_questions if not q.is_destroyed]
+
+
+class CheckInQuestion(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  check_in_id = db.Column(db.Integer, db.ForeignKey('check_in.id'), index=True, nullable=False)
+  check_in = db.relationship('CheckIn', backref='check_in_questions')
+  text = db.Column(db.Text(), nullable=False)
+  order = db.Column(db.Integer)
+  is_destroyed = db.Column(db.Boolean(), default=False)
+  created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+
+  def __init__(self, check_in, text, order):
+    self.check_in = check_in
+    self.text = text
+    self.order = order
+
+  def __repr__(self):
+    return '<CheckInQuestion id={}, check_in_id={}, text={}, order={}, is_destroyed={}, created_at={}>'.format(
+      self.id, self.check_in_id, self.text, self.order, self.is_destroyed, self.created_at)
+
+
+class CheckInAnswer(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  check_in_question_id = db.Column(db.Integer, db.ForeignKey('check_in_question.id'), index=True, nullable=False)
+  check_in_question = db.relationship('CheckInQuestion', backref='check_in_answers')
+  user_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True, nullable=False)
+  user = db.relationship('User', backref='check_in_answers')
+  text = db.Column(db.Text(), nullable=False)
+  is_destroyed = db.Column(db.Boolean(), default=False)
+  created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+
+  def __init__(self, check_in_question, user, text):
+    self.check_in_question = check_in_question
+    self.user = user
+    self.text = text
+
+  def __repr__(self):
+    return '<CheckInAnswer id={}, check_in_question_id={}, user_id={}, text={}, is_destroyed={}, created_at={}>'.format(
+      self.id, self.check_in_question_id, self.user_id, self.text, self.is_destroyed, self.created_at)
