@@ -16,7 +16,7 @@ if __name__ == '__main__':
   args = parser.parse_args(sys.argv[1:])
 
   if not args.name or not args.name.strip():
-    print 'A name is required for the new school. Use the --name argument.'
+    print('A name is required for the new school. Use the --name argument.')
     exit(0)
 
   school = find_one(School, {'name':  args.name})
@@ -26,15 +26,15 @@ if __name__ == '__main__':
     domains = [d.strip() for d in args.domains.split(',') if d.strip() != '']
 
   if school:
-    print 'School named {} already exists.'.format(args.name)
+    print('School named {} already exists.'.format(args.name))
 
     if domains:
       school = update(school, {'domains': domains})
   else:
-    print 'Creating school, {}...'.format(args.name)
+    print('Creating school, {}...'.format(args.name))
 
     if not domains:
-      print 'Domains are required to create a new school. Use the --domains argument.'
+      print('Domains are required to create a new school. Use the --domains argument.')
       exit(0)
 
     school = create(School, {'name': args.name, 'domains': domains})
@@ -43,7 +43,7 @@ if __name__ == '__main__':
 
   challenges = find_all(Challenge, {'school': school})
 
-  print 'Creating challenges for school...'
+  print('Creating challenges for school...')
 
   # For each challenge listed in challenges.py...
   for c in sorted_challenges:
@@ -54,7 +54,7 @@ if __name__ == '__main__':
     challenge = find_one(Challenge, {'name': c['name'], 'school': school})
 
     if not challenge:
-      print 'Creating Challenge: {}...'.format(c['name'])
+      print('Creating Challenge: {}...'.format(c['name']))
 
       challenge = create(Challenge, {
         'name': c['name'],
@@ -67,7 +67,7 @@ if __name__ == '__main__':
     check_in = find_one(CheckIn, {'challenge': challenge})
 
     if not check_in:
-      print 'Creating CheckIn for Challenge: {}...'.format(c['name'])
+      print('Creating CheckIn for Challenge: {}...'.format(c['name']))
       check_in = create(CheckIn, {'challenge': challenge})
 
     # Find or create new CheckInQuestions for this CheckIn
@@ -81,7 +81,7 @@ if __name__ == '__main__':
       })
 
       if not check_in_question:
-        print 'Creating CheckInQuestion...'
+        print('Creating CheckInQuestion...')
 
         create(CheckInQuestion, {
           'check_in': check_in,
@@ -91,4 +91,4 @@ if __name__ == '__main__':
 
       i += 1
 
-  print 'Done!'
+  print('Done!')
