@@ -106,4 +106,4 @@ ENV/
 app.db
 
 .idea/
-migrations/
+*.dump
