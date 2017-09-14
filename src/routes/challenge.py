@@ -3,7 +3,7 @@ from src.routes import namespace, api
 from src.helpers.user_helper import current_user
 from src.helpers.prize_helper import format_prizes
 from src.helpers.sponsor_helper import format_sponsors
-from src.helpers.challenge_helper import format_challenges
+from src.helpers.challenge_helper import format_challenges, current_week_num
 from operator import attrgetter
 from src.challenges import universal_challenge_info
 from datetime import datetime
@@ -160,7 +160,7 @@ class GetChallenges(Resource):
     challenges = sorted(user.school.active_challenges(), key=attrgetter('start_date'))
 
     resp = {
-      'weekNum': 6,
+      'weekNum': current_week_num(challenges),
       'challenges': format_challenges(challenges)
     }
 
