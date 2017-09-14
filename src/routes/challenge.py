@@ -3,6 +3,7 @@ from src.routes import namespace, api
 from src.helpers.user_helper import current_user
 from src.helpers.prize_helper import format_prizes
 from src.helpers.sponsor_helper import format_sponsors
+from src.helpers.challenge_helper import format_challenges
 from operator import attrgetter
 from src.challenges import universal_challenge_info
 from datetime import datetime
@@ -142,3 +143,25 @@ class UpdateSuggestions(Resource):
     dbi.update(challenge, {'suggestions': api.payload['suggestions']})
 
     return {'suggestions': challenge.suggestions}
+
+
+@namespace.route('/challenges')
+class GetChallenges(Resource):
+  """Fetch all challenges for a school"""
+
+  @namespace.doc('get_challenges')
+  def get(self):
+    user = current_user()
+
+    if not user:
+      return '', 403
+
+    # Get challenges for school, sorted by date
+    challenges = sorted(user.school.active_challenges(), key=attrgetter('start_date'))
+
+    resp = {
+      'weekNum': 6,
+      'challenges': format_challenges(challenges)
+    }
+
+    return resp

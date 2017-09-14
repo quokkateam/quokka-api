@@ -11,7 +11,8 @@ universal_challenge_info = {
     ],
     'links': [],
     'extra_info': '',
-    'check_in_questions': []
+    'check_in_questions': [],
+    'preview_text': 'This challenge is going to be awesome'
   },
   'good-deeds': {
     'defaultIndex': 1,
@@ -25,7 +26,8 @@ universal_challenge_info = {
     ],
     'links': [],
     'extra_info': '',
-    'check_in_questions': []
+    'check_in_questions': [],
+    'preview_text': 'This challenge is going to be awesome'
   },
   'sleep': {
     'defaultIndex': 2,
@@ -39,7 +41,8 @@ universal_challenge_info = {
     ],
     'links': [],
     'extra_info': '',
-    'check_in_questions': []
+    'check_in_questions': [],
+    'preview_text': 'This challenge is going to be awesome'
   },
   'healthy-eating': {
     'defaultIndex': 3,
@@ -53,7 +56,8 @@ universal_challenge_info = {
     ],
     'links': [],
     'extra_info': '',
-    'check_in_questions': []
+    'check_in_questions': [],
+    'preview_text': 'This challenge is going to be awesome'
   },
   'journaling': {
     'defaultIndex': 4,
@@ -67,7 +71,8 @@ universal_challenge_info = {
     ],
     'links': [],
     'extra_info': '',
-    'check_in_questions': []
+    'check_in_questions': [],
+    'preview_text': 'This challenge is going to be awesome'
   },
   'exercise': {
     'defaultIndex': 5,
@@ -129,7 +134,8 @@ universal_challenge_info = {
       'How did you feel about this week\'s challenge?',
       'Did you notice anything new about yourself?',
       'Any other thoughts or feedback on this week or the program?'
-    ]
+    ],
+    'preview_text': 'This challenge is going to be awesome'
   },
   'group-selected-challenge': {
     'defaultIndex': 6,
@@ -143,7 +149,8 @@ universal_challenge_info = {
     ],
     'links': [],
     'extra_info': '',
-    'check_in_questions': []
+    'check_in_questions': [],
+    'preview_text': 'This challenge is going to be awesome'
   },
   'positivity-mindfulness': {
     'defaultIndex': 7,
@@ -157,6 +164,7 @@ universal_challenge_info = {
     ],
     'links': [],
     'extra_info': '',
-    'check_in_questions': []
+    'check_in_questions': [],
+    'preview_text': 'This challenge is going to be awesome'
   }
 }
