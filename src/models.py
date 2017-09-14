@@ -141,7 +141,7 @@ class Prize(db.Model):
     self.name = name
 
   def __repr__(self):
-    return '<Sponsor id={}, challenge_id={}, sponsor_id={}, name={}, is_destroyed={}, created_at={}>'.format(
+    return '<Prize id={}, challenge_id={}, sponsor_id={}, name={}, is_destroyed={}, created_at={}>'.format(
       self.id, self.challenge_id, self.sponsor_id, self.name, self.is_destroyed, self.created_at)
 
 
@@ -156,7 +156,7 @@ class CheckIn(db.Model):
     self.challenge = challenge
 
   def __repr__(self):
-    return '<Sponsor id={}, challenge_id={}, is_destroyed={}, created_at={}>'.format(
+    return '<CheckIn id={}, challenge_id={}, is_destroyed={}, created_at={}>'.format(
       self.id, self.challenge_id, self.is_destroyed, self.created_at)
 
   def active_check_in_questions(self):
@@ -192,8 +192,12 @@ class CheckInAnswer(db.Model):
   is_destroyed = db.Column(db.Boolean(), default=False)
   created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
-  def __init__(self, check_in_question, user, text):
-    self.check_in_question = check_in_question
+  def __init__(self, user, text, check_in_question=None, check_in_question_id=None):
+    if check_in_question_id:
+      self.check_in_question_id = check_in_question_id
+    else:
+      self.check_in_question = check_in_question
+
     self.user = user
     self.text = text
 
