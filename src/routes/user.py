@@ -123,7 +123,8 @@ class MintToken(Resource):
     response_data = {
       'user': {
         'name': user.name,
-        'email': user.email
+        'email': user.email,
+        'isAdmin': user.is_admin
       },
       'school': {
         'name': school.name,
