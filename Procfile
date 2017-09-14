@@ -1,2 +1,2 @@
 web: python app.py
-release: python manage.py db init && python manage.py db migrate && python manage.py db upgrade
+release: python release.py && python manage.py db init && python manage.py db migrate && python manage.py db upgrade
