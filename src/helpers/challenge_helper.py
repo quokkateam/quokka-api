@@ -2,20 +2,27 @@ from datetime import datetime, date
 from src.challenges import universal_challenge_info
 
 
-def format_challenges(challenges):
+def format_challenges(challenges, user, curr_week_num=None):
   formatted_challenges = []
 
+  i = 1
   for c in challenges:
     universal_challenge = universal_challenge_info.get(c.slug)
 
-    formatted_challenges.append({
+    data = {
       'name': c.name,
       'slug': c.slug,
       'previewText': universal_challenge['preview_text'],
-      'points': c.points,
       'startDate': datetime.strftime(c.start_date, '%m/%d/%y'),
       'endDate': datetime.strftime(c.end_date, '%m/%d/%y')
-    })
+    }
+
+    # Prevent points from being disclosed if week not available yet
+    if not curr_week_num or i <= curr_week_num or user.is_admin:
+      data['points'] = c.points
+
+    formatted_challenges.append(data)
+    i += 1
 
   return formatted_challenges
 

@@ -9,6 +9,7 @@ from src.challenges import universal_challenge_info
 from datetime import datetime
 from src import dbi, logger
 from src.models import Challenge
+from src.helpers.error_codes import CHALLENGE_NOT_EXIST, INVALID_CHALLENGE_ACCESS
 
 update_challenge_section_model = api.model('Challenge', {
   'id': fields.Integer(required=True),
@@ -39,6 +40,16 @@ class GetChallenge(Resource):
     # Get challenges for school, sorted by date
     challenges = sorted(school.active_challenges(), key=attrgetter('start_date'))
 
+    if week_num < 1 or week_num > len(challenges):
+      return {'error': 'Challenge does not exist', 'code': CHALLENGE_NOT_EXIST}, 400
+
+    # curr_week_num = current_week_num(challenges)
+    curr_week_num = 4  # hardcoding for demo
+
+    # if this is a future week and the user isn't an admin, prevent access
+    if week_num > curr_week_num and not user.is_admin:
+      return {'error': 'Week not yet available to access', 'code': INVALID_CHALLENGE_ACCESS}, 400
+
     # Find the challenge requested by week index
     challenge = challenges[week_index]
 
@@ -63,6 +74,10 @@ class GetChallenge(Resource):
         'weekNum': week_num + 1,
         'name': challenges[week_num].name
       }
+
+    # if this is the current week and the user isn't an admin, he/she shouldn't have a link to the next week yet
+    if week_num == curr_week_num and not user.is_admin:
+      next_habit = None
 
     universal_challenge = universal_challenge_info.get(challenge.slug)
 
@@ -159,9 +174,14 @@ class GetChallenges(Resource):
     # Get challenges for school, sorted by date
     challenges = sorted(user.school.active_challenges(), key=attrgetter('start_date'))
 
+    # curr_week_num = current_week_num(challenges)
+    curr_week_num = 4  # hardcoding for demo
+
+    challenges_data = format_challenges(challenges, user, curr_week_num=curr_week_num)
+
     resp = {
-      'weekNum': current_week_num(challenges),
-      'challenges': format_challenges(challenges)
+      'weekNum': curr_week_num,
+      'challenges': challenges_data
     }
 
     return resp
