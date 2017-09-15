@@ -11,7 +11,8 @@ universal_challenge_info = {
     ],
     'links': [],
     'extra_info': '',
-    'check_in_questions': []
+    'check_in_questions': [],
+    'preview_text': 'Social support plays an important role in our behaviors, interactions, self-image, and how we respond to stress.'
   },
   'good-deeds': {
     'defaultIndex': 1,
@@ -25,7 +26,8 @@ universal_challenge_info = {
     ],
     'links': [],
     'extra_info': '',
-    'check_in_questions': []
+    'check_in_questions': [],
+    'preview_text': 'A positive feedback loop exists between kindness and happiness &mdash; the more you do to make other people feel better, the more your own happiness increases!'
   },
   'sleep': {
     'defaultIndex': 2,
@@ -39,7 +41,8 @@ universal_challenge_info = {
     ],
     'links': [],
     'extra_info': '',
-    'check_in_questions': []
+    'check_in_questions': [],
+    'preview_text': 'We all underestimate how big of an impact getting a good night\'s sleep can have on our overall health and happiness.'
   },
   'healthy-eating': {
     'defaultIndex': 3,
@@ -53,7 +56,8 @@ universal_challenge_info = {
     ],
     'links': [],
     'extra_info': '',
-    'check_in_questions': []
+    'check_in_questions': [],
+    'preview_text': 'Healthy eating has multiple benefits for you. It can help you stay in shape, increase your energy, and boost your immune system.'
   },
   'journaling': {
     'defaultIndex': 4,
@@ -67,7 +71,8 @@ universal_challenge_info = {
     ],
     'links': [],
     'extra_info': '',
-    'check_in_questions': []
+    'check_in_questions': [],
+    'preview_text': 'Physically logging your days and putting your thoughts on paper can be great for organizing thoughts.'
   },
   'exercise': {
     'defaultIndex': 5,
@@ -129,7 +134,8 @@ universal_challenge_info = {
       'How did you feel about this week\'s challenge?',
       'Did you notice anything new about yourself?',
       'Any other thoughts or feedback on this week or the program?'
-    ]
+    ],
+    'preview_text': 'Science has proven that even small amounts of exercise can lead to significant changes in both physical and mental health.'
   },
   'group-selected-challenge': {
     'defaultIndex': 6,
@@ -143,7 +149,8 @@ universal_challenge_info = {
     ],
     'links': [],
     'extra_info': '',
-    'check_in_questions': []
+    'check_in_questions': [],
+    'preview_text': 'Goal setting is important for your short-term motivation and long term vision. During your week off, come up with a challenge amongst your friends and see how well you can stick to it!'
   },
   'positivity-mindfulness': {
     'defaultIndex': 7,
@@ -157,6 +164,7 @@ universal_challenge_info = {
     ],
     'links': [],
     'extra_info': '',
-    'check_in_questions': []
+    'check_in_questions': [],
+    'preview_text': 'Thinking positively and being mindful of one\'s emotions are great habits for anyone to develop during his or her long-term pursuit of happiness.'
   }
 }
