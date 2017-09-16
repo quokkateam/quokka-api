@@ -12,6 +12,7 @@ def format_challenges(challenges, user, curr_week_num=None):
     data = {
       'name': c.name,
       'slug': c.slug,
+      'weekNum': i,
       'previewText': universal_challenge['preview_text'],
       'startDate': datetime.strftime(c.start_date, '%m/%d/%y'),
       'endDate': datetime.strftime(c.end_date, '%m/%d/%y')
