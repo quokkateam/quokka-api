@@ -6,7 +6,7 @@ from src.helpers.sponsor_helper import format_sponsors
 from src.helpers.challenge_helper import format_challenges, current_week_num
 from operator import attrgetter
 from src.challenges import universal_challenge_info
-from datetime import datetime
+from datetime import datetime, timedelta
 from src import dbi, logger
 from src.models import Challenge
 from src.helpers.error_codes import CHALLENGE_NOT_EXIST, INVALID_CHALLENGE_ACCESS
@@ -20,6 +20,12 @@ update_challenge_section_model = api.model('Challenge', {
 update_suggestions_model = api.model('Challenge', {
   'id': fields.Integer(required=True),
   'suggestions': fields.String(required=True)
+})
+
+update_challenges_model = api.model('Challenge', {
+  'school': fields.String(required=True),
+  'challenges': fields.String(required=True),
+  'startDate': fields.String(required=True)
 })
 
 
@@ -161,7 +167,7 @@ class UpdateSuggestions(Resource):
 
 
 @namespace.route('/challenges')
-class GetChallenges(Resource):
+class RestfulChallenges(Resource):
   """Fetch all challenges for a school"""
 
   @namespace.doc('get_challenges')
@@ -185,3 +191,47 @@ class GetChallenges(Resource):
     }
 
     return resp
+
+  @namespace.doc('update_challenges')
+  @namespace.expect(update_challenges_model)
+  def put(self):
+    user = current_user()
+
+    if not user or not user.is_admin:
+      return '', 403
+
+    try:
+      start_date = datetime.strptime(api.payload['startDate'], '%m/%d/%y')
+    except:
+      return 'Invalid start date', 500
+
+    challenge_slugs = [c['slug'] for c in api.payload['challenges']]
+
+    school = user.school
+
+    challenges = dbi.find_all(Challenge, {
+      'school': user.school,
+      'slug': challenge_slugs
+    })
+
+    i = 0
+    for slug in challenge_slugs:
+      challenge = [c for c in challenges if c.slug == slug][0]
+
+      if i > 0:
+        start_date = start_date + timedelta(days=(7))
+
+      end_date = start_date + timedelta(days=6)
+
+      dbi.update(challenge, {'start_date': start_date, 'end_date': end_date})
+
+      i += 1
+
+    challenges = sorted(school.active_challenges(), key=attrgetter('start_date'))
+
+    # curr_week_num = current_week_num(challenges)
+    curr_week_num = 4  # hardcoding for demo
+
+    resp_data = format_challenges(challenges, user, curr_week_num=curr_week_num)
+
+    return resp_data

@@ -84,9 +84,9 @@ class Challenge(db.Model):
   is_destroyed = db.Column(db.Boolean(), default=False)
   created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
-  def __init__(self, name, school, start_date=None, end_date=None, text=None, points=0, suggestions=[]):
+  def __init__(self, name=None, school=None, start_date=None, end_date=None, text=None, points=0, suggestions=[], slug=None):
     self.name = name
-    self.slug = slugify(name, separator='-', to_lower=True)
+    self.slug = slug or slugify(name, separator='-', to_lower=True)
     self.school = school
     self.start_date = start_date
     self.end_date = end_date
