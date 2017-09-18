@@ -31,9 +31,7 @@ class RestfulSponsor(Resource):
 
     sponsor_name = api.payload['name']
 
-    logo_name = '{}-{}'.format(
-      slugify(sponsor_name, separator='-', to_lower=True),
-      uuid4().get_hex())
+    logo_name = '{}-{}'.format(slugify(sponsor_name, separator='-', to_lower=True), uuid4().hex)
 
     try:
       # TODO: Once you have apscheduler, run this as a delayed job
