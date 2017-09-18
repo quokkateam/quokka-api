@@ -35,6 +35,7 @@ class RestfulSponsor(Resource):
       uuid4().get_hex())
 
     try:
+      # TODO: Once you have apscheduler, run this as a delayed job
       logo = upload_image(
         data=api.payload['logo'],
         name=logo_name,
