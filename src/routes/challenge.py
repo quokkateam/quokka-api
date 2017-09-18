@@ -48,8 +48,7 @@ class GetChallenge(Resource):
     if week_num < 1 or week_num > len(challenges):
       return {'error': 'Challenge does not exist', 'code': CHALLENGE_NOT_EXIST}, 400
 
-    # curr_week_num = current_week_num(challenges)
-    curr_week_num = 4  # hardcoding for demo
+    curr_week_num = current_week_num(challenges)
 
     # if this is a future week and the user isn't an admin, prevent access
     if week_num > curr_week_num and not user.is_admin:
@@ -179,8 +178,7 @@ class RestfulChallenges(Resource):
     # Get challenges for school, sorted by date
     challenges = sorted(user.school.active_challenges(), key=attrgetter('start_date'))
 
-    # curr_week_num = current_week_num(challenges)
-    curr_week_num = 4  # hardcoding for demo
+    curr_week_num = current_week_num(challenges)
 
     challenges_data = format_challenges(challenges, user, curr_week_num=curr_week_num)
 
@@ -228,8 +226,7 @@ class RestfulChallenges(Resource):
 
     challenges = sorted(school.active_challenges(), key=attrgetter('start_date'))
 
-    # curr_week_num = current_week_num(challenges)
-    curr_week_num = 4  # hardcoding for demo
+    curr_week_num = current_week_num(challenges)
 
     resp_data = format_challenges(challenges, user, curr_week_num=curr_week_num)
 
