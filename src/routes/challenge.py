@@ -229,6 +229,11 @@ class RestfulChallenges(Resource):
 
     curr_week_num = current_week_num(challenges)
 
-    resp_data = format_challenges(challenges, user, curr_week_num=curr_week_num)
+    challenges_data = format_challenges(challenges, user, curr_week_num=curr_week_num)
 
-    return resp_data
+    resp = {
+      'weekNum': curr_week_num,
+      'challenges': challenges_data
+    }
+
+    return resp
