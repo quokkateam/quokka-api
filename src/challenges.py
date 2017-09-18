@@ -20,7 +20,7 @@ universal_challenge_info = {
     'icon': 'https://s3-us-west-1.amazonaws.com/quokkadev/images/running-green.png',
     'overview': [
       {
-        'title': 'What\'s the science say?',
+        'title': 'Why should I exercise?',
         'content': """Regular physical activity is important for increasing energy and focus, strengthening bones and muscles, 
         and increasing longevity [[1]](https://www.cdc.gov/physicalactivity/basics/pa-health/index.htm#StrengthenBonesMuscle). 
         It'll also help you manage stress and anxiety and reduce your risk of cardiovascular disease and obesity. 
