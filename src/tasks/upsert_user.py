@@ -5,6 +5,7 @@ from src import dbi
 from src.helpers.user_validation import validate_user
 from src.helpers.auth_util import hash_pw
 
+# TODO: Make more versatile with optional vs. required args
 
 def validate_arg(arg):
   if arg is None or (type(arg) == str and not arg.strip()):

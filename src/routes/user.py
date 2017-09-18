@@ -34,7 +34,7 @@ class CreateUser(Resource):
   @namespace.doc('create_user')
   @namespace.expect(create_user_model, validate=True)
   def post(self):
-    email = api.payload['email']
+    email = api.payload['email'].lower()
     hashed_pw = None
 
     # Find the school they selected
@@ -94,9 +94,10 @@ class MintToken(Resource):
   @namespace.response(201, 'Success', model=token_model)
   def post(self):
     pw = api.payload['password']
+    email = api.payload['email'].lower()
 
     # Attempt to find user by email
-    user = dbi.find_one(User, {'email': api.payload['email']})
+    user = dbi.find_one(User, {'email': email})
 
     # If the user is not found
     if not user:

@@ -17,15 +17,16 @@ update_challenge_section_model = api.model('Challenge', {
   'points': fields.Integer(required=True)
 })
 
-update_suggestions_model = api.model('Challenge', {
-  'id': fields.Integer(required=True),
-  'suggestions': fields.String(required=True)
-})
+# TODO: Validate JSON field types for 'suggestions' and 'challenges' below
+# update_suggestions_model = api.model('Challenge', {
+#   'id': fields.Integer(required=True),
+#   'suggestions': fields.String(required=True)
+# })
 
-update_challenges_model = api.model('Challenge', {
-  'challenges': fields.String(required=True),
-  'startDate': fields.String(required=True)
-})
+# update_challenges_model = api.model('Challenge', {
+#   'challenges': fields.String(required=True),
+#   'startDate': fields.String(required=True)
+# })
 
 
 @namespace.route('/challenge/<int:week_num>')
@@ -120,7 +121,7 @@ class UpdateChallengeSection(Resource):
   """Save the text and points for a weekly challenge"""
 
   @namespace.doc('update_challenge_section')
-  @namespace.expect(update_challenge_section_model)
+  @namespace.expect(update_challenge_section_model, validate=True)
   def put(self):
     user = current_user()
 
@@ -146,7 +147,7 @@ class UpdateSuggestions(Resource):
   """Save the suggestions for a weekly challenge"""
 
   @namespace.doc('update_suggestions')
-  @namespace.expect(update_suggestions_model)
+  # @namespace.expect(update_suggestions_model, validate=True)
   def put(self):
     user = current_user()
 
@@ -190,7 +191,7 @@ class RestfulChallenges(Resource):
     return resp
 
   @namespace.doc('update_challenges')
-  @namespace.expect(update_challenges_model)
+  # @namespace.expect(update_challenges_model, validate=True)
   def put(self):
     user = current_user()
 

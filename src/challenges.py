@@ -90,7 +90,7 @@ universal_challenge_info = {
     'links': [],
     'extra_info': '',
     'check_in_questions': [],
-    'preview_text': 'A positive feedback loop exists between kindness and happiness &mdash; the more you do to make other people feel better, the more your own happiness increases!'
+    'preview_text': 'A positive feedback loop exists between kindness and happiness - the more you do to make other people feel better, the more your own happiness increases!'
   },
   'healthy-eating': {
     'defaultIndex': 3,
