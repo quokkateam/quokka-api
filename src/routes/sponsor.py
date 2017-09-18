@@ -6,7 +6,6 @@ from src.helpers.user_helper import current_user
 from src import dbi
 
 create_sponsor_model = api.model('Sponsor', {
-  'schoolSlug': fields.String(required=True),
   'logo': fields.String(required=True),
   'name': fields.String(required=True),
   'url': fields.String(required=True)
@@ -24,15 +23,12 @@ class RestfulSponsor(Resource):
     if not user or not user.is_admin:
       return '', 403
 
-    school = dbi.find_one(School, {'slug': api.payload['schoolSlug']})
-
-    if not school:
-      return 'School required to create sponsor', 500
+    school = user.school
 
     dbi.create(Sponsor, {
       'school': school,
       'name': api.payload['name'],
-      'logo': api.payload['logo'],
+      'logo': '',
       'url': api.payload['url']
     })
 

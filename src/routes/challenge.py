@@ -23,7 +23,6 @@ update_suggestions_model = api.model('Challenge', {
 })
 
 update_challenges_model = api.model('Challenge', {
-  'school': fields.String(required=True),
   'challenges': fields.String(required=True),
   'startDate': fields.String(required=True)
 })

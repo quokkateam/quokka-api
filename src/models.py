@@ -84,7 +84,7 @@ class Challenge(db.Model):
   is_destroyed = db.Column(db.Boolean(), default=False)
   created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
-  def __init__(self, name=None, school=None, start_date=None, end_date=None, text=None, points=0, suggestions=[], slug=None):
+  def __init__(self, name=None, school=None, start_date=None, end_date=None, text=None, points=0, suggestions=None, slug=None):
     self.name = name
     self.slug = slug or slugify(name, separator='-', to_lower=True)
     self.school = school
@@ -92,7 +92,7 @@ class Challenge(db.Model):
     self.end_date = end_date
     self.text = text
     self.points = points
-    self.suggestions = suggestions
+    self.suggestions = suggestions or []
 
   def __repr__(self):
     return '<Challenge id={}, name={}, slug={}, school_id={}, start_date={}, end_date={}, text={}, points={}, suggestions={}, is_destroyed={}, created_at={}>'.format(
