@@ -8,6 +8,7 @@ from slugify import slugify
 from src.integrations.s3 import upload_image
 from uuid import uuid4
 
+
 create_sponsor_model = api.model('Sponsor', {
   'logo': fields.String(required=True),
   'name': fields.String(required=True),
