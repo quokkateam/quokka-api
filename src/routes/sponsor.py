@@ -41,8 +41,8 @@ class RestfulSponsor(Resource):
         name=logo_name,
         location='sponsors/'
       )
-    except BaseException, e:
-      logger.error('Error uploading image to S3'.format(e))
+    except BaseException:
+      logger.error('Error uploading image to S3')
       return 'Error uploading provided image', 500
 
     dbi.create(Sponsor, {
