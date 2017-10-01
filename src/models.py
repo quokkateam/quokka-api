@@ -12,6 +12,7 @@ class User(db.Model):
   hashed_pw = db.Column(db.String(120), nullable=True)
   email_verified = db.Column(db.Boolean(), default=False)
   email_verification_secret = db.Column(db.String(64))
+  email_verification_sent = db.Column(db.Boolean(), default=False)
   school_id = db.Column(db.Integer, db.ForeignKey('school.id'), index=True, nullable=False)
   school = db.relationship('School', backref='users')
   is_admin = db.Column(db.Boolean(), default=False)
@@ -27,8 +28,8 @@ class User(db.Model):
     self.email_verification_secret = auth_util.fresh_secret()
 
   def __repr__(self):
-    return '<User id={}, email={}, name={}, email_verified={}, school_id={}, is_admin={}, is_destroyed={}, created_at={}>'.format(
-      self.id, self.email, self.name, self.email_verified, self.school_id, self.is_admin, self.is_destroyed, self.created_at)
+    return '<User id={}, email={}, name={}, email_verified={}, email_verification_sent={}, school_id={}, is_admin={}, is_destroyed={}, created_at={}>'.format(
+      self.id, self.email, self.name, self.email_verified, self.email_verification_sent, self.school_id, self.is_admin, self.is_destroyed, self.created_at)
 
 
 class Token(db.Model):

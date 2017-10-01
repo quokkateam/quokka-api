@@ -13,7 +13,7 @@ email_override = os.environ.get('MAIL_TO_OVERRIDE')
 perform_deliveries = bool(re.match('true', os.environ.get('MAILER_PERFORM_DELIVERIES') or '', re.I))
 
 
-def send_email(to=None, subject=None, from_email='team@quokkachallenge.com', template_vars={}):
+def send_email(to=None, subject=None, from_email='team@quokkachallenge.com', template_vars={}, delay=True):
   template = None
 
   try:
@@ -40,9 +40,11 @@ def send_email(to=None, subject=None, from_email='team@quokkachallenge.com', tem
 
   content = Content('text/html', template)
 
-  delayed.add_job(perform, args=[to, subject, content, from_email])
-
-  return True
+  if delay:
+    delayed.add_job(perform, args=[to, subject, content, from_email])
+    return True
+  else:
+    return perform(to, subject, content, from_email)
 
 
 def perform(to, subject, content, from_email):
@@ -53,17 +55,18 @@ def perform(to, subject, content, from_email):
   if not perform_deliveries:
     logger.warn('Not sending email from {} to {} -- Mailer not configured to perform deliveries.'.format(
       from_obj.email, to_obj.email))
-    return
+    return False
 
   try:
     logger.info('Sending email from {} to {}...'.format(from_obj.email, to_obj.email))
     resp = sg.client.mail.send.post(request_body=mail.get())
   except BaseException, e:
     print('Email failed: {}'.format(e.__dict__))
-    return
+    return False
 
   if resp.status_code not in [200, 202]:
     print('Email failed with error code {}: {}'.format(resp.status_code, resp.body))
-    return
+    return False
 
   logger.info('Successfully sent email.')
+  return True
