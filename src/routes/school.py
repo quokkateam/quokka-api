@@ -6,7 +6,7 @@ from src import dbi
 school_model = api.model('School', {
   'name': fields.String(),
   'slug': fields.String(),
-  'domains': fields.List(fields.String()),
+  'domains': fields.List(fields.String())
 })
 
 schools_model = api.model('Schools', {
