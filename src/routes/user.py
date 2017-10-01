@@ -5,7 +5,7 @@ from src import dbi
 from src.helpers import auth_util, user_validation
 from src.models import User, Token, School
 from src.routes import namespace, api
-from src.mailers.user_mailer import complete_account
+from src.mailers import user_mailer
 
 
 create_user_model = api.model('User', {
@@ -56,17 +56,19 @@ class CreateUser(Resource):
 
     # If user doesn't exist yet, create him
     if not user:
-      dbi.create(User, {
+      user = dbi.create(User, {
         'email': email,
         'name': api.payload['name'],
         'school': school,
         'hashed_pw': hashed_pw
       })
 
+      # Send email verification
+      if user_mailer.complete_account(user):
+        dbi.update(user, {'email_verification_sent': True})
+
     return '', 201
 
-
-# TODO add endpoint for resending user verification email
 
 @namespace.route('/verify_email/<int:user_id>/<string:secret>')
 class VerifyEmail(Resource):
