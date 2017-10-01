@@ -217,7 +217,7 @@ class RestfulChallenges(Resource):
       challenge = [c for c in challenges if c.slug == slug][0]
 
       if i > 0:
-        start_date = start_date + timedelta(days=(7))
+        start_date = start_date + timedelta(days=7)
 
       end_date = start_date + timedelta(days=6)
 
