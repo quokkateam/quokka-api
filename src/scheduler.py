@@ -17,7 +17,7 @@ executors = {
 
 job_defaults = {
   'coalesce': True,
-  'max_instances': 3
+  'max_instances': 5
 }
 
 delayed = BackgroundScheduler(jobstores=jobstores, executors=executors,

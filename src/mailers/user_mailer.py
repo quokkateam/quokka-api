@@ -6,5 +6,5 @@ def complete_account(user):
   send_email(
     to=user.email,
     subject='Complete Your Account',
-    content=Content('text/plain', 'Please complete your Quokka account!')
+    template_vars={'name': user.name}
   )

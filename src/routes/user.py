@@ -5,6 +5,8 @@ from src import dbi
 from src.helpers import auth_util, user_validation
 from src.models import User, Token, School
 from src.routes import namespace, api
+from src.mailers.user_mailer import complete_account
+
 
 create_user_model = api.model('User', {
   'email': fields.String(required=True),
