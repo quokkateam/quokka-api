@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "88250610b9c599ab0f83dae9c3af7f75d08565b5a2ccdc3268c5f67088718099"
+            "sha256": "e2f64fbebceb2b974768f7a50973443b9a4757249f1769a1af4687b662c2202e"
         },
         "requires": {},
         "sources": [
@@ -12,6 +12,7 @@
         ]
     },
     "default": {
+        "apscheduler": "*",
         "awesome-slugify": "*",
         "bcrypt": "*",
         "boto3": "*",
@@ -22,7 +23,8 @@
         "flask-sslify": "*",
         "passlib": "*",
         "psycopg2": "*",
-        "requests": "*"
+        "requests": "*",
+        "sendgrid": "*"
     },
     "develop": {
         "coverage": "*",
