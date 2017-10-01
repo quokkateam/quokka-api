@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "e2f64fbebceb2b974768f7a50973443b9a4757249f1769a1af4687b662c2202e"
+            "sha256": "bc33c0637724d754f8799004c3c6ee0a64f8c102cebf61bd1380e84da62321ce"
         },
         "requires": {},
         "sources": [
@@ -23,8 +23,10 @@
         "flask-sslify": "*",
         "passlib": "*",
         "psycopg2": "*",
+        "pytz": "*",
         "requests": "*",
-        "sendgrid": "*"
+        "sendgrid": "*",
+        "tzlocal": "*"
     },
     "develop": {
         "coverage": "*",
