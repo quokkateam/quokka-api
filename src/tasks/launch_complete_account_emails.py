@@ -16,9 +16,9 @@ for user in users_to_email:
 
   try:
     success = complete_account(user, delay=False)
-  except BaseException, e:
+  except BaseException:
     success = False
-    print('Error emailing user {}: {}'.format(user.email, e.__dict__))
+    print('Error emailing user {}.'.format(user.email))
 
   if success:
     dbi.update(user, {'email_verification_sent': True})

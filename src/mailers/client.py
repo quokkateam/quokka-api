@@ -30,8 +30,8 @@ def send_email(to=None, subject=None, from_email='team@quokkachallenge.com', tem
 
     t = Template(filename=template_path)
     template = t.render(**template_vars)
-  except BaseException, e:
-    logger.error('Error configuring email template, {}'.format(e.__dict__))
+  except BaseException:
+    logger.error('Error configuring email template')
     return False
 
   if not template:
@@ -60,8 +60,7 @@ def perform(to, subject, content, from_email):
   try:
     logger.info('Sending email from {} to {}...'.format(from_obj.email, to_obj.email))
     resp = sg.client.mail.send.post(request_body=mail.get())
-  except BaseException, e:
-    print('Email failed: {}'.format(e.__dict__))
+  except BaseException:
     return False
 
   if resp.status_code not in [200, 202]:
