@@ -1,3 +1,4 @@
+import urllib
 from flask import request
 from src.helpers.auth_util import unserialize_token
 from src.dbi import find_one
@@ -10,7 +11,7 @@ def current_user():
   if not user_token:
     return None
 
-  token_info = unserialize_token(user_token)
+  token_info = unserialize_token(urllib.unquote(user_token))
 
   if not token_info.get('token_id') or not token_info.get('secret'):
     return None

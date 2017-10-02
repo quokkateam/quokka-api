@@ -3,6 +3,7 @@ from flask_restplus import Resource, fields
 import os
 from src import dbi
 from src.helpers import auth_util, user_validation
+from src.helpers.user_helper import current_user
 from src.models import User, Token, School
 from src.routes import namespace, api
 from src.mailers import user_mailer
@@ -11,8 +12,16 @@ from src.mailers import user_mailer
 create_user_model = api.model('User', {
   'email': fields.String(required=True),
   'name': fields.String(required=True),
-  'school': fields.String(required=True),
-  'password': fields.String(required=False),
+  'school': fields.String(required=True)
+})
+
+verify_email_model = api.model('VerifyEmail', {
+  'userId': fields.Integer(required=True),
+  'token': fields.String(required=True)
+})
+
+update_pw_model = api.model('UpdatePassword', {
+  'password': fields.String(required=True)
 })
 
 mint_token_model = api.model('Credentials', {
@@ -37,7 +46,6 @@ class CreateUser(Resource):
   @namespace.expect(create_user_model, validate=True)
   def post(self):
     email = api.payload['email'].lower()
-    hashed_pw = None
 
     # Find the school they selected
     school = dbi.find_one(School, {'slug': api.payload['school']})
@@ -48,10 +56,6 @@ class CreateUser(Resource):
     if user_validation_error:
       return dict(error=user_validation_error), 400
 
-    # Password still optional at this point
-    if 'password' in api.payload:
-      hashed_pw = auth_util.hash_pw(api.payload['password'])
-
     user = dbi.find_one(User, {'email': email})
 
     # If user doesn't exist yet, create him
@@ -59,8 +63,7 @@ class CreateUser(Resource):
       user = dbi.create(User, {
         'email': email,
         'name': api.payload['name'],
-        'school': school,
-        'hashed_pw': hashed_pw
+        'school': school
       })
 
       # Send email verification
@@ -70,21 +73,42 @@ class CreateUser(Resource):
     return '', 201
 
 
-@namespace.route('/verify_email/<int:user_id>/<string:secret>')
+@namespace.route('/verify_email')
 class VerifyEmail(Resource):
   """Verifies an email address."""
 
-  @namespace.response(200, 'Success')
-  @namespace.response(401, 'Secret unrecognized')
-  def post(self, user_id, secret):
+  @namespace.doc('verify_email')
+  @namespace.expect(verify_email_model, validate=True)
+  def post(self):
+    user_id = api.payload['userId']
+    email_secret = api.payload['token']
+
     user = dbi.find_one(User, {'id': user_id})
 
-    if not user or not auth_util.verify_secret(secret, user.email_verification_secret):
+    if not user or not auth_util.verify_secret(email_secret, user.email_verification_secret) or user.email_verified:
       return '', 401
 
-    dbi.update(user, {'email_verified': True})
+    user = dbi.update(user, {'email_verified': True})
 
-    return '', 200
+    secret = auth_util.fresh_secret()
+    token = dbi.create(Token, {'user': user, 'secret': secret})
+    school = user.school
+
+    response_data = {
+      'user': {
+        'name': user.name,
+        'email': user.email,
+        'isAdmin': user.is_admin
+      },
+      'school': {
+        'name': school.name,
+        'slug': school.slug
+      }
+    }
+
+    quokka_user = auth_util.serialize_token(token.id, secret)
+
+    return response_data, 200, {'quokka-user': quokka_user}
 
 
 @namespace.route('/mint_token')
@@ -138,3 +162,22 @@ class MintToken(Resource):
     }
 
     return response_data, 201, {'quokka-user': auth_util.serialize_token(token.id, secret)}
+
+
+@namespace.route('/update_password')
+class UpdatePassword(Resource):
+  """User updating his/her password."""
+
+  @namespace.doc('update_password')
+  @namespace.expect(update_pw_model, validate=True)
+  def put(self):
+    user = current_user()
+
+    if not user:
+      return '', 403
+
+    hashed_pw = auth_util.hash_pw(api.payload['password'])
+
+    dbi.update(user, {'hashed_pw': hashed_pw})
+
+    return '', 200
