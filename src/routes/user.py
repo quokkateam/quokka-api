@@ -1,6 +1,7 @@
 from flask_restplus import Resource, fields
 
 import os
+import urllib
 from src import dbi
 from src.helpers import auth_util, user_validation
 from src.helpers.user_helper import current_user
@@ -17,6 +18,10 @@ create_user_model = api.model('User', {
 
 verify_email_model = api.model('VerifyEmail', {
   'userId': fields.Integer(required=True),
+  'token': fields.String(required=True)
+})
+
+verify_demo_token_model = api.model('VerifyDemoToken', {
   'token': fields.String(required=True)
 })
 
@@ -106,9 +111,7 @@ class VerifyEmail(Resource):
       }
     }
 
-    quokka_user = auth_util.serialize_token(token.id, secret)
-
-    return response_data, 200, {'quokka-user': quokka_user}
+    return response_data, 200, {'quokka-user': auth_util.serialize_token(token.id, secret)}
 
 
 @namespace.route('/mint_token')
@@ -181,3 +184,37 @@ class UpdatePassword(Resource):
     dbi.update(user, {'hashed_pw': hashed_pw})
 
     return '', 200
+
+
+@namespace.route('/verify_demo_token')
+class VerifyDemoToken(Resource):
+  """Ensure demo token is valid."""
+
+  @namespace.doc('verify_demo_token')
+  @namespace.expect(verify_demo_token_model, validate=True)
+  def post(self):
+    demo_token = os.environ.get('DEMO_TOKEN')
+    submitted_token = urllib.unquote(api.payload['token'])
+
+    if not auth_util.verify_pw(submitted_token, demo_token):
+      return '', 403
+
+    user = dbi.find_one(User, {'email': 'demouser@demo.edu'})
+
+    secret = auth_util.fresh_secret()
+    token = dbi.create(Token, {'user': user, 'secret': secret})
+    school = user.school
+
+    response_data = {
+      'user': {
+        'name': user.name,
+        'email': user.email,
+        'isAdmin': user.is_admin
+      },
+      'school': {
+        'name': school.name,
+        'slug': school.slug
+      }
+    }
+
+    return response_data, 200, {'quokka-user': auth_util.serialize_token(token.id, secret)}
