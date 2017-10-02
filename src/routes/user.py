@@ -3,7 +3,7 @@ from flask_restplus import Resource, fields
 import os
 import urllib
 from src import dbi
-from src.helpers import auth_util, user_validation
+from src.helpers import auth_util, user_validation, decode_url_encoded_str
 from src.helpers.user_helper import current_user
 from src.models import User, Token, School
 from src.routes import namespace, api
@@ -194,7 +194,7 @@ class VerifyDemoToken(Resource):
   @namespace.expect(verify_demo_token_model, validate=True)
   def post(self):
     demo_token = os.environ.get('DEMO_TOKEN')
-    submitted_token = urllib.unquote(api.payload['token'])
+    submitted_token = decode_url_encoded_str(api.payload['token'])
 
     if not auth_util.verify_pw(submitted_token, demo_token):
       return '', 403
