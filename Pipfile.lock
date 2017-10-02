@@ -26,7 +26,8 @@
         "pytz": "*",
         "requests": "*",
         "sendgrid": "*",
-        "tzlocal": "*"
+        "tzlocal": "*",
+        "python_http_client": "*"
     },
     "develop": {
         "coverage": "*",
