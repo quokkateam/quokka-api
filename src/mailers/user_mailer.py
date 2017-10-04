@@ -6,10 +6,18 @@ config = get_config()
 
 
 def complete_account(user, delay=True):
+  encoded_secret = url_encode_str(user.email_verification_secret)
+  link = '{}/verify-email/{}/{}'.format(config.URL, user.id, encoded_secret)
+
+  vars = {
+    'name': user.name.split(' ')[0],
+    'link': link
+  }
+
   return send_email(
     to=user.email,
     subject='Complete Your Account',
-    template_vars={'name': user.name},
+    template_vars=vars,
     delay=delay
   )
 
@@ -25,7 +33,7 @@ def reset_password(user, delay=True):
 
   return send_email(
     to=user.email,
-    subject='BLah Your Password',
+    subject='Reset Your Password',
     template_vars=vars,
     delay=delay
   )

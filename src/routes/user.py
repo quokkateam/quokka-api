@@ -93,7 +93,9 @@ class VerifyEmail(Resource):
   def post(self):
     user = dbi.find_one(User, {'id': api.payload['userId']})
 
-    if not user or not auth_util.verify_secret(api.payload['token'], user.email_verification_secret) or user.email_verified:
+    provided_token = decode_url_encoded_str(api.payload['token'])
+
+    if not user or not auth_util.verify_secret(provided_token, user.email_verification_secret) or user.email_verified:
       return '', 401
 
     user = dbi.update(user, {'email_verified': True})
