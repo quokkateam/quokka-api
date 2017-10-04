@@ -16,6 +16,7 @@ class User(db.Model):
   school_id = db.Column(db.Integer, db.ForeignKey('school.id'), index=True, nullable=False)
   school = db.relationship('School', backref='users')
   is_admin = db.Column(db.Boolean(), default=False)
+  reset_pw_secret = db.Column(db.String(64))
   is_destroyed = db.Column(db.Boolean(), default=False)
   created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 

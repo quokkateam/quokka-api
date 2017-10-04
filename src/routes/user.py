@@ -1,14 +1,11 @@
 from flask_restplus import Resource, fields
-
 import os
-import urllib
 from src import dbi
 from src.helpers import auth_util, user_validation, decode_url_encoded_str
 from src.helpers.user_helper import current_user
 from src.models import User, Token, School
 from src.routes import namespace, api
 from src.mailers import user_mailer
-
 
 create_user_model = api.model('User', {
   'email': fields.String(required=True),
@@ -22,6 +19,15 @@ verify_email_model = api.model('VerifyEmail', {
 })
 
 verify_demo_token_model = api.model('VerifyDemoToken', {
+  'token': fields.String(required=True)
+})
+
+trigger_forgot_pw_email_model = api.model('TriggerForgotPwEmail', {
+  'email': fields.String(required=True)
+})
+
+forgot_pw_model = api.model('ForgotPassword', {
+  'userId': fields.Integer(required=True),
   'token': fields.String(required=True)
 })
 
@@ -85,12 +91,9 @@ class VerifyEmail(Resource):
   @namespace.doc('verify_email')
   @namespace.expect(verify_email_model, validate=True)
   def post(self):
-    user_id = api.payload['userId']
-    email_secret = api.payload['token']
+    user = dbi.find_one(User, {'id': api.payload['userId']})
 
-    user = dbi.find_one(User, {'id': user_id})
-
-    if not user or not auth_util.verify_secret(email_secret, user.email_verification_secret) or user.email_verified:
+    if not user or not auth_util.verify_secret(api.payload['token'], user.email_verification_secret) or user.email_verified:
       return '', 401
 
     user = dbi.update(user, {'email_verified': True})
@@ -200,6 +203,66 @@ class VerifyDemoToken(Resource):
       return '', 403
 
     user = dbi.find_one(User, {'email': 'demouser@demo.edu'})
+
+    secret = auth_util.fresh_secret()
+    token = dbi.create(Token, {'user': user, 'secret': secret})
+    school = user.school
+
+    response_data = {
+      'user': {
+        'name': user.name,
+        'email': user.email,
+        'isAdmin': user.is_admin
+      },
+      'school': {
+        'name': school.name,
+        'slug': school.slug
+      }
+    }
+
+    return response_data, 200, {'quokka-user': auth_util.serialize_token(token.id, secret)}
+
+
+@namespace.route('/trigger_forgot_pw_email')
+class TriggerForgotPwEmail(Resource):
+  """Send reset password email to user."""
+
+  @namespace.doc('trigger_forgot_pw_email')
+  @namespace.expect(trigger_forgot_pw_email_model, validate=True)
+  def post(self):
+    email = api.payload['email']
+    user = dbi.find_one(User, {'email': email})
+
+    if not user:
+      return '', 400
+
+    # Give user a reset password token
+    user = dbi.update(user, {'reset_pw_secret': auth_util.fresh_secret()})
+
+    # Send user an email with a link to reset pw
+    user_mailer.reset_password(user)
+
+    return '', 200
+
+
+@namespace.route('/forgot_password')
+class ForgotPassword(Resource):
+  """Validate a user's reset_pw_secret"""
+
+  @namespace.doc('forgot_password')
+  @namespace.expect(forgot_pw_model, validate=True)
+  def post(self):
+    user = dbi.find_one(User, {'id': api.payload['userId']})
+
+    if not user or not user.reset_pw_secret:
+      return '', 401
+
+    provided_token = decode_url_encoded_str(api.payload['token'])
+
+    if not auth_util.verify_secret(provided_token, user.reset_pw_secret):
+      return '', 401
+
+    user = dbi.update(user, {'reset_pw_secret': None})
 
     secret = auth_util.fresh_secret()
     token = dbi.create(Token, {'user': user, 'secret': secret})
