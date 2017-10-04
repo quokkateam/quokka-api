@@ -2,6 +2,7 @@ from flask_restplus import Resource
 from src.routes import namespace, api
 from src.helpers.user_helper import current_user
 from src.helpers.check_in_helper import format_questions
+from src.helpers.challenge_helper import current_week_num
 from operator import attrgetter
 from src import dbi, logger
 from src.models import CheckIn, CheckInAnswer
@@ -33,6 +34,57 @@ class GetCheckIn(Resource):
       'id': check_in.id,
       'challengeName': challenge.name,
       'questions': questions
+    }
+
+
+@namespace.route('/check_ins')
+class GetCheckIns(Resource):
+  """Fetch all school check_ins for /challenges#check-ins page"""
+
+  @namespace.doc('get_check_ins_for_school')
+  def get(self):
+    user = current_user()
+
+    if not user:
+      return '', 403
+
+    challenges = sorted(user.school.active_challenges(), key=attrgetter('start_date'))
+    challenge_ids = [c.id for c in challenges]
+
+    curr_week_num = current_week_num(challenges)
+
+    # TODO: Eager-load all of this
+
+    check_ins = dbi.find_all(CheckIn, {'challenge_id': challenge_ids})
+    check_ins_map = {c.challenge_id: c for c in check_ins}
+
+    check_in_answers_map = {a.check_in_question_id: a for a in user.check_in_answers}
+
+    formatted_check_ins = []
+    i = 1
+    for c in challenges:
+      check_in = check_ins_map[c.id]
+      check_in_questions = check_in.check_in_questions
+      num_questions = len(check_in_questions)
+
+      num_answers = 0
+      for q in check_in_questions:
+        if check_in_answers_map.get(q.id):
+          num_answers += 1
+
+      data = {
+        'challengeName': c.name,
+        'weekNum': i,
+        'numQuestions': num_questions,
+        'numAnswers': num_answers
+      }
+
+      formatted_check_ins.append(data)
+      i += 1
+
+    return {
+      'checkIns': formatted_check_ins,
+      'weekNum': curr_week_num
     }
 
 
@@ -93,3 +145,4 @@ class SaveUserCheckIn(Resource):
     questions = format_questions(check_in, user)
 
     return questions
+
