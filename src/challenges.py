@@ -11,7 +11,11 @@ universal_challenge_info = {
     ],
     'links': [],
     'extra_info': '',
-    'check_in_questions': [],
+    'check_in_questions': [
+      'How did you feel about this week\'s challenge?',
+      'Did you notice anything new about yourself?',
+      'Any other thoughts or feedback on this week or the program?'
+    ],
     'preview_text': 'Social support plays an important role in our behaviors, interactions, self-image, and how we respond to stress.'
   },
   'exercise': {
@@ -89,7 +93,11 @@ universal_challenge_info = {
     ],
     'links': [],
     'extra_info': '',
-    'check_in_questions': [],
+    'check_in_questions': [
+      'How did you feel about this week\'s challenge?',
+      'Did you notice anything new about yourself?',
+      'Any other thoughts or feedback on this week or the program?'
+    ],
     'preview_text': 'A positive feedback loop exists between kindness and happiness - the more you do to make other people feel better, the more your own happiness increases!'
   },
   'healthy-eating': {
@@ -104,7 +112,11 @@ universal_challenge_info = {
     ],
     'links': [],
     'extra_info': '',
-    'check_in_questions': [],
+    'check_in_questions': [
+      'How did you feel about this week\'s challenge?',
+      'Did you notice anything new about yourself?',
+      'Any other thoughts or feedback on this week or the program?'
+    ],
     'preview_text': 'Healthy eating has multiple benefits for you. It can help you stay in shape, increase your energy, and boost your immune system.'
   },
   'journaling': {
@@ -119,7 +131,11 @@ universal_challenge_info = {
     ],
     'links': [],
     'extra_info': '',
-    'check_in_questions': [],
+    'check_in_questions': [
+      'How did you feel about this week\'s challenge?',
+      'Did you notice anything new about yourself?',
+      'Any other thoughts or feedback on this week or the program?'
+    ],
     'preview_text': 'Physically logging your days and putting your thoughts on paper can be great for organizing thoughts.'
   },
   'campus-selected-challenge': {
@@ -134,7 +150,11 @@ universal_challenge_info = {
     ],
     'links': [],
     'extra_info': '',
-    'check_in_questions': [],
+    'check_in_questions': [
+      'How did you feel about this week\'s challenge?',
+      'Did you notice anything new about yourself?',
+      'Any other thoughts or feedback on this week or the program?'
+    ],
     'preview_text': 'Goal setting is important for your short-term motivation and long term vision. During your week off, come up with a challenge amongst your friends and see how well you can stick to it!'
   },
   'sleep': {
@@ -149,7 +169,11 @@ universal_challenge_info = {
     ],
     'links': [],
     'extra_info': '',
-    'check_in_questions': [],
+    'check_in_questions': [
+      'How did you feel about this week\'s challenge?',
+      'Did you notice anything new about yourself?',
+      'Any other thoughts or feedback on this week or the program?'
+    ],
     'preview_text': 'We all underestimate how big of an impact getting a good night\'s sleep can have on our overall health and happiness.'
   },
   'positivity-mindfulness': {
@@ -164,7 +188,11 @@ universal_challenge_info = {
     ],
     'links': [],
     'extra_info': '',
-    'check_in_questions': [],
+    'check_in_questions': [
+      'How did you feel about this week\'s challenge?',
+      'Did you notice anything new about yourself?',
+      'Any other thoughts or feedback on this week or the program?'
+    ],
     'preview_text': 'Thinking positively and being mindful of one\'s emotions are great habits for anyone to develop during his or her long-term pursuit of happiness.'
   }
 }

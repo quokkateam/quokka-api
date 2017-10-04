@@ -54,7 +54,6 @@ class GetCheckIns(Resource):
     curr_week_num = current_week_num(challenges)
 
     # TODO: Eager-load all of this
-
     check_ins = dbi.find_all(CheckIn, {'challenge_id': challenge_ids})
     check_ins_map = {c.challenge_id: c for c in check_ins}
 
