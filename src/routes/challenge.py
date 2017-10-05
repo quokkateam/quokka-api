@@ -11,6 +11,7 @@ from src import dbi, logger
 from src.models import Challenge
 from src.helpers.error_codes import CHALLENGE_NOT_EXIST, INVALID_CHALLENGE_ACCESS
 
+
 update_challenge_section_model = api.model('Challenge', {
   'id': fields.Integer(required=True),
   'text': fields.String(required=True),
