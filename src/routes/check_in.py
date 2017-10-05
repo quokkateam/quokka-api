@@ -6,6 +6,7 @@ from src.helpers.challenge_helper import current_week_num
 from operator import attrgetter
 from src import dbi, logger
 from src.models import CheckIn, CheckInAnswer
+from datetime import date
 
 
 @namespace.route('/check_in/<int:week_num>')
@@ -21,8 +22,13 @@ class GetCheckIn(Resource):
 
     challenges = sorted(user.school.active_challenges(), key=attrgetter('start_date'))
 
-    # Find the challenge requested by week index
+    curr_week_num = current_week_num(challenges)
     challenge = challenges[week_num - 1]
+
+    # If requesting future check_in or
+    # requesting first check_in but challenges haven't started yet, error out
+    if week_num > curr_week_num or (week_num == 1 and date.today() < challenge.start_date.date()):
+      return '', 403
 
     # Get the CheckIn from the Challenge
     check_in = challenge.check_in
@@ -81,9 +87,14 @@ class GetCheckIns(Resource):
       formatted_check_ins.append(data)
       i += 1
 
+    launched = True
+    if date.today() < challenges[0].start_date.date():
+      launched = False
+
     return {
       'checkIns': formatted_check_ins,
-      'weekNum': curr_week_num
+      'weekNum': curr_week_num,
+      'launched': launched
     }
 
 
