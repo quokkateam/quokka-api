@@ -11,3 +11,4 @@ from src.routes.challenge import *
 from src.routes.prize import *
 from src.routes.sponsor import *
 from src.routes.check_in import *
+from src.routes.weekly_email import *
