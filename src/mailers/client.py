@@ -5,7 +5,7 @@ import inspect
 from sendgrid.helpers.mail import *
 from src import delayed, logger
 from src.helpers.definitions import templates_dir
-from mako.template import Template
+from src.helpers.template_helper import template_as_str
 
 sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
 
@@ -28,8 +28,7 @@ def send_email(to=None, subject=None, from_email='team@quokkachallenge.com', tem
       logger.error('Error finding template at {}. Not sending email.'.format(template_path))
       return False
 
-    t = Template(filename=template_path)
-    template = t.render(**template_vars)
+    template = template_as_str(template_path, template_vars)
   except BaseException:
     logger.error('Error configuring email template')
     return False
@@ -61,6 +60,7 @@ def perform(to, subject, content, from_email):
     logger.info('Sending email from {} to {}...'.format(from_obj.email, to_obj.email))
     resp = sg.client.mail.send.post(request_body=mail.get())
   except BaseException:
+    logger.error('Error sending email to {}'.format(to_obj.email))
     return False
 
   if resp.status_code not in [200, 202]:
