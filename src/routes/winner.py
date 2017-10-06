@@ -6,7 +6,7 @@ from src.helpers.winner_helper import formatted_winners
 from src import dbi
 from operator import attrgetter
 from datetime import date
-from src.models import Winner
+from src.models import Winner, User
 from src.mailers import challenge_mailer
 
 choose_winners_model = api.model('Winner', {
@@ -53,11 +53,18 @@ class RestfulWinners(Resource):
     if challenge.start_date.date() > date.today():
       return '', 401
 
-    past_winners = dbi.find_all(Winner, {
+    past_winners = [w.user_id for w in dbi.find_all(Winner, {
       'challenge_id': [c.id for c in school_challenges]
-    })
+    })]
 
-    potential_winners = [u for u in school.users if u not in past_winners]
+    # Question: Can admins win prizes too, or should we filter them out?
+
+    potential_winner_user_ids = [u.id for u in school.users if u.id not in past_winners]
+
+    if len(potential_winner_user_ids) == 0:
+      return 'Everyone has already won!', 501
+
+    potential_winners = dbi.find_all(User, {'id': potential_winner_user_ids})
 
     num_winners = len(challenge.prizes)
 

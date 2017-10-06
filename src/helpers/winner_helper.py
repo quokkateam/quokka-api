@@ -1,5 +1,7 @@
 from src.helpers.challenge_helper import current_week_num
 from datetime import date
+from src import dbi
+from src.models import User
 
 
 def formatted_winners(challenges):
@@ -27,8 +29,8 @@ def formatted_winners(challenges):
     if i > curr_week_num:
       winners = []
     else:
-      # unclear how winners are gonna be associated to prizes atm
-      winners = [{'name': w.name, 'email': w.email} for w in c.winners]
+      users = dbi.find_all(User, {'id': [w.user_id for w in c.winners]})
+      winners = [{'name': u.name, 'email': u.email} for u in users]
 
     data['winners'] = winners
 
