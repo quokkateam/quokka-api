@@ -1,7 +1,7 @@
 from flask_restplus import Resource
 from src.routes import namespace, api
 from src.helpers.user_helper import current_user
-from src.helpers.check_in_helper import format_questions
+from src.helpers.check_in_helper import format_questions, format_response_overviews
 from src.helpers.challenge_helper import current_week_num
 from operator import attrgetter
 from src import dbi, logger
@@ -156,3 +156,20 @@ class SaveUserCheckIn(Resource):
 
     return questions
 
+
+@namespace.route('/check_ins/response_overviews')
+class GetCheckInResponseOverviews(Resource):
+  """Get response overviews for check_in responses"""
+
+  @namespace.doc('get_check_in_response_overviews')
+  def get(self):
+    user = current_user()
+
+    if not user or not user.is_admin:
+      return '', 403
+
+    challenges = sorted(user.school.active_challenges(), key=attrgetter('start_date'))
+
+    resp = format_response_overviews(challenges)
+
+    return resp
