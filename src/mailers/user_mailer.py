@@ -37,3 +37,17 @@ def reset_password(user, delay=True):
     template_vars=vars,
     delay=delay
   )
+
+
+def invite_user(from_user, to_email, delay=True):
+  vars = {
+    'from_user_name': from_user.name,
+    'school_name': from_user.school.name
+  }
+
+  return send_email(
+    to=to_email,
+    subject='You\'ve been invited to join Quokka!',
+    template_vars=vars,
+    delay=delay
+  )
