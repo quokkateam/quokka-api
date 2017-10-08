@@ -1,4 +1,3 @@
-import urllib
 from flask import request
 from src.helpers.auth_util import unserialize_token
 from src.dbi import find_one

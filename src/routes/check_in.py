@@ -1,7 +1,7 @@
 from flask_restplus import Resource
 from src.routes import namespace, api
 from src.helpers.user_helper import current_user
-from src.helpers.check_in_helper import format_questions, format_response_overviews
+from src.helpers.check_in_helper import *
 from src.helpers.challenge_helper import current_week_num
 from operator import attrgetter
 from src import dbi, logger
@@ -171,5 +171,31 @@ class GetCheckInResponseOverviews(Resource):
     challenges = sorted(user.school.active_challenges(), key=attrgetter('start_date'))
 
     resp = format_response_overviews(challenges)
+
+    return resp
+
+
+@namespace.route('/check_ins/responses/download/<int:check_in_id>')
+class DownloadCheckInResponses(Resource):
+  """Download Check-in responses"""
+
+  @namespace.doc('download_check_in_responses')
+  def get(self, check_in_id):
+    user = current_user()
+
+    if not user or not user.is_admin:
+      return '', 403
+
+    check_in = dbi.find_one(CheckIn, {'id': check_in_id})
+
+    if not check_in:
+      return '', 404
+
+    csv_data = format_csv_responses(check_in)
+
+    resp = {
+      'content': csv_data,
+      'filename': 'check-in-responses-{}.csv'.format(check_in.challenge.slug)
+    }
 
     return resp
