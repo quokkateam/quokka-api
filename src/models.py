@@ -225,7 +225,7 @@ class Winner(db.Model):
   created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
   def __init__(self, user=None, prize=None, prize_id=None):
-    if prize:
+    if prize_id:
       self.prize_id = prize_id
     else:
       self.prize = prize

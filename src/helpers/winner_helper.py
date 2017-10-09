@@ -28,13 +28,35 @@ def formatted_winners(challenges):
 
     user_info = []
     if i <= curr_week_num:
-      winners = []
-      for p in c.prizes:
-        winners += p.winners
+      prizes = c.prizes
 
-      users = dbi.find_all(User, {'id': [w.user_id for w in winners]})
+      if prizes:
+        for p in prizes:
+          winners = p.winners
 
-      user_info = [{'name': u.name, 'email': u.email} for u in users]
+          if not winners:
+            continue
+
+          users = dbi.find_all(User, {'id': [w.user_id for w in winners]})
+
+          sponsor = p.sponsor
+
+          for u in users:
+            user_info.append({
+              'user': {
+                'name': u.name,
+                'email': u.email
+              },
+              'prize': {
+                'name': p.name
+              },
+              'sponsor': {
+                'name': sponsor.name,
+                'logo': sponsor.logo
+              }
+            })
+      else:
+        data['noPrizes'] = True
 
     data['winners'] = user_info
 
