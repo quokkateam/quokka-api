@@ -1,4 +1,4 @@
-import logging
+from logging import StreamHandler, FileHandler, INFO
 import sys
 import os
 from flask import Flask
@@ -12,19 +12,11 @@ app.config.from_object(get_config())
 
 # Set up logging
 if is_prod():
-  app.logger.addHandler({
-    'handlers': {
-      'console': {
-        'level': 'INFO',
-        'class': 'logging.StreamHandler',
-        'strm': sys.stdout
-      }
-    }
-  })
+  app.logger.addHandler(StreamHandler(sys.stdout))
 else:
-  app.logger.addHandler(logging.FileHandler('main.log'))
-  app.logger.setLevel(logging.INFO)
+  app.logger.addHandler(FileHandler('main.log'))
 
+app.logger.setLevel(INFO)
 logger = app.logger
 
 # Create and start our delayed job scheduler
