@@ -12,9 +12,14 @@ def weekly_challenge(user=None, vars={}, template_path=None, delay=True):
 
 
 def congratulate_winner(challenge, user, delay=True):
+  prize = None # which prize did they win?
+
   vars = {
     'name': user.name.split(' ')[0],
     'challenge_name': challenge.name,
+    'sponsorName': '',
+    'sponsorLogo': '',
+    'prizeName': ''
   }
 
   return send_email(
