@@ -1,6 +1,8 @@
 from flask_restplus import Resource, fields
 import os
-from src import dbi, logger
+from operator import attrgetter
+from datetime import date
+from src import dbi
 from src.helpers import auth_util, user_validation, decode_url_encoded_str
 from src.helpers.user_helper import current_user
 from src.models import User, Token, School
@@ -73,6 +75,9 @@ class CreateUser(Resource):
 
     user = dbi.find_one(User, {'email': email})
 
+    challenges = sorted(school.active_challenges(), key=attrgetter('start_date'))
+    launched = len(challenges) > 0 and date.today() >= challenges[0].start_date.date() and school.launchable
+
     # If user doesn't exist yet, create him
     if not user:
       user = dbi.create(User, {
@@ -81,11 +86,13 @@ class CreateUser(Resource):
         'school': school
       })
 
-      # Send email verification
-      if user_mailer.complete_account(user):
-        dbi.update(user, {'email_verification_sent': True})
+      if launched:
+        email_sent = user_mailer.complete_account(user)
 
-    return '', 201
+        if email_sent:
+          dbi.update(user, {'email_verification_sent': True})
+
+    return {'launched': launched}, 201
 
 
 @namespace.route('/verify_email')

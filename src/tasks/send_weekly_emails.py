@@ -65,7 +65,7 @@ def format_weekly_email_vars(challenge, week_num):
   }
 
 
-schools = dbi.find_all(School)
+schools = dbi.find_all(School, {'launchable': True})
 
 logger.info('Checking if weekly emails should be sent for {} schools...'.format(len(schools)))
 
