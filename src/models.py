@@ -54,18 +54,20 @@ class School(db.Model):
   slug = db.Column(db.String(120), index=True)
   domains = db.Column(JSON, default=[])
   is_demo = db.Column(db.Boolean(), default=False)
+  redeem_prize_email = db.Column(db.String(120))
   is_destroyed = db.Column(db.Boolean(), default=False)
   created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
-  def __init__(self, name, domains=[], is_demo=False):
+  def __init__(self, name, domains=[], is_demo=False, redeem_prize_email=None):
     self.name = name
     self.slug = slugify(name, separator='-', to_lower=True)
     self.domains = domains
     self.is_demo = is_demo
+    self.redeem_prize_email = redeem_prize_email
 
   def __repr__(self):
-    return '<School id={}, name={}, slug={}, domains={}, is_demo={}, is_destroyed={}, created_at={}>'.format(
-      self.id, self.name, self.slug, self.domains, self.is_demo, self.is_destroyed, self.created_at)
+    return '<School id={}, name={}, slug={}, domains={}, is_demo={}, redeem_prize_email={}, is_destroyed={}, created_at={}>'.format(
+      self.id, self.name, self.slug, self.domains, self.is_demo, self.redeem_prize_email, self.is_destroyed, self.created_at)
 
   def active_users(self):
     return [u for u in self.users if not u.is_destroyed]
