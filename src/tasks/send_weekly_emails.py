@@ -4,43 +4,7 @@ from src import dbi, logger
 from datetime import date
 from src.mailers.challenge_mailer import weekly_challenge
 from src.helpers.definitions import templates_dir
-
-
-# Make this run every day at X time
-def perform():
-  schools = dbi.find_all(School)
-
-  logger.info('Checking if weekly emails should be sent for {} schools...'.format(len(schools)))
-
-  for school in schools:
-    challenge_info = find_newly_started_challenge(school)
-
-    if not challenge_info:
-      logger.info('Not today -- {}'.format(school.name))
-      continue
-
-    challenge, week_num = challenge_info
-
-    logger.info('New Challenge Detected ({}) for {}...'.format(challenge.name, school.name))
-
-    users = school.active_users()
-
-    weekly_email_info = format_weekly_email_vars(challenge, week_num)
-
-    logger.info('Sending emails to {} users at {}...'.format(len(users), school.name))
-
-    template_path = '{}/challenge_mailer/weekly_challenges/{}.html'.format(templates_dir, challenge.slug)
-
-    failures = []
-    for user in users:
-      success = weekly_challenge(user, weekly_email_info, template_path=template_path, delay=False)
-
-      if not success:
-        failures.append(user.email)
-
-    logger.info('Emails Sent with {} Failures: {}'.format(len(failures), ','.join(failures)))
-
-  logger.info('DONE.')
+from markdown2 import markdown
 
 
 def find_newly_started_challenge(school):
@@ -74,8 +38,42 @@ def format_weekly_email_vars(challenge, week_num):
   return {
     'week_num': week_num,
     'name': challenge.name,
-    'challenge': challenge.text,
+    'slug': challenge.slug,
+    'challenge': markdown(challenge.text),
     'suggestions': challenge.suggestions,
-    'prizes': prizes,
-    'overview': 'Challenge Overview'
+    'prizes': prizes
   }
+
+schools = dbi.find_all(School)
+
+logger.info('Checking if weekly emails should be sent for {} schools...'.format(len(schools)))
+
+for school in schools:
+  challenge_info = find_newly_started_challenge(school)
+
+  if not challenge_info:
+    logger.info('Not today -- {}'.format(school.name))
+    continue
+
+  challenge, week_num = challenge_info
+
+  logger.info('New Challenge Detected ({}) for {}...'.format(challenge.name, school.name))
+
+  users = school.active_users()
+
+  weekly_email_info = format_weekly_email_vars(challenge, week_num)
+
+  logger.info('Sending emails to {} users at {}...'.format(len(users), school.name))
+
+  template_path = '{}/challenge_mailer/weekly_challenges/{}.html'.format(templates_dir, challenge.slug)
+
+  failures = []
+  for user in users:
+    success = weekly_challenge(user, weekly_email_info, template_path=template_path, delay=False)
+
+    if not success:
+      failures.append(user.email)
+
+  logger.info('Emails Sent with {} Failures: {}'.format(len(failures), ','.join(failures)))
+
+logger.info('DONE.')
