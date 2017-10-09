@@ -5,11 +5,34 @@ universal_challenge_info = {
     'icon': 'https://s3-us-west-1.amazonaws.com/quokkadev/images/socialize-green.png',
     'overview': [
       {
-        'title': '',
-        'content': ''
-      }
+        'title': 'Ok...so it\’s obvious I should socialize, right?',
+        'content': """Yes! This week is as easy as it sounds. It’s important to have a strong support network, 
+        especially during times of stress (whether it’s a bad day at work, a bad week, or a bad month). 
+        Having close friends and family to talk to and a close group of people to support and care for you 
+        will have far-reaching benefits for your health. See this week as an opportunity to foster meaningful 
+        relationships —- with old friends or new ones!"""
+      },
+      {
+        'title': 'What are the health benefits?',
+        'content': """Positive social support can affect your ability to make healthier choices. 
+        The friends you spend time with regularly affect your decision making, and knowing you have people 
+        to rely on will have emotional and physical benefits. It seems obvious, but having an increased sense of 
+        security and belonging will help you feel much better and improve your overall well-being."""
+      },
+      {
+        'title': 'What are some easy ways to get started?',
+        'content': """Start by reaching out to old friends you haven’t talked to in awhile -— schedule a call and stick to it! 
+        If you already see close friends regularly, try having a more purposeful hangout by talking more deeply 
+        (ask them to talk about their week, if there’s anything on their mind, etc.)."""
+      },
     ],
-    'links': [],
+    'links': [
+      'https://blogs.scientificamerican.com/streams-of-consciousness/the-importance-of-being-social/',
+      'https://www.jhsph.edu/research/centers-and-institutes/johns-hopkins-center-for-health-equity/about/influences_on_health/family_social_support.html' ,
+      'https://www.ncbi.nlm.nih.gov/pubmed/3901065' ,
+      'http://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.1000316' ,
+      'https://well.blogs.nytimes.com/2010/03/17/talk-deeply-be-happy/?_r=0'
+],
     'extra_info': '',
     'check_in_questions': [
       'How did you feel about this week\'s challenge?',
