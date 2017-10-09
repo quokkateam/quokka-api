@@ -30,9 +30,9 @@ def format_weekly_email_vars(challenge, week_num):
     sponsor = p.sponsor
 
     prizes.append({
-      'prizeName': p.name,
-      'sponsorName': sponsor.name,
-      'sponsorLogo': sponsor.logo
+      'prize_name': p.name,
+      'sponsor_name': sponsor.name,
+      'sponsor_logo': sponsor.logo
     })
 
   return {

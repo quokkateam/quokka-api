@@ -6,7 +6,7 @@ from src.helpers.winner_helper import formatted_winners
 from src import dbi
 from operator import attrgetter
 from datetime import date
-from src.models import Winner, User
+from src.models import Winner, User, Prize
 from src.mailers import challenge_mailer
 
 choose_winners_model = api.model('Winner', {
@@ -47,38 +47,56 @@ class RestfulWinners(Resource):
     else:
       return 'Challenge Not Found', 404
 
-    if challenge.winners:
-      return 'Winners have already been selected for this challenge', 500
-
     if challenge.start_date.date() > date.today():
       return '', 401
 
-    past_winners = [w.user_id for w in dbi.find_all(Winner, {
+    prizes = challenge.prizes
+
+    # Make sure winners haven't already been chosen
+    challenge_winners = dbi.find_all(Winner, {
+      'prize_id': [p.id for p in prizes]
+    })
+
+    if challenge_winners:
+      return 'Winners already chosen for this challenge', 500
+
+    all_challenge_prizes = dbi.find_all(Prize, {
       'challenge_id': [c.id for c in school_challenges]
-    })]
+    })
 
-    # Question: Can admins win prizes too, or should we filter them out?
+    past_winners = []
+    for p in all_challenge_prizes:
+      past_winners += p.winners
 
-    potential_winner_user_ids = [u.id for u in school.users if u.id not in past_winners]
+    past_winner_users = dbi.find_all(User, {'id': [w.user_id for w in past_winners]})
 
-    if len(potential_winner_user_ids) == 0:
+    potential_winner_user_ids = [u.id for u in school.users if u.id not in past_winner_users]
+
+    if not potential_winner_user_ids:
       return 'Everyone has already won!', 501
 
     potential_winners = dbi.find_all(User, {'id': potential_winner_user_ids})
 
-    num_winners = len(challenge.prizes)
+    prize_ids_for_winners = []
+    for p in prizes:
+      prize_ids_for_winners += ([p.id] * p.count)
 
-    winners = random_subset(potential_winners, num_winners)
+    winning_users = random_subset(potential_winners, len(prize_ids_for_winners))
 
-    for winner in winners:
+    i = 0
+    for u in winning_users:
+      prize_id = prize_ids_for_winners[i]
+
       # Create the winner
-      dbi.create(Winner, {
-        'challenge': challenge,
-        'user': winner
+      winner = dbi.create(Winner, {
+        'user': u,
+        'prize_id': prize_id
       })
 
       # Send the winner an email congratulating him/her
-      challenge_mailer.congratulate_winner(challenge, winner)
+      challenge_mailer.congratulate_winner(challenge, winner.prize, u, school)
+
+      i += 1
 
     data = formatted_winners(school_challenges)
 

@@ -139,17 +139,19 @@ class Prize(db.Model):
   sponsor_id = db.Column(db.Integer, db.ForeignKey('sponsor.id'), index=True, nullable=False)
   sponsor = db.relationship('Sponsor', backref='prizes')
   name = db.Column(db.String(240), nullable=False)
+  count = db.Column(db.Integer, default=1)
   is_destroyed = db.Column(db.Boolean(), default=False)
   created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
-  def __init__(self, challenge, sponsor, name):
+  def __init__(self, challenge, sponsor, name, count):
     self.challenge = challenge
     self.sponsor = sponsor
     self.name = name
+    self.count = count
 
   def __repr__(self):
-    return '<Prize id={}, challenge_id={}, sponsor_id={}, name={}, is_destroyed={}, created_at={}>'.format(
-      self.id, self.challenge_id, self.sponsor_id, self.name, self.is_destroyed, self.created_at)
+    return '<Prize id={}, challenge_id={}, sponsor_id={}, name={}, count={} is_destroyed={}, created_at={}>'.format(
+      self.id, self.challenge_id, self.sponsor_id, self.name, self.count, self.is_destroyed, self.created_at)
 
 
 class CheckIn(db.Model):
@@ -215,21 +217,21 @@ class CheckInAnswer(db.Model):
 
 class Winner(db.Model):
   id = db.Column(db.Integer, primary_key=True)
-  challenge_id = db.Column(db.Integer, db.ForeignKey('challenge.id'), index=True, nullable=False)
-  challenge = db.relationship('Challenge', backref='winners')
   user_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True, nullable=False)
   user = db.relationship('User', backref='winners')
+  prize_id = db.Column(db.Integer, db.ForeignKey('prize.id'), index=True, nullable=False)
+  prize = db.relationship('Prize', backref='winners')
   is_destroyed = db.Column(db.Boolean(), default=False)
   created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
-  def __init__(self, challenge=None, user=None, challenge_id=None):
-    if challenge_id:
-      self.challenge_id = challenge_id
+  def __init__(self, user=None, prize=None, prize_id=None):
+    if prize_id:
+      self.prize_id = prize_id
     else:
-      self.challenge = challenge
+      self.prize = prize
 
     self.user = user
 
   def __repr__(self):
-    return '<Winner id={}, challenge_id={}, user_id={}, is_destroyed={}, created_at={}>'.format(
-      self.id, self.challenge_id, self.user_id, self.is_destroyed, self.created_at)
+    return '<Winner id={}, user_id={}, prize_id={}, is_destroyed={}, created_at={}>'.format(
+      self.id, self.user_id, self.prize_id, self.is_destroyed, self.created_at)
