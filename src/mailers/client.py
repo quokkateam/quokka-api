@@ -13,16 +13,16 @@ email_override = os.environ.get('MAIL_TO_OVERRIDE')
 perform_deliveries = bool(re.match('true', os.environ.get('MAILER_PERFORM_DELIVERIES') or '', re.I))
 
 
-def send_email(to=None, subject=None, from_email='team@quokkachallenge.com', template_vars={}, template_path=None, delay=True):
+def send_email(to=None, subject=None, from_email='team@quokkachallenge.com', template_vars={}, delay=True):
   template = None
 
   try:
-    if not template_path:
-      stack = inspect.stack()
-      caller = stack[1]
-      mailer = caller[1].split('/')[-1][:-3]
-      method = caller[3]
-      template_path = '{}/{}/{}.html'.format(templates_dir, mailer, method)
+    stack = inspect.stack()
+    caller = stack[1]
+    mailer = caller[1].split('/')[-1][:-3]
+    method = caller[3]
+
+    template_path = '{}/{}/{}.html'.format(templates_dir, mailer, method)
 
     if not os.path.exists(template_path):
       logger.error('Error finding template at {}. Not sending email.'.format(template_path))

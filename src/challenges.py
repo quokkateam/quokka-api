@@ -16,7 +16,11 @@ universal_challenge_info = {
       'Did you notice anything new about yourself?',
       'Any other thoughts or feedback on this week or the program?'
     ],
-    'preview_text': 'Social support plays an important role in our behaviors, interactions, self-image, and how we respond to stress.'
+    'preview_text': 'Social support plays an important role in our behaviors, interactions, self-image, and how we respond to stress.',
+    'email': {
+      'science': '',
+      'welcome_text': ''
+    }
   },
   'exercise': {
     'defaultIndex': 1,
@@ -79,7 +83,11 @@ universal_challenge_info = {
       'Did you notice anything new about yourself?',
       'Any other thoughts or feedback on this week or the program?'
     ],
-    'preview_text': 'Science has proven that even small amounts of exercise can lead to significant changes in both physical and mental health.'
+    'preview_text': 'Science has proven that even small amounts of exercise can lead to significant changes in both physical and mental health.',
+    'email': {
+      'science': 'Regular physical activity is important for increasing energy and focus, strengthening bones and muscles, and increasing longevity. It\'ll also help you manage stress and anxiety and reduce your risk of cardiovascular disease and obesity. Even our perceptions and mindsets on how physically active we are can predict health and longevity in the domains of stress, diet, and obesity.',
+      'welcome_text': 'Let\'s get moving!'
+    }
   },
   'good-deeds': {
     'defaultIndex': 2,
@@ -98,7 +106,11 @@ universal_challenge_info = {
       'Did you notice anything new about yourself?',
       'Any other thoughts or feedback on this week or the program?'
     ],
-    'preview_text': 'A positive feedback loop exists between kindness and happiness - the more you do to make other people feel better, the more your own happiness increases!'
+    'preview_text': 'A positive feedback loop exists between kindness and happiness - the more you do to make other people feel better, the more your own happiness increases!',
+    'email': {
+      'science': '',
+      'welcome_text': ''
+    }
   },
   'healthy-eating': {
     'defaultIndex': 3,
@@ -117,7 +129,11 @@ universal_challenge_info = {
       'Did you notice anything new about yourself?',
       'Any other thoughts or feedback on this week or the program?'
     ],
-    'preview_text': 'Healthy eating has multiple benefits for you. It can help you stay in shape, increase your energy, and boost your immune system.'
+    'preview_text': 'Healthy eating has multiple benefits for you. It can help you stay in shape, increase your energy, and boost your immune system.',
+    'email': {
+      'science': '',
+      'welcome_text': ''
+    }
   },
   'journaling': {
     'defaultIndex': 4,
@@ -136,7 +152,11 @@ universal_challenge_info = {
       'Did you notice anything new about yourself?',
       'Any other thoughts or feedback on this week or the program?'
     ],
-    'preview_text': 'Physically logging your days and putting your thoughts on paper can be great for organizing thoughts.'
+    'preview_text': 'Physically logging your days and putting your thoughts on paper can be great for organizing thoughts.',
+    'email': {
+      'science': '',
+      'welcome_text': ''
+    }
   },
   'campus-selected-challenge': {
     'defaultIndex': 5,
@@ -155,7 +175,11 @@ universal_challenge_info = {
       'Did you notice anything new about yourself?',
       'Any other thoughts or feedback on this week or the program?'
     ],
-    'preview_text': 'Goal setting is important for your short-term motivation and long term vision. During your week off, come up with a challenge amongst your friends and see how well you can stick to it!'
+    'preview_text': 'Goal setting is important for your short-term motivation and long term vision. During your week off, come up with a challenge amongst your friends and see how well you can stick to it!',
+    'email': {
+      'science': '',
+      'welcome_text': ''
+    }
   },
   'sleep': {
     'defaultIndex': 6,
@@ -174,7 +198,11 @@ universal_challenge_info = {
       'Did you notice anything new about yourself?',
       'Any other thoughts or feedback on this week or the program?'
     ],
-    'preview_text': 'We all underestimate how big of an impact getting a good night\'s sleep can have on our overall health and happiness.'
+    'preview_text': 'We all underestimate how big of an impact getting a good night\'s sleep can have on our overall health and happiness.',
+    'email': {
+      'science': '',
+      'welcome_text': ''
+    }
   },
   'positivity-mindfulness': {
     'defaultIndex': 7,
@@ -193,6 +221,10 @@ universal_challenge_info = {
       'Did you notice anything new about yourself?',
       'Any other thoughts or feedback on this week or the program?'
     ],
-    'preview_text': 'Thinking positively and being mindful of one\'s emotions are great habits for anyone to develop during his or her long-term pursuit of happiness.'
+    'preview_text': 'Thinking positively and being mindful of one\'s emotions are great habits for anyone to develop during his or her long-term pursuit of happiness.',
+    'email': {
+      'science': '',
+      'welcome_text': ''
+    }
   }
 }
