@@ -1,4 +1,5 @@
 import logging
+import sys
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -10,8 +11,20 @@ app = Flask(__name__)
 app.config.from_object(get_config())
 
 # Set up logging
-app.logger.addHandler(logging.FileHandler('main.log'))
-app.logger.setLevel(logging.INFO)
+if is_prod():
+  app.logger.addHandler({
+    'handlers': {
+      'console': {
+        'level': 'INFO',
+        'class': 'logging.StreamHandler',
+        'strm': sys.stdout
+      }
+    }
+  })
+else:
+  app.logger.addHandler(logging.FileHandler('main.log'))
+  app.logger.setLevel(logging.INFO)
+
 logger = app.logger
 
 # Create and start our delayed job scheduler
