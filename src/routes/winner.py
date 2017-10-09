@@ -47,8 +47,8 @@ class RestfulWinners(Resource):
     else:
       return 'Challenge Not Found', 404
 
-    # if challenge.start_date.date() > date.today():
-    #   return '', 401
+    if challenge.start_date.date() > date.today():
+      return '', 401
 
     prizes = challenge.prizes
 
