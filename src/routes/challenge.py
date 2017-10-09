@@ -29,7 +29,6 @@ update_challenge_section_model = api.model('Challenge', {
 #   'startDate': fields.String(required=True)
 # })
 
-
 @namespace.route('/challenge/<int:week_num>')
 class GetChallenge(Resource):
   """Fetch data for a school's challenge page by week number"""
