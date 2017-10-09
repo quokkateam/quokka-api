@@ -1,5 +1,6 @@
 import urllib
 import sys
+import random
 
 if sys.version_info[0] < 3:
   unquote = urllib.unquote
@@ -15,3 +16,19 @@ def decode_url_encoded_str(string):
 
 def url_encode_str(string):
   return quote(string)
+
+
+def random_subset(iterator, K):
+  result = []
+  N = 0
+
+  for item in iterator:
+    N += 1
+    if len(result) < K:
+      result.append(item)
+    else:
+      s = int(random.random() * N)
+      if s < K:
+        result[s] = item
+
+  return result

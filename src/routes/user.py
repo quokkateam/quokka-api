@@ -1,6 +1,6 @@
 from flask_restplus import Resource, fields
 import os
-from src import dbi
+from src import dbi, logger
 from src.helpers import auth_util, user_validation, decode_url_encoded_str
 from src.helpers.user_helper import current_user
 from src.models import User, Token, School
@@ -46,6 +46,10 @@ unauthorized_response_model = api.model('Unauthorized', {
 
 token_model = api.model('Token', {
   'token': fields.String(),
+})
+
+invite_user_model = api.model('InviteUserModel', {
+  'email': fields.String(required=True)
 })
 
 
@@ -283,3 +287,26 @@ class ForgotPassword(Resource):
     }
 
     return response_data, 200, {'quokka-user': auth_util.serialize_token(token.id, secret)}
+
+
+@namespace.route('/users/invite')
+class InviteUser(Resource):
+  """Invite a user on behalf of another user"""
+
+  @namespace.doc('invite_user')
+  @namespace.expect(invite_user_model, validate=True)
+  def post(self):
+    from_user = current_user()
+
+    if not from_user:
+      return '', 403
+
+    to_email = api.payload['email']
+    to_user = dbi.find_one(User, {'email': to_email})
+
+    if to_user:
+      return 'User already on Quokka', 500
+
+    user_mailer.invite_user(from_user, to_email)
+
+    return '', 200

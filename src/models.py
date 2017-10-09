@@ -209,3 +209,25 @@ class CheckInAnswer(db.Model):
   def __repr__(self):
     return '<CheckInAnswer id={}, check_in_question_id={}, user_id={}, text={}, is_destroyed={}, created_at={}>'.format(
       self.id, self.check_in_question_id, self.user_id, self.text, self.is_destroyed, self.created_at)
+
+
+class Winner(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  challenge_id = db.Column(db.Integer, db.ForeignKey('challenge.id'), index=True, nullable=False)
+  challenge = db.relationship('Challenge', backref='winners')
+  user_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True, nullable=False)
+  user = db.relationship('User', backref='winners')
+  is_destroyed = db.Column(db.Boolean(), default=False)
+  created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+
+  def __init__(self, challenge=None, user=None, challenge_id=None):
+    if challenge_id:
+      self.challenge_id = challenge_id
+    else:
+      self.challenge = challenge
+
+    self.user = user
+
+  def __repr__(self):
+    return '<Winner id={}, challenge_id={}, user_id={}, is_destroyed={}, created_at={}>'.format(
+      self.id, self.challenge_id, self.user_id, self.is_destroyed, self.created_at)

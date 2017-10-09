@@ -5,7 +5,7 @@ import inspect
 from sendgrid.helpers.mail import *
 from src import delayed, logger
 from src.helpers.definitions import templates_dir
-from mako.template import Template
+from src.helpers.template_helper import template_as_str
 
 sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
 
@@ -13,23 +13,22 @@ email_override = os.environ.get('MAIL_TO_OVERRIDE')
 perform_deliveries = bool(re.match('true', os.environ.get('MAILER_PERFORM_DELIVERIES') or '', re.I))
 
 
-def send_email(to=None, subject=None, from_email='team@quokkachallenge.com', template_vars={}, delay=True):
+def send_email(to=None, subject=None, from_email='team@quokkachallenge.com', template_vars={}, template_path=None, delay=True):
   template = None
 
   try:
-    stack = inspect.stack()
-    caller = stack[1]
-    mailer = caller[1].split('/')[-1][:-3]
-    method = caller[3]
-
-    template_path = '{}/{}/{}.html'.format(templates_dir, mailer, method)
+    if not template_path:
+      stack = inspect.stack()
+      caller = stack[1]
+      mailer = caller[1].split('/')[-1][:-3]
+      method = caller[3]
+      template_path = '{}/{}/{}.html'.format(templates_dir, mailer, method)
 
     if not os.path.exists(template_path):
       logger.error('Error finding template at {}. Not sending email.'.format(template_path))
       return False
 
-    t = Template(filename=template_path)
-    template = t.render(**template_vars)
+    template = template_as_str(template_path, template_vars)
   except BaseException:
     logger.error('Error configuring email template')
     return False
@@ -61,6 +60,7 @@ def perform(to, subject, content, from_email):
     logger.info('Sending email from {} to {}...'.format(from_obj.email, to_obj.email))
     resp = sg.client.mail.send.post(request_body=mail.get())
   except BaseException:
+    logger.error('Error sending email to {}'.format(to_obj.email))
     return False
 
   if resp.status_code not in [200, 202]:
