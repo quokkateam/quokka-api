@@ -6,11 +6,10 @@ universal_challenge_info = {
     'overview': [
       {
         'title': 'Ok...so it\'s obvious I should socialize, right?',
-        'content': """Yes! This week is as easy as it sounds. It's important to have a strong support network, 
-        especially during times of stress (whether it's a bad day at work, a bad week, or a bad month). 
-        Having close friends and family to talk to and a close group of people to support and care for you 
-        will have far-reaching benefits for your health. See this week as an opportunity to foster meaningful 
-        relationships —- with old friends or new ones!"""
+        'content': """Yes! This week is as easy as it sounds. It's important to have a strong support network, especially 
+        during times of stress (whether it's a bad day at work, a bad week, or a bad month). Having close friends and family
+        to talk to and a close group of people to support and care for you will have far-reaching benefits for your health. 
+        See this week as an opportunity to foster meaningful relationships -- with old friends or new ones!"""
       },
       {
         'title': 'What are the health benefits?',
@@ -21,9 +20,9 @@ universal_challenge_info = {
       },
       {
         'title': 'What are some easy ways to get started?',
-        'content': """Start by reaching out to old friends you haven't talked to in awhile -— schedule a call and stick to it! 
-        If you already see close friends regularly, try having a more purposeful hangout by talking more deeply 
-        (ask them to talk about their week, if there's anything on their mind, etc.)."""
+        'content': """Start by reaching out to old friends you haven't talked to in awhile -- schedule a call and stick to it!
+        If you already see close friends regularly, try having a more purposeful hangout by talking more deeply (ask them to 
+        talk about their week, if there's anything on their mind, etc.)."""
       },
     ],
     'links': [
