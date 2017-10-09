@@ -9,13 +9,15 @@ from src import dbi
 create_prize_model = api.model('Prize', {
   'challengeId': fields.Integer(required=True),
   'sponsorId': fields.Integer(required=True),
-  'name': fields.String(required=True)
+  'name': fields.String(required=True),
+  'count': fields.Integer(required=True)
 })
 
 update_prize_model = api.model('Prize', {
   'id': fields.Integer(required=True),
   'sponsorId': fields.Integer(required=True),
-  'name': fields.String(required=True)
+  'name': fields.String(required=True),
+  'count': fields.Integer(required=True)
 })
 
 
@@ -43,7 +45,8 @@ class RestfulPrize(Resource):
     dbi.create(Prize, {
       'challenge': challenge,
       'sponsor': sponsor,
-      'name': api.payload['name']
+      'name': api.payload['name'],
+      'count': api.payload['count'] or 1
     })
 
     return format_prizes(challenge.active_prizes())
@@ -68,7 +71,8 @@ class RestfulPrize(Resource):
 
     dbi.update(prize, {
       'sponsor': sponsor,
-      'name': api.payload['name']
+      'name': api.payload['name'],
+      'count': api.payload['count'] or 1
     })
 
     prizes = format_prizes(prize.challenge.active_prizes())
