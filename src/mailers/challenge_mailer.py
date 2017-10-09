@@ -19,7 +19,8 @@ def congratulate_winner(challenge, user, delay=True):
     'challenge_name': challenge.name,
     'sponsorName': '',
     'sponsorLogo': '',
-    'prizeName': ''
+    'prizeName': '',
+    'redeem_prize_email': user.school.redeem_prize_email
   }
 
   return send_email(
