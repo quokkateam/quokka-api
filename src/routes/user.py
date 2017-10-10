@@ -34,7 +34,8 @@ forgot_pw_model = api.model('ForgotPassword', {
 })
 
 update_pw_model = api.model('UpdatePassword', {
-  'password': fields.String(required=True)
+  'password': fields.String(required=True),
+  'dorm': fields.String(required=False)
 })
 
 mint_token_model = api.model('Credentials', {
@@ -195,9 +196,14 @@ class UpdatePassword(Resource):
     if not user:
       return '', 403
 
-    hashed_pw = auth_util.hash_pw(api.payload['password'])
+    updates = {
+      'hashed_pw': auth_util.hash_pw(api.payload['password'])
+    }
 
-    dbi.update(user, {'hashed_pw': hashed_pw})
+    if user.school.slug == 'rice-university' and api.payload.get('dorm'):
+      updates['meta'] = {'dorm': api.payload['dorm']}
+
+    dbi.update(user, updates)
 
     return '', 200
 
