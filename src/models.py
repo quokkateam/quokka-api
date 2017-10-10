@@ -18,22 +18,22 @@ class User(db.Model):
   school = db.relationship('School', backref='users')
   is_admin = db.Column(db.Boolean(), default=False)
   reset_pw_secret = db.Column(db.String(64))
-  metadata = db.Column(JSON, default={})
+  meta = db.Column(JSON, default={})
   is_destroyed = db.Column(db.Boolean(), default=False)
   created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
-  def __init__(self, email, name, school, hashed_pw=None, is_admin=False, metadata={}):
+  def __init__(self, email, name, school, hashed_pw=None, is_admin=False, meta={}):
     self.email = email
     self.name = name
     self.school = school
     self.hashed_pw = hashed_pw
     self.is_admin = is_admin
     self.email_verification_secret = auth_util.fresh_secret()
-    self.metadata = metadata
+    self.meta = meta
 
   def __repr__(self):
-    return '<User id={}, email={}, name={}, email_verified={}, email_verification_sent={}, school_id={}, is_admin={}, metadata={}, is_destroyed={}, created_at={}>'.format(
-      self.id, self.email, self.name, self.email_verified, self.email_verification_sent, self.school_id, self.is_admin, self.metadata, self.is_destroyed, self.created_at)
+    return '<User id={}, email={}, name={}, email_verified={}, email_verification_sent={}, school_id={}, is_admin={}, meta={}, is_destroyed={}, created_at={}>'.format(
+      self.id, self.email, self.name, self.email_verified, self.email_verification_sent, self.school_id, self.is_admin, self.meta, self.is_destroyed, self.created_at)
 
 
 class Token(db.Model):

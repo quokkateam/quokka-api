@@ -201,7 +201,7 @@ class UpdatePassword(Resource):
     }
 
     if user.school.slug == 'rice-university' and api.payload.get('dorm'):
-      updates['metadata'] = {'dorm': api.payload['dorm']}
+      updates['meta'] = {'dorm': api.payload['dorm']}
 
     dbi.update(user, updates)
 
