@@ -182,7 +182,7 @@ universal_challenge_info = {
   },
   'campus-selected-challenge': {
     'defaultIndex': 5,
-    'name': 'Campus-Selected Challenge',
+    'name': 'Self-Care',
     'icon': 'https://s3-us-west-1.amazonaws.com/quokkadev/images/group-challenge-green.png',
     'overview': [
       {
