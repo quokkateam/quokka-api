@@ -96,7 +96,7 @@ def format_response_overviews(challenges):
   return resp
 
 
-def format_csv_responses(check_in):
+def format_csv_responses(check_in, include_dorm=False):
   questions = check_in.check_in_questions
   question_ids = []
   id2text = {}
@@ -111,12 +111,22 @@ def format_csv_responses(check_in):
 
   sorted_answers = sorted(answers, key=attrgetter('check_in_question_id'))
 
-  content = ['question,answer']
+  headers = 'question,answer'
+
+  if include_dorm:
+    headers += ',dorm'
+
+  content = [headers]
 
   for a in sorted_answers:
     question = json.dumps(id2text.get(a.check_in_question_id))
     answer = json.dumps(a.text)
-    row = ','.join([question, answer])
+    row = [question, answer]
+
+    if include_dorm:
+      row.append((a.user.meta or {}).get('dorm'))
+
+    row = ','.join(row)
     content.append(row)
 
   return '\n'.join(content)

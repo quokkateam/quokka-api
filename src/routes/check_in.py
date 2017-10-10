@@ -191,7 +191,8 @@ class DownloadCheckInResponses(Resource):
     if not check_in:
       return '', 404
 
-    csv_data = format_csv_responses(check_in)
+    include_dorm = user.school.slug == 'rice-university'
+    csv_data = format_csv_responses(check_in, include_dorm=include_dorm)
 
     resp = {
       'content': csv_data,
