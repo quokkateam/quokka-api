@@ -366,7 +366,7 @@ universal_challenge_info = {
       'http://jamanetwork.com/journals/jamainternalmedicine/fullarticle/1809754',
       'http://www.cumc.columbia.edu/student-health/center-student-wellness/wellness-resources/mindfulnessmeditation',
       'https://news.harvard.edu/gazette/story/2016/12/optistic-women-live-longer-are-healthier/',
-      'https://academic.oup.com/aje/article-abstract/185/1/21/2631298/Optimism-and-Cause-Specific-Mortality-A?sid=7816bd15-60fd-491b-bd99-f2cd39646d10',
+      'https://academic.oup.com/aje/article/185/1/21/2631298/Optimism-and-Cause-Specific-Mortality-A',
       'http://www.mayoclinic.org/healthy-lifestyle/stress-management/in-depth/positive-thinking/art-20043950',
       'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3156028/',
       'http://www.hopkinsmedicine.org/health/healthy_aging/healthy_mind/the-power-of-positive-thinking'
