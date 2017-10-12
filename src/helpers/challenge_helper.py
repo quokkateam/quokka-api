@@ -49,3 +49,5 @@ def current_week_num(challenges):
 
     if start_date <= today <= end_date:
       return i
+
+    i += 1

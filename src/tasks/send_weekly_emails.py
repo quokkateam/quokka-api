@@ -4,6 +4,7 @@ from src import dbi, logger
 from datetime import date
 from src.mailers.challenge_mailer import weekly_challenge
 from markdown2 import markdown
+from time import sleep
 from src.challenges import universal_challenge_info
 
 
@@ -87,12 +88,23 @@ for school in schools:
   logger.info('Sending emails to {} users at {}...'.format(len(users), school.name))
 
   failures = []
+  successes = []
   for user in users:
-    success = weekly_challenge(user, weekly_email_info, delay=False)
+    try:
+      success = weekly_challenge(user, weekly_email_info, delay=False)
+    except BaseException:
+      success = False
 
-    if not success:
+    if success:
+      successes.append(user.email)
+    else:
       failures.append(user.email)
 
-  logger.info('Emails Sent with {} Failures: {}'.format(len(failures), ','.join(failures)))
+    sleep(0.3)  # Potential Rate-Limit protection for SendGrid API
+
+  if failures:
+    logger.info('Weekly Email Results for {}: Failures: {}; Successes: {}'.format(school.name, failures, successes))
+  else:
+    logger.info('All emails sent successfully for {}'.format(school.name))
 
 logger.info('DONE.')

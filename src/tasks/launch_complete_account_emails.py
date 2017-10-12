@@ -2,6 +2,7 @@ from src import dbi, logger
 from operator import attrgetter
 from src.models import School
 from src.mailers.user_mailer import complete_account
+from time import sleep
 from datetime import date
 
 
@@ -51,6 +52,8 @@ for school in launching_schools:
       dbi.update(user, {'email_verification_sent': True})
     else:
       logger.error('Unsuccessful emailing user {}.'.format(user.email))
+
+    sleep(0.3)  # Potential Rate-Limit protection for SendGrid API
 
     i += 1
 

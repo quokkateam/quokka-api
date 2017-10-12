@@ -50,7 +50,7 @@ class RestfulWinners(Resource):
     if challenge.start_date.date() > date.today():
       return '', 401
 
-    prizes = challenge.prizes
+    prizes = sorted(challenge.prizes, key=attrgetter('id'))
 
     # Make sure winners haven't already been chosen
     challenge_winners = dbi.find_all(Winner, {

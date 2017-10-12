@@ -30,6 +30,12 @@ if __name__ == '__main__':
     if domains:
       school = update(school, {'domains': domains})
   else:
+    # NOTE: Since most schools added to the DB early on were added manually without a created_at,
+    # this will probably blow up with an error saying there's an issue with primary_key not being unique...
+    # This is because it somehow doesn't "see" the other school records that were manually added and then
+    # tries to create this record with a primary_id of 1, which obviously won't work. Options at this point:
+    # (1) See if adding fake created_at datetimes for the schools that don't have them will fix this.
+    # (2) Add the school with a SQL INSERT before running this script
     print('Creating school, {}...'.format(args.name))
 
     if not domains:
@@ -38,8 +44,15 @@ if __name__ == '__main__':
 
     school = create(School, {'name': args.name, 'domains': domains})
 
-  sorted_challenges = sorted(universal_challenge_info.values(), key=itemgetter('defaultIndex'))
-  sorted_challenges = [c for c in sorted_challenges if not c.get('custom')]
+  sorted_challenges = []
+  for k, v in universal_challenge_info.items():
+    if v.get('custom'):
+      continue
+
+    v['slug'] = k
+    sorted_challenges.append(v)
+
+  sorted_challenges = sorted(sorted_challenges, key=itemgetter('defaultIndex'))
 
   challenges = find_all(Challenge, {'school': school})
 
@@ -58,6 +71,7 @@ if __name__ == '__main__':
 
       challenge = create(Challenge, {
         'name': c['name'],
+        'slug': c['slug'],
         'school': school,
         'start_date': start_date,
         'end_date': end_date
