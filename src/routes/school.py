@@ -1,7 +1,7 @@
 from flask_restplus import Resource, fields
 from src.models import School
 from src.routes import namespace, api
-from src import dbi
+from src import dbi, logger
 
 school_model = api.model('School', {
   'name': fields.String(),
@@ -21,6 +21,7 @@ class GetSchools(Resource):
   @namespace.doc('get_schools')
   @namespace.marshal_with(schools_model)
   def get(self):
+    logger.info('Fetching schools...')
     schools = dbi.find_all(School, {'is_demo': False})
     school_data = [{'name': s.name, 'slug': s.slug, 'domains': s.domains} for s in schools]
     return {'schools': school_data}
