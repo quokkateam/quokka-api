@@ -240,11 +240,35 @@ universal_challenge_info = {
     'icon': 'https://s3-us-west-1.amazonaws.com/quokkadev/images/journaling-green.png',
     'overview': [
       {
-        'title': '',
-        'content': ''
-      }
+        'title': 'Why should I journal?',
+        'content': """Journaling can help you better understand yourself, others, and the world around you. It can help 
+        you clarify your thoughts and feelings, reduce stress and anxiety, and help you solve problems more effectively. 
+        Actively engaging your thoughts through journaling can increase your self-awareness and help you process your 
+        emotions. Writing about your worries prior to a stressful event might help you control your emotions better, too. """
+      },
+      {
+        'title': 'What constitutes journaling?',
+        'content': """Keeping a journal is a great way to build better habits, as it forces you to be aware of your 
+        actions and behaviors. This can take place in the form of keeping a physical notebook, jotting down thoughts 
+        in a Word doc, or [using journaling apps](https://www.nytimes.com/2017/01/25/technology/personaltech/journaling-apps-that-inspire-organize-and-keep-out-snoops.html). 
+        You can write whatever you want without following any particular structure -- just try to write frequently, and 
+        use your journal however you see fit!"""
+      },
+      {
+        'title': 'What are some easy prompts to get started?',
+        'content': """1. Make things easy and set a 5-minute timer or stick to a structured format (e.g., 3 highlights 
+        of your day, 3 things you're grateful for, etc.).\n2. Go beyond your daily activities and write about the 
+        big picture. What inspires you or scares you? What do you dream about? What are your goals?\n3. Write notes to 
+        yourself to read at a later date, perhaps at the end of the month, at the end of the semester, or at the end of the year."""
+      },
     ],
-    'links': [],
+    'links': [
+      'http://apt.rcpsych.org/content/11/5/338.full',
+      'https://www.ncbi.nlm.nih.gov/pubmed/16942980',
+      'https://www.ncbi.nlm.nih.gov/pubmed/21233387',
+      'http://nymag.com/scienceofus/2017/08/a-beginners-guide-to-keeping-a-journal.html',
+      'https://well.blogs.nytimes.com/2015/01/19/writing-your-way-to-happiness/'
+    ],
     'extra_info': '',
     'check_in_questions': [
       'How did you feel about this week\'s challenge?',
@@ -263,8 +287,23 @@ universal_challenge_info = {
     'icon': 'https://s3-us-west-1.amazonaws.com/quokkadev/images/group-challenge-green.png',
     'overview': [
       {
-        'title': '',
-        'content': ''
+        'title': 'What\'s the deal?',
+        'content': """Up to this point, we've encouraged you to try a few habits that'll boost your health and 
+        happiness. This week, we want you to set your own self-care goal and follow through on it!"""
+      },
+      {
+        'title': 'What can I do to take better care of myself?',
+        'content': """Self-care is the most important thing you can do for your mental, emotional, 
+        and physical health. Think of how you can incorporate breaks for yourself or schedule some down 
+        time to relax or to make time for hobbies. Perhaps go out of your way to do something fun for yourself that 
+        you would not normally do."""
+      },
+      {
+        'title': 'How can I start?',
+        'content': """Make a list of things that help you practice self-care. That can be some of the habits we've 
+        covered in the past weeks, hobbies or activities you don't make enough time for, or simply a few tasks you 
+        tend to put off that you'll be better off completing. A few examples: make more time for reading books, clean 
+        your room, check off bucket list items, or go on more walks. Do what makes you happy!"""
       }
     ],
     'links': [],
@@ -286,11 +325,44 @@ universal_challenge_info = {
     'icon': 'https://s3-us-west-1.amazonaws.com/quokkadev/images/sleep-green.png',
     'overview': [
       {
-        'title': '',
-        'content': ''
+        'title': 'What\'s the science say?',
+        'content': """Sleep is good for our brains, our bodies, our souls...It's truly the best thing to getting more 
+        energy and functioning at a higher level. A good night's sleep helps you recharge your mind: processing 
+        information faster for learning and work, promoting memory consolidation, and maintaining concentration. 
+        Sleep starts the recovery process each night, helping you heal faster and keep your immune system in top shape."""
+      },
+      {
+        'title': 'How much sleep should I actually get?',
+        'content': """Most people need about 7-8 hours each night, but everyone's individual needs are different. 
+        That's why it's especially important to emphasize quality over quantity here -- if you feel sluggish and tired 
+        throughout the day, you probably need some more time snoozing. Some research has suggested that it's not about 
+        the duration; better sleep is tied to the number of complete sleep cycles. One sleep cycle lasts an average of 
+        90 minutes, and this research suggests that waking up at the end of a completed cycle (e.g., after 7.5 hours, 
+        or 5 complete cycles) may help you feel more energized and refreshed."""
+      },
+      {
+        'title': 'What about naps?',
+        'content': """Naps can be a perfect energy boost for when you're having a slow day, but our bodies are better 
+        served by ones with shorter 20-30 minute durations. However, napping for longer than this can often make you 
+        feel more tired and interfere with a good night's sleep later on."""
+      },
+      {
+        'title': 'What happens when I pull an all-nighter?',
+        'content': """Pulling all-nighters might help you push through mounding workloads, but it's better to cement 
+        the information you've learned and get more sleep before an exam than it is to try cramming in more information. 
+        A lack of adequate sleep can weaken your immune system, impair your ability to learn and retain information, 
+        and result in "sleep debt." Sleep debt can affect your daytime functions and increase irritability or negatively 
+        affect your mood. If you don't feel the effects the day after an all-nighter, you'll likely experience them 
+        later on in the week."""
       }
     ],
-    'links': [],
+    'links': [
+      'http://healthysleep.med.harvard.edu/healthy/science/what/sleep-patterns-rem-nrem',
+      'http://healthysleep.med.harvard.edu/healthy/matters/consequences',
+      'https://sleep.health.columbia.edu/tips',
+      'https://sleepfoundation.org/sleep-topics/sleep-hygiene',
+      'http://www.mayoclinic.org/healthy-lifestyle/adult-health/in-depth/sleep/art-20048379'
+    ],
     'extra_info': '',
     'check_in_questions': [
       'How did you feel about this week\'s challenge?',
@@ -300,7 +372,7 @@ universal_challenge_info = {
     'preview_text': 'We all underestimate how big of an impact getting a good night\'s sleep can have on our overall health and happiness.',
     'email': {
       'science': '',
-      'welcome_text': ''
+      'welcome_text': 'Let\'s sleep more!'
     }
   },
   'positivity-mindfulness': {
