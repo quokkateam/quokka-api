@@ -109,6 +109,6 @@ for school in schools:
   if failures:
     logger.info('Weekly Email Results for {}: Failures: {}; Successes: {}'.format(school.name, failures, successes))
   else:
-    logger.info('All emails sent successfully for {}'.format(school.name))
+    logger.info('All emails sent successfully for {}.'.format(school.name))
 
 logger.info('DONE.')

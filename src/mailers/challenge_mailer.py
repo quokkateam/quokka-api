@@ -31,3 +31,12 @@ def congratulate_winner(challenge, prize, user, school=None, delay=True):
     template_vars=vars,
     delay=delay
   )
+
+
+def weekly_reminder(user=None, vars={}, delay=True):
+  return send_email(
+    to=user.email,
+    subject='Some Subject',
+    template_vars=vars,
+    delay=delay
+  )
