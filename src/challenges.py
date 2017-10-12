@@ -454,5 +454,24 @@ universal_challenge_info = {
       'science': '',
       'welcome_text': 'Let\'s focus on our thoughts!'
     }
+  },
+  'give-thanks': {
+    'defaultIndex': 8,
+    'custom': True,
+    'name': 'Give Thanks',
+    'icon': 'https://s3-us-west-1.amazonaws.com/quokkadev/images/give-thanks-green.png',
+    'overview': [],
+    'links': [],
+    'extra_info': '',
+    'check_in_questions': [
+      'How did you feel about this week\'s challenge?',
+      'Did you notice anything new about yourself?',
+      'Any other thoughts or feedback on this week or the program?'
+    ],
+    'preview_text': '',
+    'email': {
+      'science': '',
+      'welcome_text': ''
+    }
   }
 }

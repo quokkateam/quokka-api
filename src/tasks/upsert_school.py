@@ -39,6 +39,7 @@ if __name__ == '__main__':
     school = create(School, {'name': args.name, 'domains': domains})
 
   sorted_challenges = sorted(universal_challenge_info.values(), key=itemgetter('defaultIndex'))
+  sorted_challenges = [c for c in sorted_challenges if not c.get('custom')]
 
   challenges = find_all(Challenge, {'school': school})
 
