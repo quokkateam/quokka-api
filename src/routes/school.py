@@ -21,7 +21,6 @@ class GetSchools(Resource):
   @namespace.doc('get_schools')
   @namespace.marshal_with(schools_model)
   def get(self):
-    logger.info('Fetching schools...')
     schools = dbi.find_all(School, {'is_demo': False})
     school_data = [{'name': s.name, 'slug': s.slug, 'domains': s.domains} for s in schools]
     return {'schools': school_data}
