@@ -25,3 +25,12 @@ def current_user():
     return None
 
   return token.user
+
+
+def format_school_users_csv(school):
+  content = ['name,email']
+
+  for user in school.active_users():
+    content.append(','.join([user.name, user.email]))
+
+  return '\n'.join(content)

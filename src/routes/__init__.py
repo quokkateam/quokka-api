@@ -13,3 +13,4 @@ from src.routes.sponsor import *
 from src.routes.check_in import *
 # from src.routes.weekly_email import *
 from src.routes.winner import *
+from src.routes.downloads import *
