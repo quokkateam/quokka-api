@@ -16,7 +16,8 @@ def format_prizes(prizes):
       },
       'prize': {
         'id': p.id,
-        'name': p.name
+        'name': p.name,
+        'count': p.count or 1
       }
     })
 
