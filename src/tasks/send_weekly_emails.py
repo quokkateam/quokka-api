@@ -53,6 +53,10 @@ def format_weekly_email_vars(challenge, week_num):
     logger.error('Science or Welcome Text not configured in static email content for Challenge({})'.format(challenge.id))
     exit(1)
 
+  if not challenge.text:
+    logger.error('No text for Challenge({}). Not sending emails'.format(challenge.id))
+    exit(1)
+
   return {
     'week_num': week_num,
     'name': challenge.name,
