@@ -107,7 +107,10 @@ class RestfulWinners(Resource):
     if not potential_winner_user_ids:
       return 'No users currently eligible for prizes -- either everyone has already won or no one has filled out check-ins', 400
 
-    potential_winning_users = dbi.find_all(User, {'id': potential_winner_user_ids})
+    potential_winning_users = dbi.find_all(User, {
+      'id': potential_winner_user_ids,
+      'is_admin': False  # admins can't win
+    })
 
     prize_ids_for_winners = []
     for p in prizes:

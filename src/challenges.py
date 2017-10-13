@@ -34,9 +34,9 @@ universal_challenge_info = {
     ],
     'extra_info': '',
     'check_in_questions': [
-      'How did you feel about this week\'s challenge?',
-      'Did you notice anything new about yourself?',
-      'Any other thoughts or feedback on this week or the program?'
+      'What\'d you do to complete this week\'s challenge?',
+      'Tell us about your experience. Did you enjoy it or notice anything different about yourself?',
+      'Any additional comments (about the week or the overall challenge)?'
     ],
     'preview_text': 'Social support plays an important role in our behaviors, interactions, self-image, and how we respond to stress.',
     'email': {
@@ -101,9 +101,9 @@ universal_challenge_info = {
       pain symptoms](https://nccih.nih.gov/health/stress/relaxation.htm). The information on this site is for general purposes only and is not intended or implied to be a substitute for professional 
       medical advice, diagnosis, or treatment. Seek advice from your health care provider for your personal health needs.""",
     'check_in_questions': [
-      'How did you feel about this week\'s challenge?',
-      'Did you notice anything new about yourself?',
-      'Any other thoughts or feedback on this week or the program?'
+      'What\'d you do to complete this week\'s challenge?',
+      'Tell us about your experience. Did you enjoy it or notice anything different about yourself?',
+      'Any additional comments (about the week or the overall challenge)?'
     ],
     'preview_text': 'Science has proven that even small amounts of exercise can lead to significant changes in both physical and mental health.',
     'email': {
@@ -151,9 +151,9 @@ universal_challenge_info = {
     ],
     'extra_info': '',
     'check_in_questions': [
-      'How did you feel about this week\'s challenge?',
-      'Did you notice anything new about yourself?',
-      'Any other thoughts or feedback on this week or the program?'
+      'What\'d you do to complete this week\'s challenge?',
+      'Tell us about your experience. Did you enjoy it or notice anything different about yourself?',
+      'Any additional comments (about the week or the overall challenge)?'
     ],
     'preview_text': 'A positive feedback loop exists between kindness and happiness - the more you do to make other people feel better, the more your own happiness increases!',
     'email': {
@@ -224,9 +224,9 @@ universal_challenge_info = {
     ],
     'extra_info': '',
     'check_in_questions': [
-      'How did you feel about this week\'s challenge?',
-      'Did you notice anything new about yourself?',
-      'Any other thoughts or feedback on this week or the program?'
+      'What\'d you do to complete this week\'s challenge?',
+      'Tell us about your experience. Did you enjoy it or notice anything different about yourself?',
+      'Any additional comments (about the week or the overall challenge)?'
     ],
     'preview_text': 'Healthy eating has multiple benefits for you. It can help you stay in shape, increase your energy, and boost your immune system.',
     'email': {
@@ -271,9 +271,9 @@ universal_challenge_info = {
     ],
     'extra_info': '',
     'check_in_questions': [
-      'How did you feel about this week\'s challenge?',
-      'Did you notice anything new about yourself?',
-      'Any other thoughts or feedback on this week or the program?'
+      'What\'d you do to complete this week\'s challenge?',
+      'Tell us about your experience. Did you enjoy it or notice anything different about yourself?',
+      'Any additional comments (about the week or the overall challenge)?'
     ],
     'preview_text': 'Physically logging your days and putting your thoughts on paper can be great for organizing thoughts.',
     'email': {
@@ -309,9 +309,9 @@ universal_challenge_info = {
     'links': [],
     'extra_info': '',
     'check_in_questions': [
-      'How did you feel about this week\'s challenge?',
-      'Did you notice anything new about yourself?',
-      'Any other thoughts or feedback on this week or the program?'
+      'What\'d you do to complete this week\'s challenge?',
+      'Tell us about your experience. Did you enjoy it or notice anything different about yourself?',
+      'Any additional comments (about the week or the overall challenge)?'
     ],
     'preview_text': 'Goal setting is important for your short-term motivation and long term vision. During your week off, come up with a challenge amongst your friends and see how well you can stick to it!',
     'email': {
@@ -365,9 +365,9 @@ universal_challenge_info = {
     ],
     'extra_info': '',
     'check_in_questions': [
-      'How did you feel about this week\'s challenge?',
-      'Did you notice anything new about yourself?',
-      'Any other thoughts or feedback on this week or the program?'
+      'What\'d you do to complete this week\'s challenge?',
+      'Tell us about your experience. Did you enjoy it or notice anything different about yourself?',
+      'Any additional comments (about the week or the overall challenge)?'
     ],
     'preview_text': 'We all underestimate how big of an impact getting a good night\'s sleep can have on our overall health and happiness.',
     'email': {
@@ -445,9 +445,9 @@ universal_challenge_info = {
     ],
     'extra_info': '',
     'check_in_questions': [
-      'How did you feel about this week\'s challenge?',
-      'Did you notice anything new about yourself?',
-      'Any other thoughts or feedback on this week or the program?'
+      'What\'d you do to complete this week\'s challenge?',
+      'Tell us about your experience. Did you enjoy it or notice anything different about yourself?',
+      'Any additional comments (about the week or the overall challenge)?'
     ],
     'preview_text': 'Thinking positively and being mindful of one\'s emotions are great habits for anyone to develop during his or her long-term pursuit of happiness.',
     'email': {
@@ -460,13 +460,43 @@ universal_challenge_info = {
     'custom': True,
     'name': 'Give Thanks',
     'icon': 'https://s3-us-west-1.amazonaws.com/quokkadev/images/give-thanks-green.png',
-    'overview': [],
-    'links': [],
+    'overview': [
+      {
+        'title': 'What are the benefits to giving thanks?',
+        'content': """Gratitude is the general state of thankfulness and appreciation of what is meaningful to you. 
+        Gratitude is consistently associated with greater happiness, often helping people to feel more positive 
+        emotions, build stronger relationships, and more fully enjoy good experiences. Gratitude can reduce stress 
+        and have a major role in overcoming trauma and fostering resilience."""
+      },
+      {
+        'title': 'What are ways to express gratitude regularly?',
+        'content': """Gratitude can be applied to the past (retrieving positive memories, being thankful for past 
+        experiences), the present (not taking things for granted as they come), and the future (maintaining a hopeful 
+        attitude). You can cultivate gratitude by focusing on what you have and what you hope to achieve rather than 
+        complaining about the things you think you deserve."""
+      },
+      {
+        'title': 'What can I do to get started?',
+        'content': """The best way to get started is to think about the people around you who support you. Who looks 
+        out for you regularly, perhaps making your life easier as a result? Is there anyone or anything you might take 
+        for granted? Think of what you've been fortunate to experience and think of ways you can reciprocate. Try 
+        taking the time to thank a few close people and tell them you appreciate the impact they've had on your life."""
+      }
+    ],
+    'links': [
+      'https://www.psychologytoday.com/blog/what-mentally-strong-people-dont-do/201504/7-scientifically-proven-benefits-gratitude',
+      'https://www.ncbi.nlm.nih.gov/pubmed/25222798',
+      'https://www.ncbi.nlm.nih.gov/pubmed/27139595',
+      'https://www.huffingtonpost.com/2014/07/21/gratitude-healthy-benefits_n_2147182.html',
+      'https://www.health.harvard.edu/newsletter_article/in-praise-of-gratitude',
+      'https://www.psychiatry.org/news-room/apa-blogs/apa-blog/2017/08/practicing-gratitude-can-be-good-for-mental-health-and-well-being',
+      'https://www.washingtonpost.com/news/inspired-life/wp/2016/11/24/the-science-behind-why-you-shouldnt-stop-giving-thanks-after-thanksgiving'
+    ],
     'extra_info': '',
     'check_in_questions': [
-      'How did you feel about this week\'s challenge?',
-      'Did you notice anything new about yourself?',
-      'Any other thoughts or feedback on this week or the program?'
+      'What\'d you do to complete this week\'s challenge?',
+      'Tell us about your experience. Did you enjoy it or notice anything different about yourself?',
+      'Any additional comments (about the week or the overall challenge)?'
     ],
     'preview_text': '',
     'email': {
