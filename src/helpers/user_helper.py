@@ -3,6 +3,7 @@ from src.helpers.auth_util import unserialize_token
 from src.dbi import find_one
 from src.models import Token
 from src.helpers import decode_url_encoded_str
+from operator import attrgetter
 
 
 def current_user():
@@ -30,7 +31,9 @@ def current_user():
 def format_school_users_csv(school):
   content = ['name,email']
 
-  for user in school.active_users():
+  users = sorted(school.active_users(), key=attrgetter('name'))
+
+  for user in users:
     content.append(','.join([user.name, user.email]))
 
   return '\n'.join(content)
