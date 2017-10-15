@@ -313,7 +313,7 @@ universal_challenge_info = {
       'Tell us about your experience. Did you enjoy it or notice anything different about yourself?',
       'Any additional comments (about the week or the overall challenge)?'
     ],
-    'preview_text': 'Goal setting is important for your short-term motivation and long term vision. During your week off, come up with a challenge amongst your friends and see how well you can stick to it!',
+    'preview_text': 'Self-care is the most important thing you can do for your mental, emotional, and physical health. Take the time to take care of yourself!',
     'email': {
       'science': '',
       'welcome_text': ''
