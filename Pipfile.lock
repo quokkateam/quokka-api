@@ -21,6 +21,7 @@
         "flask-script": "*",
         "flask-sqlalchemy": "*",
         "flask-sslify": "*",
+        "flask": "*",
         "markdown2": "*",
         "passlib": "*",
         "psycopg2": "*",
