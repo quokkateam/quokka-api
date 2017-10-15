@@ -56,12 +56,12 @@ def perform(to, subject, content, from_email):
       from_obj.email, to_obj.email))
     return False
 
-  try:
-    logger.info('Sending email from {} to {}...'.format(from_obj.email, to_obj.email))
-    resp = sg.client.mail.send.post(request_body=mail.get())
-  except BaseException:
-    logger.error('Error sending email to {}'.format(to_obj.email))
-    return False
+  # try:
+  logger.info('Sending email from {} to {}...'.format(from_obj.email, to_obj.email))
+  resp = sg.client.mail.send.post(request_body=mail.get())
+  # except BaseException:
+  #   logger.error('Error sending email to {}'.format(to_obj.email))
+  #   return False
 
   if resp.status_code not in [200, 202]:
     print('Email failed with error code {}: {}'.format(resp.status_code, resp.body))
