@@ -1,7 +1,7 @@
 from flask_restplus import Resource, fields
 from src.models import School
 from src.routes import namespace, api
-from src import dbi, logger
+from src import dbi
 
 school_model = api.model('School', {
   'name': fields.String(),

@@ -27,7 +27,7 @@ universal_challenge_info = {
     ],
     'links': [
       'https://blogs.scientificamerican.com/streams-of-consciousness/the-importance-of-being-social/',
-      'https://www.jhsph.edu/research/centers-and-institutes/johns-hopkins-center-for-health-equity/about/influences_on_health/family_social_support.html' ,
+      'https://www.jhsph.edu/research/centers-and-institwutes/johns-hopkins-center-for-health-equity/about/influences_on_health/family_social_support.html' ,
       'https://www.ncbi.nlm.nih.gov/pubmed/3901065',
       'http://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.1000316',
       'https://well.blogs.nytimes.com/2010/03/17/talk-deeply-be-happy/?_r=0'

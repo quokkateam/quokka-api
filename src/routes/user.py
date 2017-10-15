@@ -323,3 +323,13 @@ class InviteUser(Resource):
     user_mailer.invite_user(from_user, to_email)
 
     return '', 200
+
+
+@namespace.route('/users/testemail')
+class InviteUser(Resource):
+
+  def post(self):
+    user = dbi.find_one(User, {'email': 'demouser@demo.edu'})
+    user_mailer.invite_user(user, 'benwhittle31@gmail.com', delay=False)
+
+    return '', 200
