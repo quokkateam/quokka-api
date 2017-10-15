@@ -40,8 +40,8 @@ universal_challenge_info = {
     ],
     'preview_text': 'Social support has an effect on our behaviors, choices, self-image, and how we respond to stress.',
     'email': {
-      'science': '',
-      'welcome_text': ''
+      'science': 'Having close friends and family to talk to and a close group of people to support and care for you will have far-reaching benefits for your health. See this week as an opportunity to foster meaningful relationships -- with old friends or new ones!',
+      'welcome_text': 'Let\'s socialize!'
     }
   },
   'exercise': {
@@ -230,8 +230,8 @@ universal_challenge_info = {
     ],
     'preview_text': 'Healthy eating is one of the most important things you can do for your body and mind. It can increase your energy, boost your metabolism, and help you stay in shape!',
     'email': {
-      'science': '',
-      'welcome_text': ''
+      'science': 'Making quality, balanced food choices to round out your meals will keep you full, confident in the healthy food decisions you make, and enjoying the foods you\'re eating.',
+      'welcome_text': 'Let\'s eat healthily!'
     }
   },
   'journaling': {
