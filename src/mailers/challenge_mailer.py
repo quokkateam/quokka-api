@@ -36,7 +36,7 @@ def congratulate_winner(challenge, prize, user, school=None, delay=True):
 def weekly_reminder(user=None, vars={}, delay=True):
   return send_email(
     to=user.email,
-    subject='Some Subject',
+    subject='Week {} Reminder'.format(vars.get('week_num')),
     template_vars=vars,
     delay=delay
   )

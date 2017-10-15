@@ -23,11 +23,12 @@ def find_challenge_needing_reminder(school):
 
 
 def format_weekly_reminder_vars(challenge, week_num):
+  days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
   return {
     'week_num': week_num,
-    'name': challenge.name,
-    'slug': challenge.slug
-    # ...
+    'challenge_name': challenge.name,
+    'end_day': days[challenge.end_date.weekday()]
   }
 
 
@@ -56,6 +57,7 @@ for school in schools:
   successes = []
   for user in users:
     try:
+      vars['user_name'] = user.name
       success = weekly_reminder(user, vars, delay=False)
     except BaseException:
       success = False

@@ -57,12 +57,14 @@ def format_weekly_email_vars(challenge, week_num):
     logger.error('No text for Challenge({}). Not sending emails'.format(challenge.id))
     exit(1)
 
+  suggestions = [markdown(s) for s in challenge.suggestions]
+
   return {
     'week_num': week_num,
     'name': challenge.name,
     'slug': challenge.slug,
     'challenge': markdown(challenge.text),
-    'suggestions': challenge.suggestions,
+    'suggestions': suggestions,
     'prizes': prizes,
     'check_in_questions': check_in_questions,
     'science': science,

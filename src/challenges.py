@@ -38,7 +38,7 @@ universal_challenge_info = {
       'Tell us about your experience. Did you enjoy it or notice anything different about yourself?',
       'Any additional comments (about the week or the overall challenge)?'
     ],
-    'preview_text': 'Social support plays an important role in our behaviors, interactions, self-image, and how we respond to stress.',
+    'preview_text': 'Social support has an effect on our behaviors, choices, self-image, and how we respond to stress.',
     'email': {
       'science': '',
       'welcome_text': ''
@@ -105,7 +105,7 @@ universal_challenge_info = {
       'Tell us about your experience. Did you enjoy it or notice anything different about yourself?',
       'Any additional comments (about the week or the overall challenge)?'
     ],
-    'preview_text': 'Science has proven that even small amounts of exercise can lead to significant changes in both physical and mental health.',
+    'preview_text': 'Regular exercise can lead to significant changes in both physical and mental health. It\'s one of the essential healthy habits - let\'s get moving!',
     'email': {
       'science': 'Regular physical activity is important for increasing energy and focus, strengthening bones and muscles, and increasing longevity. It\'ll also help you manage stress and anxiety and reduce your risk of cardiovascular disease and obesity. Even our perceptions and mindsets on how physically active we are can predict health and longevity in the domains of stress, diet, and obesity.',
       'welcome_text': 'Let\'s get moving!'
@@ -155,7 +155,7 @@ universal_challenge_info = {
       'Tell us about your experience. Did you enjoy it or notice anything different about yourself?',
       'Any additional comments (about the week or the overall challenge)?'
     ],
-    'preview_text': 'A positive feedback loop exists between kindness and happiness - the more you do to make other people feel better, the more your own happiness increases!',
+    'preview_text': 'A positive feedback loop exists between kindness and happiness - helping others can increase your happiness, too!',
     'email': {
       'science': '',
       'welcome_text': 'Let\'s help others!'
@@ -228,7 +228,7 @@ universal_challenge_info = {
       'Tell us about your experience. Did you enjoy it or notice anything different about yourself?',
       'Any additional comments (about the week or the overall challenge)?'
     ],
-    'preview_text': 'Healthy eating has multiple benefits for you. It can help you stay in shape, increase your energy, and boost your immune system.',
+    'preview_text': 'Healthy eating is one of the most important things you can do for your body and mind. It can increase your energy, boost your metabolism, and help you stay in shape!',
     'email': {
       'science': '',
       'welcome_text': ''
@@ -275,7 +275,7 @@ universal_challenge_info = {
       'Tell us about your experience. Did you enjoy it or notice anything different about yourself?',
       'Any additional comments (about the week or the overall challenge)?'
     ],
-    'preview_text': 'Physically logging your days and putting your thoughts on paper can be great for organizing thoughts.',
+    'preview_text': 'Writing and putting your thoughts on paper helps you gain mental clarity. You may be better able to understand what\'s flowing through your mind or what feelings you\'re going through.',
     'email': {
       'science': '',
       'welcome_text': ''
@@ -369,7 +369,7 @@ universal_challenge_info = {
       'Tell us about your experience. Did you enjoy it or notice anything different about yourself?',
       'Any additional comments (about the week or the overall challenge)?'
     ],
-    'preview_text': 'We all underestimate how big of an impact getting a good night\'s sleep can have on our overall health and happiness.',
+    'preview_text': 'Sleep is vital to your overall wellbeing. Getting in enough hours is important, but focusing on quality will help you get the proper rest you need.',
     'email': {
       'science': '',
       'welcome_text': 'Let\'s sleep more!'
@@ -449,7 +449,7 @@ universal_challenge_info = {
       'Tell us about your experience. Did you enjoy it or notice anything different about yourself?',
       'Any additional comments (about the week or the overall challenge)?'
     ],
-    'preview_text': 'Thinking positively and being mindful of one\'s emotions are great habits for anyone to develop during his or her long-term pursuit of happiness.',
+    'preview_text': 'Thinking positively and being mindful of your thoughts and emotions are important habits to develop in the pursuit of overall health and happiness.',
     'email': {
       'science': '',
       'welcome_text': 'Let\'s focus on our thoughts!'
@@ -498,7 +498,7 @@ universal_challenge_info = {
       'Tell us about your experience. Did you enjoy it or notice anything different about yourself?',
       'Any additional comments (about the week or the overall challenge)?'
     ],
-    'preview_text': '',
+    'preview_text': 'We could all spend more time thinking of who and what we\'re grateful for. Stop to appreciate the people (and things) in your life!',
     'email': {
       'science': '',
       'welcome_text': ''
