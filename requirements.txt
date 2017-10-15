@@ -1,0 +1,17 @@
+flask-restplus
+Flask-SQLAlchemy
+passlib
+bcrypt
+Flask-Script
+Flask-Migrate
+requests
+awesome-slugify
+psycopg2
+Flask-SSLify
+boto3
+sendgrid
+APScheduler
+pytz
+tzlocal
+markdown2
+Flask
