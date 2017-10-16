@@ -107,7 +107,7 @@ class VerifyEmail(Resource):
 
     provided_token = decode_url_encoded_str(api.payload['token'])
 
-    if not user or not auth_util.verify_secret(provided_token, user.email_verification_secret) or user.email_verified:
+    if not user or not auth_util.verify_secret(provided_token, user.email_verification_secret):
       return '', 401
 
     user = dbi.update(user, {'email_verified': True})
