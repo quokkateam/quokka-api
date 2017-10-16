@@ -124,7 +124,7 @@ def format_csv_responses(check_in, include_dorm=False):
     row = [question, answer]
 
     if include_dorm:
-      row.append((a.user.meta or {}).get('dorm'))
+      row.append((a.user.meta or {}).get('dorm') or '')
 
     row = ','.join(row)
     content.append(row)
