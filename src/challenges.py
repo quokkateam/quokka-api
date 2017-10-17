@@ -107,7 +107,7 @@ universal_challenge_info = {
     ],
     'preview_text': 'Regular exercise can lead to significant changes in both physical and mental health. It\'s one of the essential healthy habits - let\'s get moving!',
     'email': {
-      'science': 'Regular physical activity is important for increasing energy and focus, strengthening bones and muscles, and increasing longevity. It\'ll also help you manage stress and anxiety and reduce your risk of cardiovascular disease and obesity. Even our perceptions and mindsets on how physically active we are can predict health and longevity in the domains of stress, diet, and obesity.',
+      'science': 'Regular physical activity is important for increasing energy and focus, strengthening bones and muscles, and increasing longevity. Sitting for prolonged periods throughout the day has been linked to heart disease and diabetes, and stepping away from the chair or even just standing for a few minutes every hour can help reduce these negative effects.',
       'welcome_text': 'Let\'s get moving!'
     }
   },
@@ -157,8 +157,8 @@ universal_challenge_info = {
     ],
     'preview_text': 'A positive feedback loop exists between kindness and happiness - helping others can increase your happiness, too!',
     'email': {
-      'science': '',
-      'welcome_text': 'Let\'s help others!'
+      'science': 'Performing acts of kindness for others promotes positive physiological changes in your brain associated with happiness. It creates a positive feedback loop that encourages generosity and happiness and can reduce stress/negative feelings.',
+      'welcome_text': 'Let\'s do good deeds!'
     }
   },
   'healthy-eating': {
@@ -277,8 +277,8 @@ universal_challenge_info = {
     ],
     'preview_text': 'Writing and putting your thoughts on paper helps you gain mental clarity. You may be better able to understand what\'s flowing through your mind or what feelings you\'re going through.',
     'email': {
-      'science': '',
-      'welcome_text': ''
+      'science': 'Journaling can help you clarify your thoughts and feelings, reduce stress and anxiety, and help you solve problems more effectively. Keeping a journal is a great way to build better habits, as it forces you to be aware of your actions and behaviors.',
+      'welcome_text': 'Let\'s journal!'
     }
   },
   'campus-selected-challenge': {
@@ -315,8 +315,8 @@ universal_challenge_info = {
     ],
     'preview_text': 'Self-care is the most important thing you can do for your mental, emotional, and physical health. Take the time to take care of yourself!',
     'email': {
-      'science': '',
-      'welcome_text': ''
+      'science': 'It\'s important to incorporate breaks for yourself, schedule some down time to relax, and make time for your hobbies. Set your own self-care goals this week and see how it affects your mental, emotional, and physical health!',
+      'welcome_text': 'Time for self-care!'
     }
   },
   'sleep': {
@@ -371,8 +371,8 @@ universal_challenge_info = {
     ],
     'preview_text': 'Sleep is vital to your overall wellbeing. Getting in enough hours is important, but focusing on quality will help you get the proper rest you need.',
     'email': {
-      'science': '',
-      'welcome_text': 'Let\'s sleep more!'
+      'science': 'A good night\'s sleep helps you recharge your mind: processing information faster for learning and work, promoting memory consolidation, and maintaining concentration. Sleep starts the recovery process each night, helping you heal faster and keep your immune system in top shape.',
+      'welcome_text': 'Let\'s get some sleep!'
     }
   },
   'positivity-mindfulness': {
@@ -451,8 +451,8 @@ universal_challenge_info = {
     ],
     'preview_text': 'Thinking positively and being mindful of your thoughts and emotions are important habits to develop in the pursuit of overall health and happiness.',
     'email': {
-      'science': '',
-      'welcome_text': 'Let\'s focus on our thoughts!'
+      'science': 'Research says that focusing our minds on the present moment and being aware of our thoughts, feelings, and actions has many health benefits. Positive thinking and optimism in particular have been associated with health benefits including increased life span, lower rates of depression, and better coping skills.',
+      'welcome_text': 'Let\'s think positively!'
     }
   },
   'give-thanks': {
@@ -500,8 +500,8 @@ universal_challenge_info = {
     ],
     'preview_text': 'We could all spend more time thinking of who and what we\'re grateful for. Stop to appreciate the people (and things) in your life!',
     'email': {
-      'science': '',
-      'welcome_text': ''
+      'science': 'Gratitude is consistently associated with greater happiness, often helping people to feel more positive emotions, build stronger relationships, and more fully enjoy good experiences. Gratitude can reduce stress and have a major role in overcoming trauma and fostering resilience.',
+      'welcome_text': 'Let\'s give thanks!'
     }
   }
 }
