@@ -1,3 +1,4 @@
+
 universal_challenge_info = {
   'socializing': {
     'defaultIndex': 0,
