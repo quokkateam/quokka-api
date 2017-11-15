@@ -59,7 +59,7 @@ class RestfulWinners(Resource):
       return '', 401
 
     # Get prizes for this challenge
-    prizes = sorted(challenge.prizes, key=attrgetter('id'))
+    prizes = sorted(dbi.find_all(Prize, {'challenge': challenge}), key=attrgetter('id'))
     prize_ids = [p.id for p in prizes]
 
     # Error out if winners have already been chosen for this challenge
