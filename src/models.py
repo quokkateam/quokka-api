@@ -106,8 +106,8 @@ class Challenge(db.Model):
     self.suggestions = suggestions or []
 
   def __repr__(self):
-    return '<Challenge id={}, name={}, slug={}, school_id={}, start_date={}, end_date={}, text={}, points={}, suggestions={}, is_destroyed={}, created_at={}>'.format(
-      self.id, self.name, self.slug, self.school_id, self.start_date, self.end_date, self.text, self.points, self.suggestions, self.is_destroyed, self.created_at)
+    return '<Challenge id={}, name={}, slug={}, school_id={}, start_date={}, end_date={}, points={}, is_destroyed={}, created_at={}>'.format(
+      self.id, self.name, self.slug, self.school_id, self.start_date, self.end_date, self.points, self.is_destroyed, self.created_at)
 
   def active_prizes(self):
     return [p for p in self.prizes if not p.is_destroyed]
@@ -129,8 +129,8 @@ class Sponsor(db.Model):
     self.url = url
 
   def __repr__(self):
-    return '<Sponsor id={}, school_id={}, name={}, logo={}, url={}, created_at={}>'.format(
-      self.id, self.school_id, self.name, self.logo, self.url, self.created_at)
+    return '<Sponsor id={}, school_id={}, logo={}, created_at={}>'.format(
+      self.id, self.school_id, self.logo, self.created_at)
 
   def active_prizes(self):
     return [p for p in self.prizes if not p.is_destroyed]
@@ -154,8 +154,8 @@ class Prize(db.Model):
     self.count = count
 
   def __repr__(self):
-    return '<Prize id={}, challenge_id={}, sponsor_id={}, name={}, count={} is_destroyed={}, created_at={}>'.format(
-      self.id, self.challenge_id, self.sponsor_id, self.name, self.count, self.is_destroyed, self.created_at)
+    return '<Prize id={}, challenge_id={}, sponsor_id={}, count={} is_destroyed={}, created_at={}>'.format(
+      self.id, self.challenge_id, self.sponsor_id, self.count, self.is_destroyed, self.created_at)
 
 
 class CheckIn(db.Model):
@@ -191,8 +191,8 @@ class CheckInQuestion(db.Model):
     self.order = order
 
   def __repr__(self):
-    return '<CheckInQuestion id={}, check_in_id={}, text={}, order={}, is_destroyed={}, created_at={}>'.format(
-      self.id, self.check_in_id, self.text, self.order, self.is_destroyed, self.created_at)
+    return '<CheckInQuestion id={}, check_in_id={}, order={}, is_destroyed={}, created_at={}>'.format(
+      self.id, self.check_in_id, self.order, self.is_destroyed, self.created_at)
 
 
 class CheckInAnswer(db.Model):
@@ -215,8 +215,8 @@ class CheckInAnswer(db.Model):
     self.text = text
 
   def __repr__(self):
-    return '<CheckInAnswer id={}, check_in_question_id={}, user_id={}, text={}, is_destroyed={}, created_at={}>'.format(
-      self.id, self.check_in_question_id, self.user_id, self.text, self.is_destroyed, self.created_at)
+    return '<CheckInAnswer id={}, check_in_question_id={}, user_id={}, is_destroyed={}, created_at={}>'.format(
+      self.id, self.check_in_question_id, self.user_id, self.is_destroyed, self.created_at)
 
 
 class Winner(db.Model):
