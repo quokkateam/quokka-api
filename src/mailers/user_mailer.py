@@ -51,3 +51,12 @@ def invite_user(from_user, to_email, delay=True):
     template_vars=vars,
     delay=delay
   )
+
+
+def follow_up_email(user, delay=True):
+  return send_email(
+    to=user.email,
+    subject='Thanks from Quokka',
+    template_vars={'name': user.name.split(' ')[0]},
+    delay=delay
+  )
