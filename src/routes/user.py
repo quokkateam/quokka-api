@@ -12,7 +12,10 @@ from src.mailers import user_mailer
 create_user_model = api.model('User', {
   'email': fields.String(required=True),
   'name': fields.String(required=True),
-  'school': fields.String(required=True)
+  'school': fields.String(required=True),
+  'age': fields.String(required=True),
+  'gender': fields.String(required=True),
+  'classyear': fields.String(required=True),
 })
 
 verify_email_model = api.model('VerifyEmail', {
