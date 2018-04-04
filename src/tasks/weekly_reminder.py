@@ -32,46 +32,46 @@ def format_weekly_reminder_vars(challenge, week_num):
   }
 
 
-schools = dbi.find_all(School, {'launchable': True})
+# schools = dbi.find_all(School, {'launchable': True})
 
-logger.info('Checking if weekly reminder emails should be sent for {} schools...'.format(len(schools)))
+# logger.info('Checking if weekly reminder emails should be sent for {} schools...'.format(len(schools)))
 
-for school in schools:
-  challenge_info = find_challenge_needing_reminder(school)
+# for school in schools:
+#   challenge_info = find_challenge_needing_reminder(school)
 
-  if not challenge_info:
-    logger.info('Not today -- {}'.format(school.name))
-    continue
+#   if not challenge_info:
+#     logger.info('Not today -- {}'.format(school.name))
+#     continue
 
-  challenge, week_num = challenge_info
+#   challenge, week_num = challenge_info
 
-  logger.info('Challenge Needing Reminder Detected ({}) for {}...'.format(challenge.name, school.name))
+#   logger.info('Challenge Needing Reminder Detected ({}) for {}...'.format(challenge.name, school.name))
 
-  users = school.active_users()
+#   users = school.active_users()
 
-  vars = format_weekly_reminder_vars(challenge, week_num)
+#   vars = format_weekly_reminder_vars(challenge, week_num)
 
-  logger.info('Sending emails to {} users at {}...'.format(len(users), school.name))
+#   logger.info('Sending emails to {} users at {}...'.format(len(users), school.name))
 
-  failures = []
-  successes = []
-  for user in users:
-    try:
-      vars['user_name'] = user.name
-      success = weekly_reminder(user, vars, delay=False)
-    except BaseException:
-      success = False
+#   failures = []
+#   successes = []
+#   for user in users:
+#     try:
+#       vars['user_name'] = user.name
+#       success = weekly_reminder(user, vars, delay=False)
+#     except BaseException:
+#       success = False
 
-    if success:
-      successes.append(user.email)
-    else:
-      failures.append(user.email)
+#     if success:
+#       successes.append(user.email)
+#     else:
+#       failures.append(user.email)
 
-    sleep(0.3)  # Potential Rate-Limit protection for SendGrid API
+#     sleep(0.3)  # Potential Rate-Limit protection for SendGrid API
 
-  if failures:
-    logger.info('Weekly Reminder Results for {}: Failures: {}; Successes: {}'.format(school.name, failures, successes))
-  else:
-    logger.info('All reminder emails sent successfully for {}.'.format(school.name))
+#   if failures:
+#     logger.info('Weekly Reminder Results for {}: Failures: {}; Successes: {}'.format(school.name, failures, successes))
+#   else:
+#     logger.info('All reminder emails sent successfully for {}.'.format(school.name))
 
-logger.info('DONE.')
+# logger.info('DONE.')

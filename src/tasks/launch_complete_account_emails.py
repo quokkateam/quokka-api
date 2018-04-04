@@ -21,40 +21,40 @@ def find_launching_schools():
   return launching
 
 
-logger.info('Finding schools launching today...')
+# logger.info('Finding schools launching today...')
 
-launching_schools = find_launching_schools()
+# launching_schools = find_launching_schools()
 
-if not launching_schools:
-  logger.info('No schools launching today.')
-  exit(0)
+# if not launching_schools:
+#   logger.info('No schools launching today.')
+#   exit(0)
 
-logger.info('Found {} schools that are launching today!'.format(len(launching_schools)))
+# logger.info('Found {} schools that are launching today!'.format(len(launching_schools)))
 
-for school in launching_schools:
-  users_to_email = [u for u in school.users if not u.email_verification_sent]
-  num_users = len(users_to_email)
+# for school in launching_schools:
+#   users_to_email = [u for u in school.users if not u.email_verification_sent]
+#   num_users = len(users_to_email)
 
-  logger.info('Found {} users from {} to send email verification emails to.'.format(num_users, school.name))
+#   logger.info('Found {} users from {} to send email verification emails to.'.format(num_users, school.name))
 
-  i = 0
-  for user in users_to_email:
-    if i % 10 == 0 and i > 0:
-      logger.info('Done with {}/{}'.format(i, num_users))
+#   i = 0
+#   for user in users_to_email:
+#     if i % 10 == 0 and i > 0:
+#       logger.info('Done with {}/{}'.format(i, num_users))
 
-    try:
-      success = complete_account(user, delay=False)
-    except BaseException:
-      success = False
-      logger.error('Error emailing user {}.'.format(user.email))
+#     try:
+#       success = complete_account(user, delay=False)
+#     except BaseException:
+#       success = False
+#       logger.error('Error emailing user {}.'.format(user.email))
 
-    if success:
-      dbi.update(user, {'email_verification_sent': True})
-    else:
-      logger.error('Unsuccessful emailing user {}.'.format(user.email))
+#     if success:
+#       dbi.update(user, {'email_verification_sent': True})
+#     else:
+#       logger.error('Unsuccessful emailing user {}.'.format(user.email))
 
-    sleep(0.3)  # Potential Rate-Limit protection for SendGrid API
+#     sleep(0.3)  # Potential Rate-Limit protection for SendGrid API
 
-    i += 1
+#     i += 1
 
-logger.info('Done.')
+# logger.info('Done.')
