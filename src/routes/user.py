@@ -65,6 +65,9 @@ class CreateUser(Resource):
   @namespace.doc('create_user')
   @namespace.expect(create_user_model, validate=True)
   def post(self):
+    logger.info("Receiving this request!!!!!")
+    print "Receiving this request!!!"
+
     email = api.payload['email'].lower()
 
     # Find the school they selected
