@@ -8,6 +8,7 @@ config = get_config()
 
 jobstores = {
   'default': SQLAlchemyJobStore(url=config.SQLALCHEMY_DATABASE_URI)
+  #'default': SQLAlchemyJobStore(url='postgresql://quokka:quokka@localhost/quokka?user=quokka')
 }
 
 executors = {

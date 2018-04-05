@@ -12,6 +12,8 @@ from src.mailers import user_mailer
 create_user_model = api.model('User', {
   'email': fields.String(required=True),
   'name': fields.String(required=True),
+  'age': fields.String(required=True),
+  'gender': fields.String(required=True),
   'school': fields.String(required=True)
 })
 
@@ -84,6 +86,8 @@ class CreateUser(Resource):
       user = dbi.create(User, {
         'email': email,
         'name': api.payload['name'],
+        'age': api.payload['age'],
+        'gender': api.payload['gender'],
         'school': school
       })
 
