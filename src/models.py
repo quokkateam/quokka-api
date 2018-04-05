@@ -11,6 +11,8 @@ class User(db.Model):
   email = db.Column(db.String(120), index=True, unique=True)
   name = db.Column(db.String(120), nullable=False)
   hashed_pw = db.Column(db.String(120), nullable=True)
+  gender = db.Column(db.String(120), nullable=True)
+  age = db.Column(db.Integer, nullable=True)
   email_verified = db.Column(db.Boolean(), default=False)
   email_verification_secret = db.Column(db.String(64))
   email_verification_sent = db.Column(db.Boolean(), default=False)
