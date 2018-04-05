@@ -73,11 +73,11 @@ class CreateUser(Resource):
     # Find the school they selected
     school = dbi.find_one(School, {'slug': api.payload['school']})
 
-    user_validation_error = user_validation.validate_user(email, school)
+    # user_validation_error = user_validation.validate_user(email, school)
 
-    # Return user-validation error if one exists
-    if user_validation_error:
-      return dict(error=user_validation_error), 400
+    # # Return user-validation error if one exists
+    # if user_validation_error:
+    #   return dict(error=user_validation_error), 400
 
     user = dbi.find_one(User, {'email': email})
 
