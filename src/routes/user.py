@@ -2,7 +2,7 @@ from flask_restplus import Resource, fields
 import os
 from operator import attrgetter
 from datetime import date
-from src import dbi
+from src import dbi, logger
 from src.helpers import auth_util, user_validation, decode_url_encoded_str
 from src.helpers.user_helper import current_user
 from src.models import User, Token, School
@@ -12,8 +12,8 @@ from src.mailers import user_mailer
 create_user_model = api.model('User', {
   'email': fields.String(required=True),
   'name': fields.String(required=True),
-  'age': fields.String(required=True),
-  'gender': fields.String(required=True),
+  'age': fields.String(required=False),
+  'gender': fields.String(required=False),
   'school': fields.String(required=True)
 })
 
@@ -83,6 +83,7 @@ class CreateUser(Resource):
 
     # If user doesn't exist yet, create him
     if not user:
+      logger.info('Adding {} to database...'.format(api.payload['gender']))
       user = dbi.create(User, {
         'email': email,
         'name': api.payload['name'],
