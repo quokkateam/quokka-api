@@ -69,6 +69,8 @@ class CreateUser(Resource):
     logger.error("Receiving this request!!!!!")
     print "Receiving this request!!!"
 
+    return {'launched': launched}, 201
+
     email = api.payload['email'].lower()
 
     # Find the school they selected
