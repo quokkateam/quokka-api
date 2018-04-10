@@ -65,11 +65,6 @@ class CreateUser(Resource):
   @namespace.doc('create_user')
   @namespace.expect(create_user_model, validate=True)
   def post(self):
-    logger.info("Receiving this request!!!!!")
-    logger.error("Receiving this request!!!!!")
-    print "Receiving this request!!!"
-
-    return {'launched': 'launched'}, 201
 
     email = api.payload['email'].lower()
 
