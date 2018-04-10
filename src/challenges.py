@@ -504,5 +504,40 @@ universal_challenge_info = {
       'science': 'Gratitude is consistently associated with greater happiness, often helping people to feel more positive emotions, build stronger relationships, and more fully enjoy good experiences. Gratitude can reduce stress and have a major role in overcoming trauma and fostering resilience.',
       'welcome_text': 'Let\'s give thanks!'
     }
+  },
+  'hydration': {
+    'defaultIndex': 9,
+    'custom': True,
+    'name': 'Hydration',
+    'icon': 'https://s3-us-west-1.amazonaws.com/quokkadev/images/good-deeds-green.png',
+    'overview': [
+      {
+        'title': 'What are the benefits to giving thanks?',
+        'content': """Our bodies are made up of mostly water (~60%). Staying hydrated is important for our body to carry out many of its most basic functions, plus it helps keep hunger, fatigue, and sickness at bay. As an added bonus, it helps clear up your skin and keeps your body replenished during workouts."""
+      },
+      {
+        'title': 'What are ways to express gratitude regularly?',
+        'content': """While there’s no 'formal' recommendation for how much water people should drink daily, it is typically recommended that the average person drinks at least 8 cups a day. For those who exercise regularly, drinking this amount and more is highly recommended."""
+      },
+      {
+        'title': 'Any tips for how I can stay more hydrated?',
+        'content': """Pick a favorite reusable water bottle and carry it around with you wherever you go. When you have access to water regularly, you\’re likely to drink it more. You can also set reminders, drink a glass of water to start your day, or add fruit to naturally flavor your water."""
+      }
+    ],
+    'links': [
+      'https://greatist.com/health/reasons-to-drink-water',
+      'https://well.blogs.nytimes.com/2016/05/09/dehydration-risks-and-myths/',
+    ],
+    'extra_info': '',
+    'check_in_questions': [
+      'What\'d you do to complete this week\'s challenge?',
+      'Tell us about your experience. Did you enjoy it or notice anything different about yourself?',
+      'Any additional comments (about the week or the overall challenge)?'
+    ],
+    'preview_text': 'Staying hydrated is important for your overall health! Grab a reusable water bottle this week and drink plenty of fluids to stay healthy.',
+    'email': {
+      'science': 'Our bodies are made mostly of water! We want to make sure to keep our bodies replenished by drinking fluids and staying hydrated.',
+      'welcome_text': 'Let\'s stay hydrated!'
+    }
   }
 }
